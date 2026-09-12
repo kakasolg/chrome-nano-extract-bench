@@ -1,0 +1,15 @@
+{
+  "name": "chrome-nano-extract-bench",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Reproducible benchmark: structured extraction from screenshots with Chrome's built-in on-device model (Prompt API), vision vs OCR-first.",
+  "scripts": {
+    "fixtures": "node fixtures/generate.mjs",
+    "fixtures:html": "node fixtures/generate.mjs --html-only"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}

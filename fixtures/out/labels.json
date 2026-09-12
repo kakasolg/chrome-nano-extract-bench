@@ -1,0 +1,359 @@
+{
+  "generated_at": "2026-09-12T23:49:22.728Z",
+  "width": 860,
+  "height": 1500,
+  "fixtures": [
+    {
+      "id": "metals_en_panel_deck",
+      "file": "metals_en_panel_deck.png",
+      "article": "metals",
+      "variant": {
+        "lang": "en",
+        "panel": true,
+        "subheading": true
+      },
+      "truth": {
+        "language": "en",
+        "headline": "Halvorsen Metals slides as copper demand outlook dims",
+        "subheading": "Analysts trim targets after weak factory data",
+        "published_at": "2026-03-14",
+        "instrument": "HVM",
+        "price": 187.4,
+        "change_percent": -4.6,
+        "distractor_percent": 3.4,
+        "sentiment": "negative",
+        "topic": "copper miner cuts shipment forecast"
+      }
+    },
+    {
+      "id": "metals_en_panel_nodeck",
+      "file": "metals_en_panel_nodeck.png",
+      "article": "metals",
+      "variant": {
+        "lang": "en",
+        "panel": true,
+        "subheading": false
+      },
+      "truth": {
+        "language": "en",
+        "headline": "Halvorsen Metals slides as copper demand outlook dims",
+        "subheading": null,
+        "published_at": "2026-03-14",
+        "instrument": "HVM",
+        "price": 187.4,
+        "change_percent": -4.6,
+        "distractor_percent": 3.4,
+        "sentiment": "negative",
+        "topic": "copper miner cuts shipment forecast"
+      }
+    },
+    {
+      "id": "metals_en_nopanel_deck",
+      "file": "metals_en_nopanel_deck.png",
+      "article": "metals",
+      "variant": {
+        "lang": "en",
+        "panel": false,
+        "subheading": true
+      },
+      "truth": {
+        "language": "en",
+        "headline": "Halvorsen Metals slides as copper demand outlook dims",
+        "subheading": "Analysts trim targets after weak factory data",
+        "published_at": "2026-03-14",
+        "instrument": "HVM",
+        "price": null,
+        "change_percent": null,
+        "distractor_percent": 3.4,
+        "sentiment": "negative",
+        "topic": "copper miner cuts shipment forecast"
+      }
+    },
+    {
+      "id": "metals_en_nopanel_nodeck",
+      "file": "metals_en_nopanel_nodeck.png",
+      "article": "metals",
+      "variant": {
+        "lang": "en",
+        "panel": false,
+        "subheading": false
+      },
+      "truth": {
+        "language": "en",
+        "headline": "Halvorsen Metals slides as copper demand outlook dims",
+        "subheading": null,
+        "published_at": "2026-03-14",
+        "instrument": "HVM",
+        "price": null,
+        "change_percent": null,
+        "distractor_percent": 3.4,
+        "sentiment": "negative",
+        "topic": "copper miner cuts shipment forecast"
+      }
+    },
+    {
+      "id": "metals_ko_panel_deck",
+      "file": "metals_ko_panel_deck.png",
+      "article": "metals",
+      "variant": {
+        "lang": "ko",
+        "panel": true,
+        "subheading": true
+      },
+      "truth": {
+        "language": "ko",
+        "headline": "할보르센 메탈스, 구리 수요 전망 악화에 하락",
+        "subheading": "부진한 공장 지표에 애널리스트들 목표가 하향",
+        "published_at": "2026-03-14",
+        "instrument": "HVM",
+        "price": 187.4,
+        "change_percent": -4.6,
+        "distractor_percent": 3.4,
+        "sentiment": "negative",
+        "topic": "copper miner cuts shipment forecast"
+      }
+    },
+    {
+      "id": "metals_ko_panel_nodeck",
+      "file": "metals_ko_panel_nodeck.png",
+      "article": "metals",
+      "variant": {
+        "lang": "ko",
+        "panel": true,
+        "subheading": false
+      },
+      "truth": {
+        "language": "ko",
+        "headline": "할보르센 메탈스, 구리 수요 전망 악화에 하락",
+        "subheading": null,
+        "published_at": "2026-03-14",
+        "instrument": "HVM",
+        "price": 187.4,
+        "change_percent": -4.6,
+        "distractor_percent": 3.4,
+        "sentiment": "negative",
+        "topic": "copper miner cuts shipment forecast"
+      }
+    },
+    {
+      "id": "metals_ko_nopanel_deck",
+      "file": "metals_ko_nopanel_deck.png",
+      "article": "metals",
+      "variant": {
+        "lang": "ko",
+        "panel": false,
+        "subheading": true
+      },
+      "truth": {
+        "language": "ko",
+        "headline": "할보르센 메탈스, 구리 수요 전망 악화에 하락",
+        "subheading": "부진한 공장 지표에 애널리스트들 목표가 하향",
+        "published_at": "2026-03-14",
+        "instrument": "HVM",
+        "price": null,
+        "change_percent": null,
+        "distractor_percent": 3.4,
+        "sentiment": "negative",
+        "topic": "copper miner cuts shipment forecast"
+      }
+    },
+    {
+      "id": "metals_ko_nopanel_nodeck",
+      "file": "metals_ko_nopanel_nodeck.png",
+      "article": "metals",
+      "variant": {
+        "lang": "ko",
+        "panel": false,
+        "subheading": false
+      },
+      "truth": {
+        "language": "ko",
+        "headline": "할보르센 메탈스, 구리 수요 전망 악화에 하락",
+        "subheading": null,
+        "published_at": "2026-03-14",
+        "instrument": "HVM",
+        "price": null,
+        "change_percent": null,
+        "distractor_percent": 3.4,
+        "sentiment": "negative",
+        "topic": "copper miner cuts shipment forecast"
+      }
+    },
+    {
+      "id": "battery_en_panel_deck",
+      "file": "battery_en_panel_deck.png",
+      "article": "battery",
+      "variant": {
+        "lang": "en",
+        "panel": true,
+        "subheading": true
+      },
+      "truth": {
+        "language": "en",
+        "headline": "Larkspur Energy jumps on grid storage contract win",
+        "subheading": "Utility deal is the company's largest to date",
+        "published_at": "2026-05-02",
+        "instrument": "LKSP",
+        "price": 42.15,
+        "change_percent": 11.8,
+        "distractor_percent": 2.75,
+        "sentiment": "positive",
+        "topic": "battery storage maker wins utility contract"
+      }
+    },
+    {
+      "id": "battery_en_panel_nodeck",
+      "file": "battery_en_panel_nodeck.png",
+      "article": "battery",
+      "variant": {
+        "lang": "en",
+        "panel": true,
+        "subheading": false
+      },
+      "truth": {
+        "language": "en",
+        "headline": "Larkspur Energy jumps on grid storage contract win",
+        "subheading": null,
+        "published_at": "2026-05-02",
+        "instrument": "LKSP",
+        "price": 42.15,
+        "change_percent": 11.8,
+        "distractor_percent": 2.75,
+        "sentiment": "positive",
+        "topic": "battery storage maker wins utility contract"
+      }
+    },
+    {
+      "id": "battery_en_nopanel_deck",
+      "file": "battery_en_nopanel_deck.png",
+      "article": "battery",
+      "variant": {
+        "lang": "en",
+        "panel": false,
+        "subheading": true
+      },
+      "truth": {
+        "language": "en",
+        "headline": "Larkspur Energy jumps on grid storage contract win",
+        "subheading": "Utility deal is the company's largest to date",
+        "published_at": "2026-05-02",
+        "instrument": "LKSP",
+        "price": null,
+        "change_percent": null,
+        "distractor_percent": 2.75,
+        "sentiment": "positive",
+        "topic": "battery storage maker wins utility contract"
+      }
+    },
+    {
+      "id": "battery_en_nopanel_nodeck",
+      "file": "battery_en_nopanel_nodeck.png",
+      "article": "battery",
+      "variant": {
+        "lang": "en",
+        "panel": false,
+        "subheading": false
+      },
+      "truth": {
+        "language": "en",
+        "headline": "Larkspur Energy jumps on grid storage contract win",
+        "subheading": null,
+        "published_at": "2026-05-02",
+        "instrument": "LKSP",
+        "price": null,
+        "change_percent": null,
+        "distractor_percent": 2.75,
+        "sentiment": "positive",
+        "topic": "battery storage maker wins utility contract"
+      }
+    },
+    {
+      "id": "battery_ko_panel_deck",
+      "file": "battery_ko_panel_deck.png",
+      "article": "battery",
+      "variant": {
+        "lang": "ko",
+        "panel": true,
+        "subheading": true
+      },
+      "truth": {
+        "language": "ko",
+        "headline": "라크스퍼 에너지, 전력망 저장장치 계약 수주에 급등",
+        "subheading": "유틸리티 계약은 회사 사상 최대 규모",
+        "published_at": "2026-05-02",
+        "instrument": "LKSP",
+        "price": 42.15,
+        "change_percent": 11.8,
+        "distractor_percent": 2.75,
+        "sentiment": "positive",
+        "topic": "battery storage maker wins utility contract"
+      }
+    },
+    {
+      "id": "battery_ko_panel_nodeck",
+      "file": "battery_ko_panel_nodeck.png",
+      "article": "battery",
+      "variant": {
+        "lang": "ko",
+        "panel": true,
+        "subheading": false
+      },
+      "truth": {
+        "language": "ko",
+        "headline": "라크스퍼 에너지, 전력망 저장장치 계약 수주에 급등",
+        "subheading": null,
+        "published_at": "2026-05-02",
+        "instrument": "LKSP",
+        "price": 42.15,
+        "change_percent": 11.8,
+        "distractor_percent": 2.75,
+        "sentiment": "positive",
+        "topic": "battery storage maker wins utility contract"
+      }
+    },
+    {
+      "id": "battery_ko_nopanel_deck",
+      "file": "battery_ko_nopanel_deck.png",
+      "article": "battery",
+      "variant": {
+        "lang": "ko",
+        "panel": false,
+        "subheading": true
+      },
+      "truth": {
+        "language": "ko",
+        "headline": "라크스퍼 에너지, 전력망 저장장치 계약 수주에 급등",
+        "subheading": "유틸리티 계약은 회사 사상 최대 규모",
+        "published_at": "2026-05-02",
+        "instrument": "LKSP",
+        "price": null,
+        "change_percent": null,
+        "distractor_percent": 2.75,
+        "sentiment": "positive",
+        "topic": "battery storage maker wins utility contract"
+      }
+    },
+    {
+      "id": "battery_ko_nopanel_nodeck",
+      "file": "battery_ko_nopanel_nodeck.png",
+      "article": "battery",
+      "variant": {
+        "lang": "ko",
+        "panel": false,
+        "subheading": false
+      },
+      "truth": {
+        "language": "ko",
+        "headline": "라크스퍼 에너지, 전력망 저장장치 계약 수주에 급등",
+        "subheading": null,
+        "published_at": "2026-05-02",
+        "instrument": "LKSP",
+        "price": null,
+        "change_percent": null,
+        "distractor_percent": 2.75,
+        "sentiment": "positive",
+        "topic": "battery storage maker wins utility contract"
+      }
+    }
+  ]
+}
