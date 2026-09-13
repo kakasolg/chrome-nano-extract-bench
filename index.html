@@ -84,6 +84,7 @@
       <label class="f"><input type="checkbox" id="rules-pad"> pad (v1 + inert filler; longer than v1h)</label>
       <label class="f"><input type="checkbox" id="rules-padh"> padh (v1h + inert filler)</label>
       <label class="f"><input type="checkbox" id="rules-v1x"> v1x (v1 with the example numbers removed)</label>
+      <label class="f"><input type="checkbox" id="rules-v1n"> v1n (v1x + nullable schema; "empty string" → null)</label>
     </div>
     <div class="row" style="margin-top:8px">
       <span class="note">hybrid options:</span>
@@ -165,6 +166,13 @@
     },
     required: ['headline', 'summary', 'sentiment']
   };
+  // Nullable variant: the four fields that legitimately have no value get
+  // `null` as a schema-level option, so "leave it empty" is something the
+  // constrained decoder can actually emit rather than a request in prose.
+  const SCHEMA_NULLABLE = JSON.parse(JSON.stringify(SCHEMA));
+  for (const k of ['instrument', 'published_at', 'price', 'change_percent'])
+    SCHEMA_NULLABLE.properties[k] = { type: ['string', 'null'], maxLength: SCHEMA.properties[k].maxLength };
+  const schemaFor = (rulesVer) => rulesVer === 'v1n' ? SCHEMA_NULLABLE : SCHEMA;
 
   // ---------------------------------------------------------------
   // Prompts. Two languages with 1:1 rule numbering, chosen by the source
@@ -277,7 +285,18 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
       .replace(/\("135\.20", "\+2\.34" 등\)/, '')
       .replace(/ \(e\.g\. 2026-09-03T06:18:28Z\)/, '')
       .replace(/\(예: 2026-09-03T06:18:28Z\)/, '');
-    RULES[lang] = { v1, v1h, pad: pad(v1, lang), padh: pad(v1h, lang), v1x };
+    // v1n: v1x with every "empty string" instruction turned into "null",
+    // paired with SCHEMA_NULLABLE. Two things change together on purpose: the
+    // variable under test is "can the model be allowed to leave a field
+    // empty", and both the schema and the wording have to permit it.
+    const v1n = lang === 'en'
+      ? v1x.replace(/leave them as an empty string \(""\)/, 'set them to null')
+           .replace(/both MUST be empty strings \(""\) — do not write 0/, 'both MUST be null — do not write 0 or ""')
+           .replace(/leave it as ""/, 'set it to null')
+      : v1x.replace(/빈 문자열\(""\)로 둡니다\./, 'null로 둡니다.')
+           .replace(/둘 다 반드시 빈 문자열\(""\)로 둡니다 — 0을 적지 마세요/, '둘 다 반드시 null로 둡니다 — 0이나 ""를 적지 마세요')
+           .replace(/값을 못 찾으면 빈 문자열\(""\)로 둡니다/, '값을 못 찾으면 null로 둡니다');
+    RULES[lang] = { v1, v1h, pad: pad(v1, lang), padh: pad(v1h, lang), v1x, v1n };
   }
   window.__RULES = RULES;
 
@@ -409,8 +428,8 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
         const p = buildPrompt(lang, rulesVer, image ? null : text);
         const raw = image
           ? await session.prompt([{ role: 'user', content: [{ type: 'text', value: p }, { type: 'image', value: image }] }],
-                                 { responseConstraint: SCHEMA, signal: controller.signal })
-          : await session.prompt(p, { responseConstraint: SCHEMA, signal: controller.signal });
+                                 { responseConstraint: schemaFor(rulesVer), signal: controller.signal })
+          : await session.prompt(p, { responseConstraint: schemaFor(rulesVer), signal: controller.signal });
         return { raw, ms: Math.round(performance.now() - t0) };
       } finally { session.destroy?.(); }
     } finally { clearTimeout(timer); activeAborts.delete(controller); }
@@ -442,7 +461,7 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
     const runs = Math.max(1, Number($('cfg-runs').value) || 3);
     const timeoutMs = (Number($('cfg-timeout').value) || 90) * 1000;
     const paths = ['vision', 'ocr', 'hybrid'].filter(p => $('path-' + p).checked);
-    const rulesVers = ['v1', 'v1h', 'pad', 'padh', 'v1x'].filter(r => $('rules-' + r).checked);
+    const rulesVers = ['v1', 'v1h', 'pad', 'padh', 'v1x', 'v1n'].filter(r => $('rules-' + r).checked);
     const fixtures = selectedFixtures();
     const total = fixtures.length * paths.length * rulesVers.length * runs;
     let done = 0;

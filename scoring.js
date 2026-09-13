@@ -13,17 +13,23 @@
     return Number.isFinite(n) ? n : null;
   };
   const norm = (s) => String(s || '').toLowerCase().replace(/[\s"'“”‘’.,!?—–\-:;()]/g, '');
+  // The literal string "null" is what the constrained decoder emits when the
+  // schema allows null but the model writes the word. Treat it as empty for
+  // the accuracy metrics (the intent is clear) and count it separately.
+  const isNullStr = (v) => typeof v === 'string' && v.trim().toLowerCase() === 'null';
+  const empty = (v) => v == null || String(v).trim() === '' || isNullStr(v);
 
   const METRICS = [
     ['topicOk', 'topic'], ['langOk', 'lang'], ['copied', 'copied'], ['distractorHit', 'distractor→change'],
     ['changeOk', 'change ok'], ['priceOk', 'price ok'], ['dateOk', 'date ok'], ['dateFabricated', 'date fab'],
-    ['instrumentOk', 'instr ok'], ['sentimentOk', 'sent ok']
+    ['instrumentOk', 'instr ok'], ['sentimentOk', 'sent ok'], ['nullString', '"null" str']
   ];
 
   // dto: parsed model output. truth: labels.json entry's `truth`.
   function score(dto, truth) {
     const T = truth;
-    const cpN = num(dto.change_percent), prN = num(dto.price);
+    const cpN = isNullStr(dto.change_percent) ? null : num(dto.change_percent);
+    const prN = isNullStr(dto.price) ? null : num(dto.price);
     const h = String(dto.headline || '');
     const r = {};
     r.topicOk = T.keywords.some(k => h.toLowerCase().includes(k.toLowerCase()));
@@ -31,17 +37,18 @@
     r.copied = T.subheading != null && norm(h) === norm(T.subheading);
     r.distractorHit = cpN !== null && Math.abs(cpN - T.distractor_percent) < 0.005;
     r.changeOk = T.change_percent == null
-      ? String(dto.change_percent ?? '').trim() === ''
+      ? empty(dto.change_percent)
       : (cpN !== null && Math.abs(cpN - T.change_percent) < 0.05);
     r.priceOk = T.price == null
-      ? String(dto.price ?? '').trim() === ''
+      ? empty(dto.price)
       : (prN !== null && Math.abs(prN - T.price) < 0.05);
     r.dateOk = String(dto.published_at || '').startsWith(T.published_at);
     r.dateFabricated = !r.dateOk && /\d{4}-\d{2}-\d{2}/.test(String(dto.published_at || ''));
     r.instrumentOk = T.instrument == null
-      ? String(dto.instrument ?? '').trim() === ''
+      ? empty(dto.instrument)
       : String(dto.instrument || '').trim().toUpperCase() === T.instrument;
     r.sentimentOk = dto.sentiment === T.sentiment;
+    r.nullString = ['instrument', 'published_at', 'price', 'change_percent'].some(k => isNullStr(dto[k]));
     return r;
   }
 
