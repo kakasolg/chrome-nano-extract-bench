@@ -94,6 +94,9 @@
       <label class="f"><input type="checkbox" id="cfg-parallel" checked> call both legs concurrently</label>
       <span class="note">order:</span>
       <label class="f"><input type="checkbox" id="cfg-interleave"> interleave rule variants call by call (latency A/B)</label>
+      <span class="note">sampling:</span>
+      <label class="f"><input type="checkbox" id="samp-default" checked> default</label>
+      <label class="f"><input type="checkbox" id="samp-most-predictable"> most-predictable</label>
       <span class="note">OCR preprocess:</span>
       <label class="f"><select id="cfg-ocrpre">
         <option value="invert">grayscale + invert dark images</option>
@@ -472,7 +475,7 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
   // ---------------------------------------------------------------
   // Model calls
   // ---------------------------------------------------------------
-  async function promptModel({ image, text, lang, rulesVer, timeoutMs }) {
+  async function promptModel({ image, text, lang, rulesVer, timeoutMs, sampling }) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(new DOMException('timeout', 'TimeoutError')), timeoutMs);
     activeAborts.add(controller);
@@ -480,6 +483,7 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
     try {
       const session = await self.LanguageModel.create({
         expectedInputs: image ? [{ type: 'text' }, { type: 'image' }] : [{ type: 'text' }],
+        ...(sampling && sampling !== 'default' ? { samplingMode: sampling } : {}),
         signal: controller.signal,
         monitor(m) { m.addEventListener('downloadprogress', (e) => progress(`model download ${Math.round((e.loaded ?? 0) * 100)}%`)); }
       });
@@ -522,8 +526,12 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
     const timeoutMs = (Number($('cfg-timeout').value) || 90) * 1000;
     const paths = ['vision', 'ocr', 'hybrid'].filter(p => $('path-' + p).checked);
     const rulesVers = ['v1', 'v1h', 'pad', 'padh', 'v1x', 'v1n', 'v1n2'].filter(r => $('rules-' + r).checked);
+    // samplingMode is a Chrome 148+ create() option; on Chrome 152 it took
+    // effect without an origin-trial token (session.samplingMode reflects it,
+    // and most-predictable made repeated prompts byte-identical).
+    const samplings = ['default', 'most-predictable'].filter(m => $('samp-' + m).checked);
     const fixtures = selectedFixtures();
-    const total = fixtures.length * paths.length * rulesVers.length * runs;
+    const total = fixtures.length * paths.length * rulesVers.length * samplings.length * runs;
     let done = 0;
     try {
       for (const f of fixtures) {
@@ -535,12 +543,12 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
         // warm-cache, thermal and order effects land on every variant equally.
         // Used for latency A/B; the default groups by variant.
         const plan = [];
-        if ($('cfg-interleave').checked) { for (const path of paths) for (let i = 1; i <= runs; i++) for (const rulesVer of rulesVers) plan.push([rulesVer, path, i]); }
-        else { for (const rulesVer of rulesVers) for (const path of paths) for (let i = 1; i <= runs; i++) plan.push([rulesVer, path, i]); }
-        for (const [rulesVer, path, i] of plan) {
+        if ($('cfg-interleave').checked) { for (const path of paths) for (let i = 1; i <= runs; i++) for (const rulesVer of rulesVers) for (const sampling of samplings) plan.push([rulesVer, path, i, sampling]); }
+        else { for (const sampling of samplings) for (const rulesVer of rulesVers) for (const path of paths) for (let i = 1; i <= runs; i++) plan.push([rulesVer, path, i, sampling]); }
+        for (const [rulesVer, path, i, sampling] of plan) {
           if (state.cancelled) break;
-          progress(`${++done}/${total} · ${f.id} · ${path} · ${rulesVer} · ${i}/${runs}`);
-          const rec = { fixture: f.id, article: f.article, variant: f.variant, path, rules: rulesVer, run: i,
+          progress(`${++done}/${total} · ${f.id} · ${path} · ${rulesVer} · ${sampling} · ${i}/${runs}`);
+          const rec = { fixture: f.id, article: f.article, variant: f.variant, path, rules: rulesVer, sampling, run: i,
                         ts: new Date().toISOString(), ocrMs: ocr?.ms ?? null, inferMs: null, status: 'ok', dto: null, raw: null };
           // Prompt language follows the source. For vision there is no OCR
           // text, so use the fixture's declared language (the app would know
@@ -548,16 +556,16 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
           const lang = ocr ? (srcIsKorean(ocr.text) ? 'ko' : 'en') : f.variant.lang;
           rec.promptLang = lang;
           if (path === 'vision') {
-            const L = await leg({ image: state.images[f.id].capped, lang, rulesVer, timeoutMs });
+            const L = await leg({ image: state.images[f.id].capped, lang, rulesVer, timeoutMs, sampling });
             Object.assign(rec, { inferMs: L.ms, raw: L.raw, dto: L.dto, status: L.fail || 'ok' });
           } else if (path === 'ocr') {
-            const L = await leg({ text: ocr.text, lang, rulesVer, timeoutMs });
+            const L = await leg({ text: ocr.text, lang, rulesVer, timeoutMs, sampling });
             Object.assign(rec, { inferMs: L.ms, raw: L.raw, dto: L.dto, status: L.fail || 'ok' });
           } else {
             const gate = ocr.gate; rec.quotePanel = gate.hit; rec.gateBy = gate.by;
             rec.visionSkipped = $('cfg-gate').checked && !gate.hit;
-            const vArg = { image: state.images[f.id].capped, lang, rulesVer, timeoutMs };
-            const tArg = { text: ocr.text, lang, rulesVer, timeoutMs };
+            const vArg = { image: state.images[f.id].capped, lang, rulesVer, timeoutMs, sampling };
+            const tArg = { text: ocr.text, lang, rulesVer, timeoutMs, sampling };
             const w0 = performance.now();
             let v, t;
             if (rec.visionSkipped) { v = { dto: null, raw: null, ms: null, fail: null }; t = await leg(tArg); }
@@ -610,16 +618,17 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
   const HEADER = `<th>group</th><th>parsed</th>` + METRICS.map(([, l]) => `<th>${l}</th>`).join('') + `<th>avg ms</th>`;
   function renderSummary() {
     const tb = $('summary').querySelector('tbody'); tb.innerHTML = `<tr>${HEADER}</tr>`;
-    const keys = [...new Set(state.results.map(r => `${r.path} · ${r.rules}`))];
+    const gk = (r) => `${r.path} · ${r.rules}${r.sampling && r.sampling !== 'default' ? ' · ' + r.sampling : ''}`;
+    const keys = [...new Set(state.results.map(gk))];
     for (const k of keys) {
       const tr = document.createElement('tr');
-      tr.innerHTML = summaryRow(`<b>${k}</b>`, state.results.filter(r => `${r.path} · ${r.rules}` === k));
+      tr.innerHTML = summaryRow(`<b>${k}</b>`, state.results.filter(r => gk(r) === k));
       tb.appendChild(tr);
     }
     if (!keys.length) tb.innerHTML = '<tr><td class="note">no results yet</td></tr>';
     const bv = $('byvar').querySelector('tbody'); bv.innerHTML = `<tr>${HEADER}</tr>`;
     for (const k of keys) for (const [dim, vals] of [['lang', ['en', 'ko']], ['panel', [true, false]], ['subheading', [true, false]]]) for (const v of vals) {
-      const rows = state.results.filter(r => `${r.path} · ${r.rules}` === k && r.variant[dim] === v);
+      const rows = state.results.filter(r => gk(r) === k && r.variant[dim] === v);
       if (!rows.length) continue;
       const tr = document.createElement('tr'); tr.innerHTML = summaryRow(`${k} · ${dim}=${v}`, rows); bv.appendChild(tr);
     }
@@ -646,12 +655,12 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
   }
   const stamp = () => new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
   function toCsv() {
-    const cols = ['fixture', 'article', 'lang', 'panel', 'deck', 'path', 'rules', 'run', 'status', 'promptLang', 'mergeMode', 'narrativeFrom', 'visionSkipped',
+    const cols = ['fixture', 'article', 'lang', 'panel', 'deck', 'theme', 'path', 'rules', 'sampling', 'run', 'status', 'promptLang', 'mergeMode', 'narrativeFrom', 'visionSkipped',
                   ...METRICS.map(([k]) => k), 'headline', 'change_percent', 'price', 'published_at', 'instrument', 'sentiment', 'ocrMs', 'inferMs', 'visionMs', 'textMs', 'ts'];
     const q = (v) => v == null ? '' : /[",\n]/.test(String(v)) ? `"${String(v).replace(/"/g, '""')}"` : String(v);
     const lines = [cols.join(',')];
     for (const r of state.results) {
-      const row = { ...r, lang: r.variant.lang, panel: r.variant.panel, deck: r.variant.subheading, ...(r.score || {}),
+      const row = { ...r, lang: r.variant.lang, panel: r.variant.panel, deck: r.variant.subheading, theme: r.variant.theme, ...(r.score || {}),
                     headline: r.dto?.headline, change_percent: r.dto?.change_percent, price: r.dto?.price,
                     published_at: r.dto?.published_at, instrument: r.dto?.instrument, sentiment: r.dto?.sentiment };
       lines.push(cols.map(c => q(row[c])).join(','));

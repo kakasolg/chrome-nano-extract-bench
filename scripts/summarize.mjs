@@ -39,16 +39,17 @@ const line = (label, rs) => {
   return `| ${label} | ${a.ok}/${a.n} | ${METRICS.map(([k]) => `${a.c[k]}/${a.ok}`).join(' | ')} | ${a.ms ?? ''} |`;
 };
 
-const groups = [...new Set(rows.map(r => `${r.path} · ${r.rules}`))];
+const gk = (r) => `${r.path} · ${r.rules}${r.sampling && r.sampling !== 'default' ? ' · ' + r.sampling : ''}`;
+const groups = [...new Set(rows.map(gk))];
 console.log(`${rows.length} runs from ${files.length} file(s)\n`);
 console.log(header); console.log(sep);
-for (const g of groups) console.log(line(`**${g}**`, rows.filter(r => `${r.path} · ${r.rules}` === g)));
+for (const g of groups) console.log(line(`**${g}**`, rows.filter(r => gk(r) === g)));
 
 for (const dim of byDims) {
   const vals = [...new Set(rows.map(r => String(r.variant[dim])))];
   console.log(`\n### by ${dim}\n`); console.log(header); console.log(sep);
   for (const g of groups) for (const v of vals) {
-    const rs = rows.filter(r => `${r.path} · ${r.rules}` === g && String(r.variant[dim]) === v);
+    const rs = rows.filter(r => gk(r) === g && String(r.variant[dim]) === v);
     if (rs.length) console.log(line(`${g} · ${dim}=${v}`, rs));
   }
 }
