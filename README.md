@@ -4,7 +4,7 @@ Reproducible benchmark for structured extraction from screenshots with Chrome's
 built-in on-device model (the Prompt API / `LanguageModel`), comparing the
 vision path (image → JSON) with an OCR-first path (image → text → JSON).
 
-Status: **nine phases, 1104 runs, original findings did not reproduce as claimed.** See
+Status: **ten phases, 1296 runs, original findings did not reproduce as claimed.** See
 [RESULTS.md](RESULTS.md). On clean synthetic screenshots the vision path beats OCR-first,
 prompt length did not change compliance, prompt example values leak into the output
 (removing them stops the leak but does not improve accuracy), and the model will not
@@ -15,7 +15,9 @@ not a ticker made it invent tickers. The nullable-schema gain replicated in an
 interleaved A/B; its apparent latency gain did not (run order). Dark-mode fixtures
 leave the vision path unchanged and make OCR-first worse on numbers and dates;
 adaptive binarisation recovers the dates but not the numbers. `most-predictable`
-sampling is deterministic and changes nothing: the fabrications are the argmax.
+sampling is deterministic and changes nothing: the fabrications are the argmax. A phone
+frame (app chrome, denser type) costs the vision path only the small date line and
+costs OCR-first every numeric field.
 
 ## Run it
 
@@ -32,8 +34,8 @@ summarise with `node scripts/summarize.mjs results/<file>.json --by=lang,panel -
 `fixtures/` renders synthetic news-article screenshots with known ground truth.
 All content is fictional (companies, tickers, people, outlets, numbers).
 
-Each of 2 articles is rendered in every combination of four binary variables,
-32 images total, `860×1500` PNG:
+Each of 2 articles is rendered in every combination of five binary variables,
+64 images total, `860×1500` PNG:
 
 | variable | values | what it isolates |
 |---|---|---|
@@ -41,6 +43,7 @@ Each of 2 articles is rendered in every combination of four binary variables,
 | `panel` | price quote box present / absent | whether `price` / `change_percent` exist to be read at all; when absent the truth is `null` and a non-null answer is fabrication |
 | `subheading` | one-line deck under the headline present / absent | a verbatim-copyable line; when absent, headline copying is structurally impossible and the language metric is uncontaminated |
 | `theme` | `light`, `dark` | dark = light text on near-black, as phone news apps render at night; the OCR path binarises (adaptive) or inverts dark images before Tesseract, selectable |
+| `frame` | `none`, `phone` | phone = status bar and a Korean app nav bar above the article, denser type — the shape of the real captures |
 
 Every article body also carries a **distractor percentage** (an inflation print
 or a policy rate) that is not the price change. `change_percent` must not be

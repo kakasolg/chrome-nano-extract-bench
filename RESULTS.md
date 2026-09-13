@@ -10,7 +10,9 @@ Raw runs: `results/phaseA_v1_all16_x3.json` (144), `results/phaseB_v1h_pad_padh_
 (144), `results/phaseC_v1x_all16_x3.json` (96), `results/phaseD_v1n_all16_x3.json` (96),
 `results/phaseE_v1n2_all16_x3.json` (96), `results/phaseF_latency_ab_{vision,ocr}_x3.json`
 (96 + 96), `results/phaseG_dark_v1n_x3.json` (96), `results/phaseH_dark_ocr_adaptive_v1n_x3.json`
-(48), `results/phaseI_sampling_ab_{vision,ocr}_x3.json` (96 + 96). Re-score at any time with
+(48), `results/phaseI_sampling_ab_{vision,ocr}_x3.json` (96 + 96),
+`results/phaseJ_phone_{vision,light_ocr,dark_ocr_adaptive}_v1n_x3.json` (96 + 48 + 48).
+Re-score at any time with
 
 ```bash
 node scripts/summarize.mjs results/*.json --by=lang,panel,subheading --fails
@@ -436,6 +438,68 @@ Practical reading: use `most-predictable` when the harness is a regression test 
 run per fixture is then sufficient and reproducible) and default sampling with repeats
 when the question is a failure *rate*. It is not a quality lever.
 
+## Phase J — phone frame: app chrome above the article, denser type
+
+The last untested property of the original captures: a phone status bar and an app
+navigation bar above the article, and phone-density type. Every fixture now also
+exists with `frame=phone` (`_phone` suffix; 64 fixtures): a status bar (`9:41`, signal
+and battery glyphs), a nav bar with a back glyph and the label `뉴스 상세` — Korean
+regardless of article language, as in the real captures — and tighter type (body
+15.5 px instead of 19 px, headline 27 px instead of 36 px). Run on all 32 phone
+fixtures, `v1n`, default sampling, 3 repeats: vision in one segment; OCR in two, light
+with the grayscale baseline and dark with adaptive binarisation, matching the
+no-frame baselines. Raw runs: `results/phaseJ_phone_*.json`.
+
+No-frame baselines pool phase D/F (light) and G/H (dark), `v1n`.
+
+| path · frame | topic | lang | distractor→change | change ok | price ok | date ok | date fab | instr ok |
+|---|---|---|---|---|---|---|---|---|
+| vision · none | 117/144 | 143/144 | 2/144 | 131/144 | 141/144 | 103/144 | 36/144 | 56/144 |
+| vision · phone | 85/95 | 95/95 | 5/95 | 85/95 | 93/95 | **39/95** | **55/95** | 43/95 |
+| ocr · none | 109/143 | 112/143 | 2/143 | 77/143 | 134/143 | 88/143 | 33/143 | 22/143 |
+| ocr · phone | **94/95** | **93/95** | 2/95 | **31/95** | **64/95** | **18/95** | 40/95 | **3/95** |
+
+By theme, phone frame:
+
+| path · theme | change ok | price ok | date ok | date fab | instr ok | OCR conf |
+|---|---|---|---|---|---|---|
+| vision · light | 42/48 | 48/48 | 29/48 | 19/48 | 23/48 | — |
+| vision · dark | 43/47 | 45/47 | 10/47 | 36/47 | 20/47 | — |
+| ocr · light | 15/47 | 33/47 | 6/47 | 21/47 | 3/47 | 58–80 |
+| ocr · dark | 16/48 | 31/48 | 12/48 | 19/48 | 0/48 | 51–70 |
+
+**This is the first condition that hurt the vision path, and it hurt one field.**
+`published_at` fell from 72% correct to 41%, and on dark phone fixtures to 21%, with
+the year moved to 2020 or 2023 in run after run. The metadata line is 13 px in the
+phone layout, sits under a status-bar clock, and is the smallest text on the page; the
+vision path reads everything else — price 93/95, language 95/95, change 85/95 — at
+no-frame rates. The nav bar did not leak: no English headline contained Hangul, and
+`뉴스 상세` or `9:41` appeared in an output once in 95 runs.
+
+**The OCR path breaks on density before anything else.** After the 1024 px cap the
+15.5 px body is about 10 px; Tesseract confidence drops to 58–80 (light) and 51–70
+(dark) from 85–91, and every numeric field collapses: `change ok` 31/95, `price ok`
+64/95, `instrument` 3/95, dates 18/95 with 40 fabricated. This is the same failure as
+phases G and H — OCR loses small glyphs, decimal points first — made worse by smaller
+type, and it is an OCR-engine ceiling, not something the model does.
+
+**The one thing the frame improved is language, on the OCR path.** Topic and language
+went to 94/95 and 93/95, and the Korean-to-English translation rate fell to 1/24
+(light) and 0/24 (dark) — the lowest in the series. The OCR text now begins with
+`< 뉴스상세`; a leading Korean token appears to anchor the output language for the
+Korean fixtures without harming the English ones. That is the original probe's
+"first token sets the language" hypothesis, reproduced — in the direction that helps,
+because here the app locale matches the Korean articles and the English articles were
+never at risk.
+
+**Bottom line for the original claim:** the phone-capture conditions do reproduce a
+vision-path failure, but only on the date line, and they hurt the OCR path far more.
+On these fixtures there is no condition — light, dark, framed, dense — under which
+OCR-first beats the vision path on numbers. Where the original probe saw OCR-first
+win, the likeliest explanation left is the specific real screenshots: JPEG artefacts,
+a true phone pixel density three times this one, and articles whose numbers the
+vision path happened to misread. That cannot be settled with synthetic fixtures.
+
 ## What to change before trusting any of this further
 
 - ~~Take the example numbers out of the rules and re-run.~~ Done (phase C): the leak
@@ -455,6 +519,12 @@ when the question is a failure *rate*. It is not a quality lever.
   fabrication drops (33 → 11), numbers do not move — Tesseract still loses decimal
   points and the Korean date line. Next on the OCR side would be a different engine,
   not more preprocessing.
+- ~~Phone-density type and an app header line.~~ Done (phase J): vision loses only
+  the small date line; OCR loses every numeric field. Still untested: JPEG compression
+  and true phone pixel density (3×), and a deck line more quotable than the headline.
+- **Date line**: the one vision-path weakness found. Try a two-pass extraction — full
+  page for everything, then a crop of the header region at native resolution for
+  `published_at` — before touching the prompt.
 - ~~Try `most-predictable` sampling.~~ Done (phase I): deterministic, accuracy unchanged,
   the fabrications are the argmax. Not a quality lever; useful only for reproducible
   regression runs.
