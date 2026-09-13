@@ -4,14 +4,15 @@ Reproducible benchmark for structured extraction from screenshots with Chrome's
 built-in on-device model (the Prompt API / `LanguageModel`), comparing the
 vision path (image → JSON) with an OCR-first path (image → text → JSON).
 
-Status: **first two runs done, findings did not reproduce as claimed.** See
+Status: **six phases, 768 runs, original findings did not reproduce as claimed.** See
 [RESULTS.md](RESULTS.md). On clean synthetic screenshots the vision path beats OCR-first,
 prompt length did not change compliance, prompt example values leak into the output
 (removing them stops the leak but does not improve accuracy), and the model will not
 leave a field empty when asked in prose — but does when the schema makes the field
 nullable, which also removed the distractor contamination on English fixtures. Prose
 rules aimed at one field keep moving other fields; telling the model a company name is
-not a ticker made it invent tickers.
+not a ticker made it invent tickers. The nullable-schema gain replicated in an
+interleaved A/B; its apparent latency gain did not (run order).
 
 ## Run it
 

@@ -8,7 +8,8 @@ other response parsed.
 
 Raw runs: `results/phaseA_v1_all16_x3.json` (144), `results/phaseB_v1h_pad_padh_deck8_x3.json`
 (144), `results/phaseC_v1x_all16_x3.json` (96), `results/phaseD_v1n_all16_x3.json` (96),
-`results/phaseE_v1n2_all16_x3.json` (96). Re-score at any time with
+`results/phaseE_v1n2_all16_x3.json` (96), `results/phaseF_latency_ab_{vision,ocr}_x3.json`
+(96 + 96). Re-score at any time with
 
 ```bash
 node scripts/summarize.mjs results/*.json --by=lang,panel,subheading --fails
@@ -269,6 +270,42 @@ that; it only changes what shape the filler takes. If `instrument` must be null 
 panel, the app should null it in code when its own gate says no panel, exactly as the
 hybrid path already does for vision — not ask the model.
 
+## Phase F — latency A/B, `v1x` vs `v1n` interleaved call by call
+
+Phase D's halved latency needed an isolated test. Same 16 fixtures, 3 repeats, `v1x`
+and `v1n` alternating on every call (v1x, v1n, v1x, v1n …) so warm-up, thermal and
+order effects fall on both equally. Run as two halves in a fresh tab — vision (96
+calls) then OCR (96 calls) — after a first attempt crashed the tab at 96/192; the
+half-way numbers from that attempt (v1x 5.6 s / v1n 5.9 s vision, 4.3 s / 4.3 s OCR)
+agree with the rerun. Raw runs: `results/phaseF_latency_ab_vision_x3.json`,
+`results/phaseF_latency_ab_ocr_x3.json`.
+
+| path | v1x mean (median, sd) | v1n mean (median, sd) | paired v1n − v1x | v1n faster in |
+|---|---|---|---|---|
+| vision | 5383 ms (5014, 1803) | 5307 ms (4690, 1468) | −76 ms (sd 1635) | 18 / 48 |
+| ocr | 4031 ms (4051, 521) | 4244 ms (4271, 512) | +212 ms (sd 513) | 18 / 47 |
+
+**No latency effect from the nullable schema.** The "halving" in phase D was run order:
+inside each half of this A/B the second 48 calls averaged 600–700 ms faster than the
+first 48 (vision 5652 → 5038, OCR 4435 → 3756), with the schema variable balanced.
+Phase D was the fourth consecutive run in one tab; phase A was the first. Compare
+latencies only within an interleaved run.
+
+The A/B doubles as a replication of phase D's accuracy result, on a fresh tab and a
+different call order:
+
+| path · rules | topic | lang | distractor→change | change ok | date ok | instr ok |
+|---|---|---|---|---|---|---|
+| vision · v1x | 36/48 | 48/48 | 4/48 | 38/48 | 39/48 | 25/48 |
+| vision · v1n | 40/48 | 48/48 | **0/48** | **45/48** | 38/48 | 18/48 |
+| ocr · v1x | 32/47 | 35/47 | 0/47 | 22/47 | 30/47 | 9/47 |
+| ocr · v1n | 32/48 | 33/48 | 0/48 | **29/48** | 30/48 | 9/48 |
+
+Same direction and size as phase D: nullable schema removes the distractor
+contamination on the vision path (4 → 0) and lifts `change ok` on both (+7 each), at the
+cost of `instrument` on vision (company names where null was meant, see phase E).
+That is now two independent runs, 96 + 96 calls, agreeing.
+
 ## What to change before trusting any of this further
 
 - ~~Take the example numbers out of the rules and re-run.~~ Done (phase C): the leak
@@ -278,8 +315,8 @@ hybrid path already does for vision — not ask the model.
 - ~~Fix the `instrument` wording now that null is allowed.~~ Done (phase E): the model
   invents ticker-shaped codes instead. Null `instrument` in code when no panel is
   detected; stop trying to get it from the prompt.
-- **Isolate the latency drop** seen with the nullable schema (same fixtures, alternating
-  v1x/v1n in one session) before reporting it.
+- ~~Isolate the latency drop seen with the nullable schema.~~ Done (phase F): no effect;
+  it was run order. Never compare latency across separate runs in this harness.
 - **Add fixtures that look like the original failure cases**: dark mode, phone-density
   type, an app header line above the article, and a deck line more quotable than the
   headline. The clean renders here are an easy case for the vision path; the original
