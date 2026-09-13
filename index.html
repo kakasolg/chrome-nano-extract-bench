@@ -302,16 +302,12 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
     // wherever null was intended once null was allowed.
     const v1n2 = lang === 'en'
       ? v1n.replace(/^1\. .*$/m,
-          '1. instrument is the ticker symbol shown in a quote panel (a short all-caps code next to a
-' +
-          '   price). If there is no quote panel, instrument MUST be null — a company name is NOT an
-' +
+          '1. instrument is the ticker symbol shown in a quote panel (a short all-caps code next to a\n' +
+          '   price). If there is no quote panel, instrument MUST be null — a company name is NOT an\n' +
           '   instrument. If you cannot find published_at, set it to null.')
       : v1n.replace(/^1\. .*$/m,
-          '1. instrument는 시세 패널에 표시된 티커 기호(가격 옆의 짧은 대문자 코드)입니다. 시세 패널이
-' +
-          '   없으면 instrument는 반드시 null로 둡니다 — 회사 이름은 instrument가 아닙니다.
-' +
+          '1. instrument는 시세 패널에 표시된 티커 기호(가격 옆의 짧은 대문자 코드)입니다. 시세 패널이\n' +
+          '   없으면 instrument는 반드시 null로 둡니다 — 회사 이름은 instrument가 아닙니다.\n' +
           '   published_at은 값을 찾지 못하면 null로 둡니다.');
     RULES[lang] = { v1, v1h, pad: pad(v1, lang), padh: pad(v1h, lang), v1x, v1n, v1n2 };
   }
