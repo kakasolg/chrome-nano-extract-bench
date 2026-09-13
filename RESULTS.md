@@ -9,7 +9,7 @@ other response parsed.
 Raw runs: `results/phaseA_v1_all16_x3.json` (144), `results/phaseB_v1h_pad_padh_deck8_x3.json`
 (144), `results/phaseC_v1x_all16_x3.json` (96), `results/phaseD_v1n_all16_x3.json` (96),
 `results/phaseE_v1n2_all16_x3.json` (96), `results/phaseF_latency_ab_{vision,ocr}_x3.json`
-(96 + 96). Re-score at any time with
+(96 + 96), `results/phaseG_dark_v1n_x3.json` (96). Re-score at any time with
 
 ```bash
 node scripts/summarize.mjs results/*.json --by=lang,panel,subheading --fails
@@ -306,6 +306,59 @@ contamination on the vision path (4 → 0) and lifts `change ok` on both (+7 eac
 cost of `instrument` on vision (company names where null was meant, see phase E).
 That is now two independent runs, 96 + 96 calls, agreeing.
 
+## Phase G — dark-mode fixtures, `v1n`, 16 dark fixtures × vision/ocr × 3
+
+The original real-world failure cases were dark-mode phone captures. Every fixture now
+also exists as a dark render (`_dark` suffix; light text on `#121417`, muted grey
+metadata, green/red change colour — 32 fixtures total). The OCR path gained the
+preprocessing the original probe had: grayscale, then invert when mean luminance is
+below 128 (fired on all 16 dark images, luma 27–35; OCR confidence 81–91, same as
+light). The vision path gets the untouched image. Raw runs:
+`results/phaseG_dark_v1n_x3.json`. A first dark run was discarded: the template had
+left `<html>` white, so the PNGs were dark only down to the end of the article and the
+inversion never fired.
+
+Light `v1n` rows below pool phase D and the two phase F halves (96 runs per path).
+
+| path · theme | topic | lang | distractor→change | change ok | price ok | date ok | date fab | instr ok | avg ms |
+|---|---|---|---|---|---|---|---|---|---|
+| vision · light | 80/96 | 95/96 | 1/96 | 86/96 | 95/96 | 73/96 | 22/96 | 37/96 | 5261 |
+| vision · dark | 37/48 | 48/48 | 1/48 | 45/48 | 46/48 | 30/48 | 14/48 | 19/48 | 5572 |
+| ocr · light | 65/95 | 66/95 | 0/95 | 54/95 | 91/95 | 60/95 | 22/95 | 18/95 | 4019 |
+| ocr · dark | 39/48 | 41/48 | 0/48 | 23/48 | 47/48 | **14/48** | **33/48** | 10/48 | 3998 |
+
+**The vision path does not care about dark mode.** Every column is within noise of the
+light numbers; `date ok` is a few points lower (62% vs 76%) with the same year-moving
+fabrications (`2020-03-14`, `2026-06-02`).
+
+**The OCR path splits.** Two things got *better* on dark with inversion: the quote-panel
+gate was right on 16/16 (first time in this series), and the Korean OCR text made the
+model translate less (7/24 English headlines vs about 14/24 on light), which lifts
+`topic` and `lang`. Two things got much worse: `change ok` halved (23/48) and `date`
+collapsed (14/48 correct, 33/48 fabricated).
+
+The date collapse has a mechanical cause. The byline/date line is rendered in muted
+grey (`#8b9098`) on dark; after inversion it is light grey on near-white, and
+Tesseract drops it — the OCR text for the `battery` fixtures reads `By Tomas Reyes a AM`
+with the date gone. The model then fabricates a full timestamp with the year moved.
+Inversion is not neutral: it lowers the contrast of anything that was low-contrast by
+design. A threshold-based binarisation, or per-line contrast normalisation, would be
+the next thing to try on the OCR side — but it is an OCR-engine problem, not a model
+one, and the vision path simply reads the grey line correctly.
+
+The `change` misses on dark OCR are model-side: the OCR text has `-4.6%` and `11.8%`
+intact, and the model returned `16`, `115%`, `118`, `275` (the distractor `2.75%` with
+its point dropped) — number mangling that did not occur on the same fixtures in light
+mode, with no obvious difference in the OCR text it was given.
+
+**Bottom line for the original claim:** dark mode is not what made OCR-first win in the
+original probe. On dark fixtures the vision path is still better on every numeric and
+date field; OCR-first is better only on language compliance for Korean, and only
+because inversion happened to help Tesseract's Korean. Whatever made the original
+screenshots hard for the vision path is not reproduced by dark colours alone —
+candidates left are phone-density type, app chrome around the article, and JPEG
+compression of real captures.
+
 ## What to change before trusting any of this further
 
 - ~~Take the example numbers out of the rules and re-run.~~ Done (phase C): the leak
@@ -317,10 +370,12 @@ That is now two independent runs, 96 + 96 calls, agreeing.
   detected; stop trying to get it from the prompt.
 - ~~Isolate the latency drop seen with the nullable schema.~~ Done (phase F): no effect;
   it was run order. Never compare latency across separate runs in this harness.
-- **Add fixtures that look like the original failure cases**: dark mode, phone-density
-  type, an app header line above the article, and a deck line more quotable than the
-  headline. The clean renders here are an easy case for the vision path; the original
-  claim may hold only on hard images, which is a narrower and more useful statement.
+- ~~Add dark-mode fixtures.~~ Done (phase G): vision is unaffected; OCR-first gets
+  worse on numbers and dates (inversion kills low-contrast grey text). Still untested:
+  phone-density type, an app header line above the article, JPEG compression of real
+  captures, and a deck line more quotable than the headline.
+- **OCR preprocessing**: replace whole-image inversion with adaptive binarisation so
+  muted grey lines survive; re-run dark OCR.
 - **Try `most-predictable` sampling** (Chrome 148 origin-trial preset) to see whether the
   leak and the year fabrication are sampling noise.
 - Per-cell sample sizes are 12 or 24. Differences under about 3 runs are noise.
