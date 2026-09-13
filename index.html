@@ -92,6 +92,8 @@
       <label class="f"><input type="checkbox" id="cfg-gate" checked> skip vision when OCR text has no quote panel</label>
       <label class="f"><input type="checkbox" id="cfg-langpick" checked> take headline/summary from whichever leg matched the source language</label>
       <label class="f"><input type="checkbox" id="cfg-parallel" checked> call both legs concurrently</label>
+      <span class="note">order:</span>
+      <label class="f"><input type="checkbox" id="cfg-interleave"> interleave rule variants call by call (latency A/B)</label>
     </div>
     <div class="row" style="margin-top:8px">
       <span class="note">fixture filter:</span>
@@ -484,7 +486,13 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
         await loadImage(f);
         const needOcr = paths.includes('ocr') || paths.includes('hybrid');
         const ocr = needOcr ? await runOcr(f) : null;
-        for (const rulesVer of rulesVers) for (const path of paths) for (let i = 1; i <= runs; i++) {
+        // Interleaved order alternates rule variants call by call so that
+        // warm-cache, thermal and order effects land on every variant equally.
+        // Used for latency A/B; the default groups by variant.
+        const plan = [];
+        if ($('cfg-interleave').checked) { for (const path of paths) for (let i = 1; i <= runs; i++) for (const rulesVer of rulesVers) plan.push([rulesVer, path, i]); }
+        else { for (const rulesVer of rulesVers) for (const path of paths) for (let i = 1; i <= runs; i++) plan.push([rulesVer, path, i]); }
+        for (const [rulesVer, path, i] of plan) {
           if (state.cancelled) break;
           progress(`${++done}/${total} · ${f.id} · ${path} · ${rulesVer} · ${i}/${runs}`);
           const rec = { fixture: f.id, article: f.article, variant: f.variant, path, rules: rulesVer, run: i,
