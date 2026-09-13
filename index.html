@@ -83,6 +83,7 @@
       <label class="f"><input type="checkbox" id="rules-v1h"> v1h (v1 + "do not copy a line as the headline")</label>
       <label class="f"><input type="checkbox" id="rules-pad"> pad (v1 + inert filler; longer than v1h)</label>
       <label class="f"><input type="checkbox" id="rules-padh"> padh (v1h + inert filler)</label>
+      <label class="f"><input type="checkbox" id="rules-v1x"> v1x (v1 with the example numbers removed)</label>
     </div>
     <div class="row" style="margin-top:8px">
       <span class="note">hybrid options:</span>
@@ -267,7 +268,16 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
   for (const lang of ['en', 'ko']) {
     const v1 = RULES_V1[lang];
     const v1h = swapRule4(v1, HEADLINE_RULE[lang]);
-    RULES[lang] = { v1, v1h, pad: pad(v1, lang), padh: pad(v1h, lang) };
+    // v1x: identical to v1 except the three literal example values are gone.
+    // Those values ("135.20", "+2.34", 2026-09-03T06:18:28Z) showed up verbatim
+    // in outputs during the first runs; this variant measures how much of
+    // that was the prompt's own doing.
+    const v1x = v1
+      .replace(/\s*\("135\.20", "\+2\.34"\)\.?/, lang === 'en' ? '.' : '')
+      .replace(/\("135\.20", "\+2\.34" 등\)/, '')
+      .replace(/ \(e\.g\. 2026-09-03T06:18:28Z\)/, '')
+      .replace(/\(예: 2026-09-03T06:18:28Z\)/, '');
+    RULES[lang] = { v1, v1h, pad: pad(v1, lang), padh: pad(v1h, lang), v1x };
   }
   window.__RULES = RULES;
 
@@ -432,7 +442,7 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
     const runs = Math.max(1, Number($('cfg-runs').value) || 3);
     const timeoutMs = (Number($('cfg-timeout').value) || 90) * 1000;
     const paths = ['vision', 'ocr', 'hybrid'].filter(p => $('path-' + p).checked);
-    const rulesVers = ['v1', 'v1h', 'pad', 'padh'].filter(r => $('rules-' + r).checked);
+    const rulesVers = ['v1', 'v1h', 'pad', 'padh', 'v1x'].filter(r => $('rules-' + r).checked);
     const fixtures = selectedFixtures();
     const total = fixtures.length * paths.length * rulesVers.length * runs;
     let done = 0;

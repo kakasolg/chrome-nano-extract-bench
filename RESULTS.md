@@ -141,10 +141,51 @@ The leak is worst when the input is noisy (OCR) and the panel is absent (nothing
 put in the field). `135.20`, the price example, never leaked — `price` had a real value
 on panel fixtures and the empty-string rule held on the rest.
 
+## Phase C — the example numbers removed (`v1x`), 16 fixtures × vision/ocr × 3
+
+`v1x` is `v1` with exactly three literals deleted: the `"135.20", "+2.34"` format
+example in rule 2 and the `2026-09-03T06:18:28Z` example in rule 5 (en 1162 → 1111
+chars, ko 657 → 611). Nothing else changed. Raw runs:
+`results/phaseC_v1x_all16_x3.json`. One vision call timed out at 90 s; every other
+response parsed.
+
+| path · rules | parsed | topic | lang | distractor→change | change ok | price ok | date ok | date fab | instr ok | avg ms |
+|---|---|---|---|---|---|---|---|---|---|---|
+| vision · v1 | 48/48 | 38/48 | 48/48 | 3/48 | 43/48 | 48/48 | 42/48 | 6/48 | 22/48 | 8845 |
+| vision · v1x | 47/48 | 36/47 | 47/47 | 5/47 | 35/47 | 46/47 | 34/47 | 12/47 | 24/47 | 10684 |
+| ocr · v1 | 48/48 | 32/48 | 34/48 | 1/48 | 27/48 | 47/48 | 30/48 | 12/48 | 8/48 | 6678 |
+| ocr · v1x | 48/48 | 32/48 | 33/48 | 1/48 | 24/48 | 47/48 | 29/48 | 11/48 | 8/48 | 8290 |
+
+| leak / fabrication, per 48 runs | vision v1 | vision v1x | ocr v1 | ocr v1x |
+|---|---|---|---|---|
+| `change_percent` = ±2.34 | 0 | **0** | 3 | **0** |
+| `published_at` ends `:28` | 9 | **0** | 3 | **0** |
+| year ≠ 2026 | 3 | 9 | 8 | 6 |
+| `published_at` empty | 0 | 2 | 2 | 4 |
+| distractor → `change_percent` | 3 | 5 | 1 | 1 |
+
+**The leak is real and the examples were its only source: both signatures went to
+zero.** But removing them did not make the answers better. The slots that used to hold
+`+2.34` now hold other wrong things — on no-panel fixtures the vision path wrote the
+distractor `3.4%` three times in a row and `0` five times where the rule says empty
+string; dates that used to end in `:28` now end in `:00` with the year moved to 2020,
+2023 or 2024. `change ok` and `date ok` got worse on the vision path (43 → 35, 42 → 34),
+though with 47-run cells and a 90 s timeout in the mix that is within noise for
+everything except the two leak rows.
+
+Reading: the example values were a *symptom* of the model's reluctance to leave a
+field empty, not the cause of the misses. With the examples present it filled the gap
+with the number it had just been shown; without them it fills the gap with the nearest
+number in the input or with `0`. The fix the rules ask for ("MUST be empty strings")
+is not one the model reliably honours on either path, and that is the finding worth
+carrying forward — not "prompt examples leak", which is now the easy half.
+
 ## What to change before trusting any of this further
 
-- **Take the example numbers out of the rules** and re-run. If ±2.34 and `:28` vanish,
-  a share of every path's `change ok` and `date ok` misses was the prompt's own fault.
+- ~~Take the example numbers out of the rules and re-run.~~ Done (phase C): the leak
+  signatures vanish, accuracy does not improve. The open problem is the model filling
+  fields that should stay empty; a schema-level fix (make `change_percent` nullable
+  or an enum-gated object) is the next thing to test, not more prompt wording.
 - **Add fixtures that look like the original failure cases**: dark mode, phone-density
   type, an app header line above the article, and a deck line more quotable than the
   headline. The clean renders here are an easy case for the vision path; the original
