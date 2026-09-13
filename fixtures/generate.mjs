@@ -62,7 +62,7 @@ function renderHtml(article, lang, panel, subheading, theme, css) {
     : "";
   const deck = subheading ? `<p class="deck">${esc(t.subheading)}</p>` : "";
   return `<!doctype html>
-<html lang="${lang}"><head><meta charset="utf-8"><style>${css}</style></head>
+<html lang="${lang}" class="${theme}"><head><meta charset="utf-8"><style>${css}</style></head>
 <body class="${theme}"><div class="page">
   <div class="outlet">${esc(t.outlet)}</div>
   <h1>${esc(t.headline)}</h1>

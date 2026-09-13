@@ -31,7 +31,7 @@ h1 {
 .body p { font-size: 19px; line-height: 1.62; margin: 0 0 18px; }
 
 /* Dark theme: what the original real-world failure cases looked like. */
-body.dark { background: #121417; color: #e8eaed; }
+html.dark, body.dark { background: #121417; color: #e8eaed; }
 body.dark .outlet { color: #ff6b62; }
 body.dark .deck { color: #b4b8c0; }
 body.dark .meta { color: #8b9098; }
