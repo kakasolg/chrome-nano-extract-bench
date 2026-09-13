@@ -3,11 +3,12 @@
 Chrome 152 stable (Windows 11), built-in on-device model, image and text input both
 `available`. Tesseract.js 6 (`kor+eng`, PSM 3) on the 1024px-longest-edge copy of each
 fixture. One session per call, `responseConstraint` = the schema in `index.html`,
-default sampling. Timeout 90 s per call; one vision call in phase C timed out, every
+default sampling. Timeout 90 s per call; one call each in phases C and D timed out, every
 other response parsed.
 
 Raw runs: `results/phaseA_v1_all16_x3.json` (144), `results/phaseB_v1h_pad_padh_deck8_x3.json`
-(144), `results/phaseC_v1x_all16_x3.json` (96). Re-score at any time with
+(144), `results/phaseC_v1x_all16_x3.json` (96), `results/phaseD_v1n_all16_x3.json` (96).
+Re-score at any time with
 
 ```bash
 node scripts/summarize.mjs results/*.json --by=lang,panel,subheading --fails
@@ -181,12 +182,64 @@ number in the input or with `0`. The fix the rules ask for ("MUST be empty strin
 is not one the model reliably honours on either path, and that is the finding worth
 carrying forward — not "prompt examples leak", which is now the easy half.
 
+## Phase D — nullable schema (`v1n`), 16 fixtures × vision/ocr × 3
+
+`v1n` is `v1x` with every "empty string" instruction reworded to "null", paired with a
+schema where `instrument`, `published_at`, `price` and `change_percent` are
+`type: ["string", "null"]`. Chrome's `responseConstraint` accepted the union type
+without complaint. Raw runs: `results/phaseD_v1n_all16_x3.json`.
+
+| path · rules | parsed | topic | lang | distractor→change | change ok | price ok | date ok | date fab | instr ok | `"null"` str | avg ms |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| vision · v1 | 48/48 | 38/48 | 48/48 | 3/48 | 43/48 | 48/48 | 42/48 | 6/48 | 22/48 | 0 | 8845 |
+| vision · v1x | 47/48 | 36/47 | 47/47 | 5/47 | 35/47 | 46/47 | 34/47 | 12/47 | 24/47 | 0 | 10684 |
+| vision · v1n | 48/48 | 40/48 | 47/48 | **1/48** | **41/48** | 47/48 | 35/48 | 12/48 | 19/48 | 2 | **5214** |
+| ocr · v1 | 48/48 | 32/48 | 34/48 | 1/48 | 27/48 | 47/48 | 30/48 | 12/48 | 8/48 | 0 | 6678 |
+| ocr · v1x | 48/48 | 32/48 | 33/48 | 1/48 | 24/48 | 47/48 | 29/48 | 11/48 | 8/48 | 0 | 8290 |
+| ocr · v1n | 47/48 | 33/47 | 33/47 | **0/47** | 25/47 | 45/47 | 30/47 | 10/47 | 9/47 | 1 | **3789** |
+
+The `"null"` str column counts runs where the model wrote the *word* `"null"` as a string
+instead of JSON `null`; the scorer treats both as empty. Across the four nullable fields
+the model emitted JSON `null` 77 times, the string `"null"` 5 times, an empty string 0
+times, and a literal zero 7 times.
+
+**What the schema change did:**
+
+- **The no-panel `change_percent` slot is now mostly left empty.** On the English no-panel
+  fixtures every vision run (12/12) and 11/12 OCR runs returned `null`. The distractor
+  hits dropped to 1 (vision) and 0 (OCR). This is the effect the prose rule ("MUST be
+  empty") was asking for and never got in v1/v1x.
+- **Korean no-panel fixtures are still filled.** The remaining wrong values are all on
+  `_ko_` fixtures: `"3.4"` (the distractor), `"0"`, `"412"` (a fragment of the OCR'd
+  timestamp), `"41~43"` (the shipment range). The Korean runs are the weak spot on every
+  metric in every phase; a nullable schema does not change that.
+- **`instrument` moved the other way.** Given permission to write `null`, the model
+  instead wrote the company name (`"Halvorsen"`, `"라크스퍼 에너지"`) on every no-panel
+  fixture, so `instr ok` fell (22 → 19 vision). The rule text says "if you cannot find
+  instrument, set it to null", and the model reads a company name as an instrument.
+  That is a rule-wording problem, not a schema one.
+- **Year fabrication is unchanged** (18 wrong years across 96 runs).
+- **Latency roughly halved** on both paths (vision 8.8 s → 5.2 s, OCR 6.7 s → 3.8 s).
+  This run was the fourth in a row in the same tab, so warm caches may account for some
+  of it, but v1x was the third and got slower, not faster. A plausible mechanism is
+  that `null` is one token where a fabricated value is several, and constrained
+  decoding spends less time exploring. Worth an isolated A/B before claiming it.
+
+Net: **nullable schema is the first change that moved the distractor metric in the right
+direction on both paths**, and it cost nothing in the other columns except the
+`instrument` wording problem. The prose-rules variants (v1h, pad, padh, v1x) moved
+nothing reliably.
+
 ## What to change before trusting any of this further
 
 - ~~Take the example numbers out of the rules and re-run.~~ Done (phase C): the leak
   signatures vanish, accuracy does not improve. The open problem is the model filling
-  fields that should stay empty; a schema-level fix (make `change_percent` nullable
-  or an enum-gated object) is the next thing to test, not more prompt wording.
+  fields that should stay empty; ~~a schema-level fix is the next thing to test~~ —
+  done (phase D): nullable `change_percent` fixes the English no-panel cases outright.
+- **Fix the `instrument` wording** now that null is allowed: say "the ticker symbol
+  shown in a quote panel; null if there is no panel" so a company name is not accepted.
+- **Isolate the latency drop** seen with the nullable schema (same fixtures, alternating
+  v1x/v1n in one session) before reporting it.
 - **Add fixtures that look like the original failure cases**: dark mode, phone-density
   type, an app header line above the article, and a deck line more quotable than the
   headline. The clean renders here are an easy case for the vision path; the original

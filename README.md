@@ -8,7 +8,8 @@ Status: **first two runs done, findings did not reproduce as claimed.** See
 [RESULTS.md](RESULTS.md). On clean synthetic screenshots the vision path beats OCR-first,
 prompt length did not change compliance, prompt example values leak into the output
 (removing them stops the leak but does not improve accuracy), and the model will not
-reliably leave a field empty on any path.
+leave a field empty when asked in prose — but does when the schema makes the field
+nullable, which also removed the distractor contamination on English fixtures.
 
 ## Run it
 
