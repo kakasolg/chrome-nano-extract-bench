@@ -85,6 +85,7 @@
       <label class="f"><input type="checkbox" id="rules-padh"> padh (v1h + inert filler)</label>
       <label class="f"><input type="checkbox" id="rules-v1x"> v1x (v1 with the example numbers removed)</label>
       <label class="f"><input type="checkbox" id="rules-v1n"> v1n (v1x + nullable schema; "empty string" → null)</label>
+      <label class="f"><input type="checkbox" id="rules-v1n2"> v1n2 (v1n + instrument = panel ticker only, never a company name)</label>
     </div>
     <div class="row" style="margin-top:8px">
       <span class="note">hybrid options:</span>
@@ -172,7 +173,7 @@
   const SCHEMA_NULLABLE = JSON.parse(JSON.stringify(SCHEMA));
   for (const k of ['instrument', 'published_at', 'price', 'change_percent'])
     SCHEMA_NULLABLE.properties[k] = { type: ['string', 'null'], maxLength: SCHEMA.properties[k].maxLength };
-  const schemaFor = (rulesVer) => rulesVer === 'v1n' ? SCHEMA_NULLABLE : SCHEMA;
+  const schemaFor = (rulesVer) => rulesVer.startsWith('v1n') ? SCHEMA_NULLABLE : SCHEMA;
 
   // ---------------------------------------------------------------
   // Prompts. Two languages with 1:1 rule numbering, chosen by the source
@@ -296,7 +297,23 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
       : v1x.replace(/빈 문자열\(""\)로 둡니다\./, 'null로 둡니다.')
            .replace(/둘 다 반드시 빈 문자열\(""\)로 둡니다 — 0을 적지 마세요/, '둘 다 반드시 null로 둡니다 — 0이나 ""를 적지 마세요')
            .replace(/값을 못 찾으면 빈 문자열\(""\)로 둡니다/, '값을 못 찾으면 null로 둡니다');
-    RULES[lang] = { v1, v1h, pad: pad(v1, lang), padh: pad(v1h, lang), v1x, v1n };
+    // v1n2: v1n with rule 1 rewritten so that a company name is not accepted
+    // as an instrument. Phase D showed the model writing the company name
+    // wherever null was intended once null was allowed.
+    const v1n2 = lang === 'en'
+      ? v1n.replace(/^1\. .*$/m,
+          '1. instrument is the ticker symbol shown in a quote panel (a short all-caps code next to a
+' +
+          '   price). If there is no quote panel, instrument MUST be null — a company name is NOT an
+' +
+          '   instrument. If you cannot find published_at, set it to null.')
+      : v1n.replace(/^1\. .*$/m,
+          '1. instrument는 시세 패널에 표시된 티커 기호(가격 옆의 짧은 대문자 코드)입니다. 시세 패널이
+' +
+          '   없으면 instrument는 반드시 null로 둡니다 — 회사 이름은 instrument가 아닙니다.
+' +
+          '   published_at은 값을 찾지 못하면 null로 둡니다.');
+    RULES[lang] = { v1, v1h, pad: pad(v1, lang), padh: pad(v1h, lang), v1x, v1n, v1n2 };
   }
   window.__RULES = RULES;
 
@@ -461,7 +478,7 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
     const runs = Math.max(1, Number($('cfg-runs').value) || 3);
     const timeoutMs = (Number($('cfg-timeout').value) || 90) * 1000;
     const paths = ['vision', 'ocr', 'hybrid'].filter(p => $('path-' + p).checked);
-    const rulesVers = ['v1', 'v1h', 'pad', 'padh', 'v1x', 'v1n'].filter(r => $('rules-' + r).checked);
+    const rulesVers = ['v1', 'v1h', 'pad', 'padh', 'v1x', 'v1n', 'v1n2'].filter(r => $('rules-' + r).checked);
     const fixtures = selectedFixtures();
     const total = fixtures.length * paths.length * rulesVers.length * runs;
     let done = 0;
