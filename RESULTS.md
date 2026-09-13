@@ -11,7 +11,8 @@ Raw runs: `results/phaseA_v1_all16_x3.json` (144), `results/phaseB_v1h_pad_padh_
 `results/phaseE_v1n2_all16_x3.json` (96), `results/phaseF_latency_ab_{vision,ocr}_x3.json`
 (96 + 96), `results/phaseG_dark_v1n_x3.json` (96), `results/phaseH_dark_ocr_adaptive_v1n_x3.json`
 (48), `results/phaseI_sampling_ab_{vision,ocr}_x3.json` (96 + 96),
-`results/phaseJ_phone_{vision,light_ocr,dark_ocr_adaptive}_v1n_x3.json` (96 + 48 + 48).
+`results/phaseJ_phone_{vision,light_ocr,dark_ocr_adaptive}_v1n_x3.json` (96 + 48 + 48),
+`results/phaseK_phone_vision_headercrop_v1n_x3.json` (96, two model calls each).
 Re-score at any time with
 
 ```bash
@@ -500,6 +501,42 @@ win, the likeliest explanation left is the specific real screenshots: JPEG artef
 a true phone pixel density three times this one, and articles whose numbers the
 vision path happened to misread. That cannot be settled with synthetic fixtures.
 
+## Phase K — two-pass vision: a native-resolution header crop for `published_at`
+
+Phase J's one vision-path weakness was the small date line on phone-frame fixtures.
+Fix tried: keep the full-page call as is, then make a second call with only the top of
+the page (full width × 70% of width in height, 860×602 px, **no downscale** — the
+full-page call sees the page at 587×1024) and a one-field prompt asking for the
+publication date as ISO 8601, schema `{ published_at: string | null }`. The crop's
+answer replaces the full-page one. Both answers are stored per run, so the comparison
+is paired. Same 32 phone fixtures, `v1n`, default sampling, 3 repeats. Raw runs:
+`results/phaseK_phone_vision_headercrop_v1n_x3.json`.
+
+| `published_at` on phone fixtures, 96 runs | full-page pass | header-crop pass |
+|---|---|---|
+| correct | 35 | **83** |
+| light / dark | 25/48 · 10/48 | 42/48 · **41/48** |
+| en / ko | 24/48 · 11/48 | 38/48 · **45/48** |
+
+Paired: both right 29, crop only 54, full page only 6, neither 7. The crop fixed
+54 runs and broke 6. Cost: the header call averaged 0.73 s (small image, one field),
+taking the per-run total from about 5.0 s to 5.8 s.
+
+**Where the crop still fails** (13/96): 10 are the `battery` article's `May 2` read as
+`2026-02-02` — a month/day transposition that appears on both languages and both
+themes, so it is a model reading of "5월 2일"/"May 2" rather than a resolution
+problem — and 3 are the familiar year moves on `metals_en_panel_dark`. Every
+remaining error still carries the correct day.
+
+**Reading.** The date failure in phase J was resolution, not reasoning: given the
+header at native size the same model reads the same line correctly on dark phone
+fixtures 41/48 instead of 10/48. It is the first intervention in this series that
+moved a vision-path metric by more than noise, and it did so without touching the
+prompt rules or the main schema. The general form — extract at page scale, then
+re-ask for any small-text field from an un-downscaled crop — costs one short call per
+field and is worth applying to `instrument` (the ticker is the next-smallest text on
+the page) before any further prompt work.
+
 ## What to change before trusting any of this further
 
 - ~~Take the example numbers out of the rules and re-run.~~ Done (phase C): the leak
@@ -522,9 +559,10 @@ vision path happened to misread. That cannot be settled with synthetic fixtures.
 - ~~Phone-density type and an app header line.~~ Done (phase J): vision loses only
   the small date line; OCR loses every numeric field. Still untested: JPEG compression
   and true phone pixel density (3×), and a deck line more quotable than the headline.
-- **Date line**: the one vision-path weakness found. Try a two-pass extraction — full
-  page for everything, then a crop of the header region at native resolution for
-  `published_at` — before touching the prompt.
+- ~~Date line: two-pass extraction with a native-resolution header crop.~~ Done
+  (phase K): 35 → 83 correct on phone fixtures, paired, +0.7 s per run. Apply the same
+  crop-and-re-ask to `instrument` next; the remaining date errors are a May → February
+  transposition, not resolution.
 - ~~Try `most-predictable` sampling.~~ Done (phase I): deterministic, accuracy unchanged,
   the fabrications are the argmax. Not a quality lever; useful only for reproducible
   regression runs.
