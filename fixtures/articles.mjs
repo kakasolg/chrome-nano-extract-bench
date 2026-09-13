@@ -101,4 +101,5 @@ export const VARIANTS = {
   lang: ["en", "ko"],
   panel: [true, false],      // price quote box above the body
   subheading: [true, false], // copyable one-line deck under the headline
+  theme: ["light", "dark"],  // dark = light text on near-black, as phone news apps render at night
 };

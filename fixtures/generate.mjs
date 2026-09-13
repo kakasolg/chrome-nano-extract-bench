@@ -49,7 +49,7 @@ function fmtChange(c) {
   return `${sign}${Math.abs(c).toFixed(1)}%`;
 }
 
-function renderHtml(article, lang, panel, subheading, css) {
+function renderHtml(article, lang, panel, subheading, theme, css) {
   const t = article[lang];
   const q = article.quote;
   const quoteBox = panel
@@ -63,7 +63,7 @@ function renderHtml(article, lang, panel, subheading, css) {
   const deck = subheading ? `<p class="deck">${esc(t.subheading)}</p>` : "";
   return `<!doctype html>
 <html lang="${lang}"><head><meta charset="utf-8"><style>${css}</style></head>
-<body><div class="page">
+<body class="${theme}"><div class="page">
   <div class="outlet">${esc(t.outlet)}</div>
   <h1>${esc(t.headline)}</h1>
   ${deck}
@@ -100,9 +100,9 @@ function main() {
   for (const article of ARTICLES) {
     for (const lang of VARIANTS.lang) {
       for (const panel of VARIANTS.panel) {
-        for (const subheading of VARIANTS.subheading) {
-          const id = `${article.id}_${lang}_${panel ? "panel" : "nopanel"}_${subheading ? "deck" : "nodeck"}`;
-          const html = renderHtml(article, lang, panel, subheading, css);
+        for (const subheading of VARIANTS.subheading) for (const theme of VARIANTS.theme) {
+          const id = `${article.id}_${lang}_${panel ? "panel" : "nopanel"}_${subheading ? "deck" : "nodeck"}${theme === "dark" ? "_dark" : ""}`;
+          const html = renderHtml(article, lang, panel, subheading, theme, css);
           const htmlPath = join(outDir, `${id}.html`);
           writeFileSync(htmlPath, html);
           if (chrome) screenshot(chrome, htmlPath, join(outDir, `${id}.png`));
@@ -112,7 +112,7 @@ function main() {
             id,
             file: `${id}.png`,
             article: article.id,
-            variant: { lang, panel, subheading },
+            variant: { lang, panel, subheading, theme },
             truth: {
               language: lang,
               headline: t.headline,

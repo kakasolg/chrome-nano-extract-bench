@@ -103,6 +103,8 @@
       <label class="f"><input type="checkbox" id="f-nopanel" checked> nopanel</label>
       <label class="f"><input type="checkbox" id="f-deck" checked> deck</label>
       <label class="f"><input type="checkbox" id="f-nodeck" checked> nodeck</label>
+      <label class="f"><input type="checkbox" id="f-light" checked> light</label>
+      <label class="f"><input type="checkbox" id="f-dark" checked> dark</label>
     </div>
     <div class="row" style="margin-top:12px">
       <button class="primary" id="btn-run">Run</button>
@@ -403,6 +405,17 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
       img.src = `fixtures/out/${f.file}`;
     });
   }
+  function preprocessForOcr(src) {
+    const c = document.createElement('canvas'); c.width = src.width; c.height = src.height;
+    const ctx = c.getContext('2d'); ctx.drawImage(src, 0, 0);
+    const d = ctx.getImageData(0, 0, c.width, c.height); const px = d.data;
+    let sum = 0, n = 0;
+    for (let i = 0; i < px.length; i += 4 * 37) { sum += 0.299 * px[i] + 0.587 * px[i + 1] + 0.114 * px[i + 2]; n++; }
+    const mean = sum / Math.max(1, n); const invert = mean < 128;
+    for (let i = 0; i < px.length; i += 4) { let g = 0.299 * px[i] + 0.587 * px[i + 1] + 0.114 * px[i + 2]; if (invert) g = 255 - g; px[i] = px[i + 1] = px[i + 2] = g; }
+    ctx.putImageData(d, 0, 0);
+    return { canvas: c, inverted: invert, meanLuma: Math.round(mean) };
+  }
   async function ensureWorker() {
     if (state.worker) return state.worker;
     if (typeof Tesseract === 'undefined') throw new Error('Tesseract.js failed to load (CDN blocked or offline).');
@@ -418,9 +431,13 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
     const w = await ensureWorker();
     const img = await loadImage(f);
     const t0 = performance.now();
-    const { data } = await w.recognize(img.capped);
+    // Tesseract's default binarisation expects dark text on light ground.
+    // Grayscale the image and invert it when the mean luminance says it is a
+    // dark-mode screenshot. The model's vision path gets the untouched image.
+    const pre = preprocessForOcr(img.capped);
+    const { data } = await w.recognize(pre.canvas);
     const text = (data.text || '').replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
-    state.ocr[f.id] = { text, ms: Math.round(performance.now() - t0), confidence: Math.round(data.confidence ?? 0), gate: hasQuotePanel(text) };
+    state.ocr[f.id] = { text, ms: Math.round(performance.now() - t0), confidence: Math.round(data.confidence ?? 0), gate: hasQuotePanel(text), inverted: pre.inverted, meanLuma: pre.meanLuma };
     renderOcr();
     return state.ocr[f.id];
   }
@@ -467,7 +484,8 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
     return state.fixtures.filter(f =>
       $(f.variant.lang === 'en' ? 'f-en' : 'f-ko').checked &&
       $(f.variant.panel ? 'f-panel' : 'f-nopanel').checked &&
-      $(f.variant.subheading ? 'f-deck' : 'f-nodeck').checked);
+      $(f.variant.subheading ? 'f-deck' : 'f-nodeck').checked &&
+      $((f.variant.theme || 'light') === 'dark' ? 'f-dark' : 'f-light').checked);
   }
   async function runAll() {
     if (state.running) return;
@@ -584,7 +602,7 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
     for (const f of state.fixtures) {
       const o = state.ocr[f.id]; if (!o) continue;
       const d = document.createElement('div');
-      d.innerHTML = `<div class="row"><b class="mono">${f.id}</b><span class="pill">conf ${o.confidence}</span><span class="pill">${o.ms} ms</span>
+      d.innerHTML = `<div class="row"><b class="mono">${f.id}</b><span class="pill">conf ${o.confidence}</span><span class="pill">${o.inverted ? 'inverted' : 'not inverted'} · luma ${o.meanLuma}</span><span class="pill">${o.ms} ms</span>
         <span class="pill">gate: ${o.gate.hit ? `<span class="yes">panel (${o.gate.by})</span>` : '<span class="mid">no panel → vision skipped</span>'}</span>
         <span class="pill">truth panel=${f.variant.panel} ${o.gate.hit === f.variant.panel ? '<span class="yes">gate correct</span>' : '<span class="no">gate wrong</span>'}</span></div>
         <pre class="ocr">${esc(o.text)}</pre>`;

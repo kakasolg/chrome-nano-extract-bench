@@ -29,3 +29,13 @@ h1 {
 .quote .chg.up { color: #137333; }
 .quote .chg.down { color: #c5221f; }
 .body p { font-size: 19px; line-height: 1.62; margin: 0 0 18px; }
+
+/* Dark theme: what the original real-world failure cases looked like. */
+body.dark { background: #121417; color: #e8eaed; }
+body.dark .outlet { color: #ff6b62; }
+body.dark .deck { color: #b4b8c0; }
+body.dark .meta { color: #8b9098; }
+body.dark .quote { background: #1c1f24; border-color: #2c3038; }
+body.dark .quote .ex { color: #8b9098; }
+body.dark .quote .chg.up { color: #4cc38a; }
+body.dark .quote .chg.down { color: #e5726e; }
