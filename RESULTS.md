@@ -12,7 +12,8 @@ Raw runs: `results/phaseA_v1_all16_x3.json` (144), `results/phaseB_v1h_pad_padh_
 (96 + 96), `results/phaseG_dark_v1n_x3.json` (96), `results/phaseH_dark_ocr_adaptive_v1n_x3.json`
 (48), `results/phaseI_sampling_ab_{vision,ocr}_x3.json` (96 + 96),
 `results/phaseJ_phone_{vision,light_ocr,dark_ocr_adaptive}_v1n_x3.json` (96 + 48 + 48),
-`results/phaseK_phone_vision_headercrop_v1n_x3.json` (96, two model calls each).
+`results/phaseK_phone_vision_headercrop_v1n_x3.json` (96, two model calls each),
+`results/phaseL_phone_vision_crop_date_ticker_v1n_x3.json` (96, two calls each).
 Re-score at any time with
 
 ```bash
@@ -537,6 +538,49 @@ re-ask for any small-text field from an un-downscaled crop — costs one short c
 field and is worth applying to `instrument` (the ticker is the next-smallest text on
 the page) before any further prompt work.
 
+## Phase L — the same crop, now also asked for `instrument`
+
+Phase K's crop pass extended to two fields in one call: the un-downscaled top of the
+page (860×602), asked for `published_at` and `instrument` together, with the
+instrument line phrased as *the ticker code in a quote panel; null if there is no
+panel — do not write a company name*. Same 32 phone fixtures, `v1n`, 3 repeats; one
+full-page run timed out and is excluded. Raw runs:
+`results/phaseL_phone_vision_crop_date_ticker_v1n_x3.json`.
+
+| field, phone fixtures, 95 paired runs | full-page pass | crop pass | crop fixed / broke |
+|---|---|---|---|
+| `instrument` | 41 | **85** | +49 / −5 |
+| `instrument`, panel present | 37/48 | 41/48 | |
+| `instrument`, no panel | 4/47 | **44/47** | |
+| `published_at` | 34 | **81** | +54 / −7 |
+
+Crop call 0.87 s (up from 0.73 s with one field); per-run total 5.9 s. Asking for
+two fields did not cost the date: 81/95 vs 83/96 in phase K.
+
+**The no-panel `instrument` finally goes to null.** Phase E tried the same
+"a company name is not an instrument" wording on the full page and got invented
+tickers (`HAL`, `LARK`, `SRY`) instead of null. On the crop the identical instruction
+yields `null` on 44 of 47 no-panel runs, with the three misses being a Korean company
+name. The difference is not the prompt; it is that in a 860×602 crop containing only
+the masthead, headline, byline and (when present) the quote box, "there is no quote
+panel" is visually unambiguous, whereas in the downscaled full page the model kept
+finding *something* to put in the field.
+
+**Panel-present `instrument` is the remaining gap** (41/48): three runs returned
+`null` on a panel fixture, and four returned `LKSP EUR` — the ticker plus the exchange
+label from the next cell, which the scorer counts as wrong. The latter is a
+normalisation question for the caller, not a reading error.
+
+**Reading across K and L.** Two of the three fields the vision path was weakest on
+(`published_at`, `instrument`) are recovered by the same mechanism, at the cost of one
+short call: crop the region where small text lives, at native resolution, and ask for
+only those fields. That is now the strongest practical result in this benchmark,
+alongside the nullable schema (phase D). The third weak field, `change_percent` on
+Korean no-panel fixtures, is not small-text — it is the model filling a field the
+schema lets it leave empty — and would need the same visual-unambiguity treatment: a
+crop that contains no numbers at all when there is no panel, which is what the crop
+here already is. Worth testing as a follow-up.
+
 ## What to change before trusting any of this further
 
 - ~~Take the example numbers out of the rules and re-run.~~ Done (phase C): the leak
@@ -560,9 +604,11 @@ the page) before any further prompt work.
   the small date line; OCR loses every numeric field. Still untested: JPEG compression
   and true phone pixel density (3×), and a deck line more quotable than the headline.
 - ~~Date line: two-pass extraction with a native-resolution header crop.~~ Done
-  (phase K): 35 → 83 correct on phone fixtures, paired, +0.7 s per run. Apply the same
-  crop-and-re-ask to `instrument` next; the remaining date errors are a May → February
-  transposition, not resolution.
+  (phase K): 35 → 83 correct on phone fixtures, paired, +0.7 s per run. ~~Apply the same
+  crop-and-re-ask to `instrument` next.~~ Done (phase L): 41 → 85, and no-panel
+  instrument goes to null 44/47 with the wording that failed on the full page in
+  phase E. Next: route `change_percent` through the same crop on no-panel pages, and
+  normalise `LKSP EUR` → `LKSP` in the caller.
 - ~~Try `most-predictable` sampling.~~ Done (phase I): deterministic, accuracy unchanged,
   the fabrications are the argmax. Not a quality lever; useful only for reproducible
   regression runs.
