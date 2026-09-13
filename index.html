@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>chrome-nano-extract-bench</title>
+<style>
+  :root {
+    --bg:#f6f7fb; --surface:#fff; --surface-2:#eef1f7; --text:#171b2b; --muted:#6b7286; --border:#dfe3ed;
+    --accent:#2e5ce6; --ok:#1a8a5b; --bad:#c23a3a; --warn:#b07a1e;
+    --mono: ui-monospace, "Cascadia Code", Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#10121c; --surface:#171a28; --surface-2:#1e2233; --text:#edeff7; --muted:#9498ac; --border:#2e3348;
+            --accent:#7c97ff; --ok:#4cc38a; --bad:#e5726e; --warn:#e0ac4f; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:24px 18px 60px; background:var(--bg); color:var(--text);
+         font: 14px/1.5 -apple-system, "Segoe UI", Roboto, "Noto Sans KR", sans-serif; }
+  .wrap { max-width: 1180px; margin:0 auto; display:flex; flex-direction:column; gap:16px; }
+  h1 { font-size:20px; margin:0; } h2 { font-size:15px; margin:0 0 10px; }
+  .lede { color:var(--muted); margin:4px 0 0; }
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; }
+  .row { display:flex; flex-wrap:wrap; gap:10px 18px; align-items:center; }
+  label.f { display:inline-flex; gap:6px; align-items:center; }
+  input[type=number] { width:64px; }
+  .pill { display:inline-flex; gap:6px; align-items:center; padding:3px 10px; border-radius:999px; background:var(--surface-2); font-size:12.5px; }
+  .dot { width:9px; height:9px; border-radius:50%; background:var(--muted); }
+  .dot.ok { background:var(--ok); } .dot.bad { background:var(--bad); } .dot.warn { background:var(--warn); }
+  button { padding:8px 14px; border-radius:8px; border:1px solid var(--border); background:var(--surface-2); color:var(--text); cursor:pointer; }
+  button.primary { background:var(--accent); color:#fff; border-color:transparent; }
+  button:disabled { opacity:.5; cursor:default; }
+  table { border-collapse:collapse; width:100%; font-size:12.5px; }
+  th, td { border-bottom:1px solid var(--border); padding:5px 7px; text-align:left; vertical-align:top; }
+  th { color:var(--muted); font-weight:600; white-space:nowrap; }
+  .mono { font-family:var(--mono); font-size:12px; }
+  .yes { color:var(--ok); font-weight:700; } .no { color:var(--bad); font-weight:700; } .mid { color:var(--warn); }
+  .note { color:var(--muted); font-size:12.5px; }
+  .scroll { overflow-x:auto; }
+  .err { display:none; color:var(--bad); white-space:pre-wrap; } .err.show { display:block; }
+  .fix { display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:8px; }
+  .fix label { display:flex; flex-direction:column; gap:4px; font-size:12px; }
+  .fix img { width:100%; border:1px solid var(--border); border-radius:6px; }
+  pre.ocr { max-height:220px; overflow:auto; background:var(--surface-2); padding:10px; border-radius:8px; font-size:11.5px; white-space:pre-wrap; }
+  details summary { cursor:pointer; color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>chrome-nano-extract-bench</h1>
+    <p class="lede">
+      Structured extraction from screenshots with Chrome's built-in on-device model.
+      Three input paths over the same fixtures and the same schema:
+      <b>vision</b> (image → model), <b>ocr</b> (image → Tesseract.js → text → model),
+      <b>hybrid</b> (ocr as the base, vision only for <code>price</code>, skipped when no quote panel is detected).
+      Everything runs locally in this tab. Serve the repo over HTTP (<code>python -m http.server</code>) so
+      <code>fixtures/out/labels.json</code> can be fetched; <code>file://</code> blocks it.
+    </p>
+  </header>
+
+  <div class="card">
+    <div class="row">
+      <span class="pill"><span class="dot" id="lm-dot"></span><span id="lm-text">checking model…</span></span>
+      <span class="pill"><span class="dot" id="ocr-dot"></span><span id="ocr-text">checking OCR…</span></span>
+      <span class="pill"><span class="dot" id="fx-dot"></span><span id="fx-text">loading fixtures…</span></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Run</h2>
+    <div class="row">
+      <label class="f">repeats <input type="number" id="cfg-runs" value="3" min="1" max="20"></label>
+      <label class="f">timeout (s) <input type="number" id="cfg-timeout" value="90" min="10" max="600"></label>
+      <span class="note">paths:</span>
+      <label class="f"><input type="checkbox" id="path-vision" checked> vision</label>
+      <label class="f"><input type="checkbox" id="path-ocr" checked> ocr</label>
+      <label class="f"><input type="checkbox" id="path-hybrid" checked> hybrid</label>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <span class="note">rules (prompt variants, each run separately):</span>
+      <label class="f"><input type="checkbox" id="rules-v1" checked> v1 (short)</label>
+      <label class="f"><input type="checkbox" id="rules-v1h"> v1h (v1 + "do not copy a line as the headline")</label>
+      <label class="f"><input type="checkbox" id="rules-pad"> pad (v1 + inert filler; longer than v1h)</label>
+      <label class="f"><input type="checkbox" id="rules-padh"> padh (v1h + inert filler)</label>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <span class="note">hybrid options:</span>
+      <label class="f"><input type="checkbox" id="cfg-gate" checked> skip vision when OCR text has no quote panel</label>
+      <label class="f"><input type="checkbox" id="cfg-langpick" checked> take headline/summary from whichever leg matched the source language</label>
+      <label class="f"><input type="checkbox" id="cfg-parallel" checked> call both legs concurrently</label>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <span class="note">fixture filter:</span>
+      <label class="f"><input type="checkbox" id="f-en" checked> en</label>
+      <label class="f"><input type="checkbox" id="f-ko" checked> ko</label>
+      <label class="f"><input type="checkbox" id="f-panel" checked> panel</label>
+      <label class="f"><input type="checkbox" id="f-nopanel" checked> nopanel</label>
+      <label class="f"><input type="checkbox" id="f-deck" checked> deck</label>
+      <label class="f"><input type="checkbox" id="f-nodeck" checked> nodeck</label>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button class="primary" id="btn-run">Run</button>
+      <button id="btn-ocr">OCR only</button>
+      <button id="btn-cancel" disabled>Cancel</button>
+      <button id="btn-clear">Clear</button>
+      <button id="btn-json">Export JSON</button>
+      <button id="btn-csv">Export CSV</button>
+      <span class="note" id="progress"></span>
+    </div>
+    <div class="err" id="err"></div>
+  </div>
+
+  <div class="card">
+    <h2>Summary</h2>
+    <p class="note">Counts are over successful (parsed) runs. <code>distractor→change</code> is the number of runs where
+      <code>change_percent</code> equals the body's inflation/rate percentage — the contamination this benchmark exists to measure.
+      <code>copied</code> is the headline being the page's deck line verbatim (only possible on <code>deck</code> fixtures).</p>
+    <div class="scroll"><table id="summary"><tbody></tbody></table></div>
+    <details style="margin-top:10px"><summary>By variable (path × rules, split by lang / panel / deck)</summary>
+      <div class="scroll"><table id="byvar"><tbody></tbody></table></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>Fixtures</h2>
+    <div class="fix" id="fixtures"></div>
+  </div>
+
+  <div class="card">
+    <h2>OCR text</h2>
+    <div id="ocr-out"><p class="note">none yet</p></div>
+  </div>
+
+  <div class="card">
+    <h2>Log</h2>
+    <div class="scroll"><table id="log">
+      <thead><tr><th>#</th><th>fixture</th><th>path</th><th>rules</th><th>run</th><th>headline</th><th>topic</th><th>lang</th><th>copied</th><th>change</th><th>price</th><th>date</th><th>instr</th><th>sent</th><th>ms</th><th>status</th></tr></thead>
+      <tbody></tbody></table></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@6/dist/tesseract.min.js"></script>
+<script src="scoring.js"></script>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+
+  // ---------------------------------------------------------------
+  // Schema. Flat and generic. `summary` keeps a maxLength on purpose: the
+  // model hitting that cap and failing to close the string is one of the
+  // documented failure modes this harness records (see status column).
+  // ---------------------------------------------------------------
+  const SCHEMA = {
+    type: 'object',
+    properties: {
+      headline: { type: 'string', maxLength: 80 },
+      summary: { type: 'string', maxLength: 600 },
+      instrument: { type: 'string', maxLength: 10 },
+      published_at: { type: 'string', maxLength: 32 },
+      price: { type: 'string', maxLength: 20 },
+      change_percent: { type: 'string', maxLength: 20 },
+      sentiment: { type: 'string', enum: ['positive', 'negative', 'neutral', 'mixed'] }
+    },
+    required: ['headline', 'summary', 'sentiment']
+  };
+
+  // ---------------------------------------------------------------
+  // Prompts. Two languages with 1:1 rule numbering, chosen by the source
+  // text's language (vision path uses the fixture's declared language).
+  // v1 is the baseline. v1h swaps rule 4 for a headline-no-copy rule.
+  // pad inserts two descriptive, non-imperative paragraphs into v1 at the
+  // same positions v1h grows, matching its length. padh = v1h + the same
+  // filler. Every variant is exposed on window.__RULES for auditing.
+  // ---------------------------------------------------------------
+  const DIRECTIVE = {
+    en: `LANGUAGE RULE (read this first):
+Write "headline" and "summary" in EXACTLY the same language as the source text —
+if the source is English they MUST be English; if Korean, Korean. Never translate.
+This overrides every other instruction below.`,
+    ko: `LANGUAGE RULE (read this first / 가장 먼저 지킬 것):
+Write "headline" and "summary" in EXACTLY the same language as the source text —
+if the source is English they MUST be English; if Korean, Korean. Never translate.
+원문이 영어면 headline/summary도 영어로만, 한국어면 한국어로만 씁니다. 절대 번역하지 마세요.
+이 지시가 아래 다른 모든 규칙보다 우선합니다.`
+  };
+
+  const RULES_V1 = {
+    en: `Rules:
+1. If you cannot find instrument or published_at, leave them as an empty string ("").
+2. Fill price and change_percent ONLY when an actual quote (price tag, change percentage) is
+   displayed. Write them as plain numeric strings with currency symbols and commas removed
+   ("135.20", "+2.34"). If no quote is visible at all, both MUST be empty strings ("") — do not write 0.
+3. change_percent means ONLY "how many percent this instrument's price moved versus the previous
+   close", and holds a single percentage number. NEVER put other kinds of percentages that appear
+   in the article body — inflation prints, interest rates, growth rates — into change_percent; if
+   it is not a price change, ignore it.
+4. Keep headline short (within 15 words or 25 characters). For summary, do not copy the source
+   verbatim — pick out the key points and summarise them in 3 to 5 new sentences.
+5. Normalise published_at to ISO 8601 (e.g. 2026-09-03T06:18:28Z). If the timezone is unknown,
+   write down to seconds without the Z. If you cannot find a value, leave it as "".
+6. Write headline and summary in EXACTLY the same language as the source. Do not translate.`,
+    ko: `규칙:
+1. instrument, published_at은 값을 찾지 못하면 빈 문자열("")로 둡니다.
+2. price/change_percent는 실제로 표시된 시세(가격표, 등락률)가 있을 때만
+   통화 기호와 쉼표를 뺀 순수 숫자 문자열로 적습니다("135.20", "+2.34" 등).
+   시세가 전혀 보이지 않으면 둘 다 반드시 빈 문자열("")로 둡니다 — 0을 적지 마세요.
+3. change_percent는 오직 "이 종목 가격이 전일 대비 몇 % 움직였는가"만 의미하며,
+   퍼센트 숫자 하나만 적습니다. 물가지표, 금리, 성장률처럼 본문에 등장하는 다른 종류의
+   퍼센트 숫자를 change_percent에 절대 넣지 마세요 — 시세 등락률이 아니면 무시합니다.
+4. headline은 짧게(15단어 또는 25자 이내). summary는 원문을 그대로 옮기지 말고 핵심만 골라
+   3~5문장의 새 문장으로 요약합니다.
+5. published_at은 ISO 8601(예: 2026-09-03T06:18:28Z)로 정규화합니다. 시간대를 알 수 없으면
+   초 단위까지만 쓰고 Z는 붙이지 않습니다. 값을 못 찾으면 빈 문자열("")로 둡니다.
+6. headline과 summary는 반드시 원문과 같은 언어로 씁니다. 다른 언어로 번역하지 마세요.`
+  };
+
+  const HEADLINE_RULE = {
+    en: `4. Write headline as a NEW short sentence saying what this article is about (within 15 words or
+   25 characters). Do NOT copy a sentence or a sub-headline line from the source — a line lifted
+   from the screen is not a headline. The article's central subject (whose price did what, which
+   company did what) MUST appear in the headline. Do not make a background event that the article
+   merely mentions into the headline.
+   For summary too, do not copy the source verbatim — pick out the key points and summarise them in
+   3 to 5 new sentences.`,
+    ko: `4. headline은 이 기사가 무엇에 관한 것인지를 새 문장으로 짧게 씁니다(15단어 또는 25자 이내).
+   원문의 문장이나 소제목 줄을 그대로 옮겨 적지 마세요 — 화면에 있는 줄을 복사한 것은
+   headline이 아닙니다. 기사의 중심 소재(무엇의 가격이 어떻게 됐는지, 어느 회사가 무엇을
+   했는지)가 headline에 반드시 들어가야 합니다. 배경으로 언급된 다른 사건을 headline으로
+   삼지 마세요.
+   summary도 원문을 그대로 옮기지 말고 핵심만 골라 3~5문장의 새 문장으로 요약합니다.`
+  };
+
+  const PAD_AFTER_2 = {
+    en: `   (The field names and types in this item are maintained together in the schema document, which
+   also carries a table of when each field was first added and how it changed afterwards. The
+   items below are numbered in the order they were written. The columns of that table run field
+   name, type, date added, and date last changed, and that column order is kept the same
+   throughout the document. This paragraph is a note kept for the record.)
+`,
+    ko: `   (이 항목의 필드 이름과 자료형은 스키마 문서에서 함께 관리되며, 그 문서에는 각 필드가 처음
+   추가된 시점과 이후 변경된 이력이 표로 정리돼 있다. 아래 항목들은 작성된 순서대로 번호가
+   붙어 있다. 표의 열 순서는 필드 이름, 자료형, 추가 시점, 마지막 변경 시점 순이며 그 순서는
+   문서 전체에서 동일하게 유지된다. 이 문단은 기록 보존을 위한 서술이다.)
+`
+  };
+  const PAD_AFTER_4 = {
+    en: `   (The wording of this item was tidied up from an earlier revision, and what it asks for is the
+   same before and after that tidying. The list of edits and the review history are kept in a
+   separate table and are not reproduced here. That table is refreshed each quarter and the person
+   who refreshes it is named on the first page of the document. The table also records the date
+   each revision was written and the date it was reviewed. This paragraph is a note kept for the
+   record.)
+`,
+    ko: `   (이 항목의 문장은 이전 판에서 표현을 다듬은 것이며, 다듬기 전과 후에 요구하는 결과는 같다.
+   다듬은 내역과 검수 이력은 별도 표에 정리돼 있고 여기에는 옮기지 않았다. 표는 분기마다
+   갱신되며 갱신 담당자는 문서 첫 장에 적혀 있다. 표에는 각 판의 작성일과 검수일이 함께
+   기록된다. 이 문단은 기록 보존을 위한 서술이다.)
+`
+  };
+
+  const swapRule4 = (rules, repl) => rules.replace(/^4\.[\s\S]*?(?=^5\. )/m, repl + '\n');
+  // Order matters: swapRule4 replaces everything from "4." to just before "5.",
+  // which would delete a pad inserted after rule 4. Build v1h first, then pad it.
+  const pad = (rules, lang) => rules.replace(/(?=^3\. )/m, PAD_AFTER_2[lang]).replace(/(?=^5\. )/m, PAD_AFTER_4[lang]);
+  const RULES = {};
+  for (const lang of ['en', 'ko']) {
+    const v1 = RULES_V1[lang];
+    const v1h = swapRule4(v1, HEADLINE_RULE[lang]);
+    RULES[lang] = { v1, v1h, pad: pad(v1, lang), padh: pad(v1h, lang) };
+  }
+  window.__RULES = RULES;
+
+  const HEAD = {
+    image: { en: 'This image is a screenshot of a news article. Extract the information according to the JSON schema below.',
+             ko: '이 이미지는 뉴스 기사 화면 스크린샷입니다. 아래 JSON 스키마에 맞춰 정보를 추출하세요.' },
+    text:  { en: 'The following is the text of a news article. Extract the information according to the JSON schema below.',
+             ko: '다음은 뉴스 기사 본문입니다. 아래 JSON 스키마에 맞춰 정보를 추출하세요.' }
+  };
+  const buildPrompt = (lang, rulesVer, text) => {
+    const rules = RULES[lang][rulesVer];
+    return text == null
+      ? `${DIRECTIVE[lang]}\n\n${HEAD.image[lang]}\n\n${rules}`
+      : `${DIRECTIVE[lang]}\n\n${HEAD.text[lang]}\n\n---\n${text}\n---\n\n${rules}`;
+  };
+
+  // ---------------------------------------------------------------
+  // Helpers
+  // ---------------------------------------------------------------
+  const { score, aggregate, num, norm, hasHangul, METRICS } = globalThis.Scoring;
+  const srcIsKorean = (t) => {
+    const h = (String(t).match(/[가-힣]/g) || []).length;
+    const l = (String(t).match(/[A-Za-z]/g) || []).length;
+    return h / Math.max(1, h + l) > 0.3;
+  };
+  // Quote-panel gate on the OCR text. Cheap and already in hand — no model call.
+  function hasQuotePanel(text) {
+    const t = String(text || '');
+    const badge = /\b[A-Z]{2,5}\b[^\n]{0,60}[+\-−]\s?\d+(\.\d+)?\s*%/;      // "HVM OSE NOK 187.40 −4.6%" (OCR may drop the point)
+    const pct = /[+\-−]\s?\d+(\.\d+)?\s*%/;                                  // signed percent anywhere
+    const money = /\b(USD|EUR|NOK|KRW|GBP|JPY)\s?\d[\d,]*\.\d{2}\b/;
+    if (badge.test(t)) return { hit: true, by: 'badge' };
+    if (money.test(t) && pct.test(t)) return { hit: true, by: 'money+pct' };
+    return { hit: false, by: null };
+  }
+  function mergeHybrid(textDto, visionDto, srcText) {
+    if (!textDto && !visionDto) return { dto: null, mode: 'both-failed', narrativeFrom: null };
+    if (!textDto) return { dto: visionDto, mode: 'vision-only', narrativeFrom: 'vision' };
+    if (!visionDto) return { dto: textDto, mode: 'text-only', narrativeFrom: 'text' };
+    const out = JSON.parse(JSON.stringify(textDto));
+    const vp = String(visionDto.price ?? '').trim();
+    if (vp) out.price = vp;   // the one field vision wins on
+    let narrativeFrom = 'text';
+    if ($('cfg-langpick').checked) {
+      const wantKo = srcIsKorean(srcText);
+      const match = (d) => hasHangul(d.headline || '') === wantKo;
+      if (!match(textDto) && match(visionDto)) { out.headline = visionDto.headline; out.summary = visionDto.summary; narrativeFrom = 'vision'; }
+    }
+    return { dto: out, mode: 'merged', narrativeFrom };
+  }
+
+  // ---------------------------------------------------------------
+  // State, fixtures, images, OCR
+  // ---------------------------------------------------------------
+  const state = { fixtures: [], images: {}, ocr: {}, results: [], worker: null, running: false, cancelled: false };
+  window.__RESULTS = state.results; window.__OCR = state.ocr; window.__STATE = state;
+  const activeAborts = new Set();
+  const progress = (t) => { $('progress').textContent = t; };
+  const setDot = (d, t, kind, text) => { $(d).className = 'dot ' + kind; $(t).textContent = text; };
+  const setErr = (m) => { const b = $('err'); b.className = m ? 'err show' : 'err'; b.textContent = m || ''; };
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+
+  async function loadFixtures() {
+    const res = await fetch('fixtures/out/labels.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error(`labels.json ${res.status}`);
+    const j = await res.json();
+    state.fixtures = j.fixtures;
+    setDot('fx-dot', 'fx-text', 'ok', `${j.fixtures.length} fixtures (generated ${j.generated_at.slice(0, 10)})`);
+    const box = $('fixtures'); box.innerHTML = '';
+    for (const f of j.fixtures) {
+      const l = document.createElement('label');
+      l.innerHTML = `<img src="fixtures/out/${f.file}" alt="${f.id}" loading="lazy"><span class="mono">${f.id}</span>`;
+      box.appendChild(l);
+    }
+  }
+  function toCanvas(img, maxEdge) {
+    const s = maxEdge ? Math.min(1, maxEdge / Math.max(img.width, img.height)) : 1;
+    const c = document.createElement('canvas');
+    c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+    return c;
+  }
+  function loadImage(f) {
+    if (state.images[f.id]) return Promise.resolve(state.images[f.id]);
+    return new Promise((ok, no) => {
+      const img = new Image();
+      img.onload = () => ok(state.images[f.id] = { capped: toCanvas(img, 1024), w: img.width, h: img.height });
+      img.onerror = () => no(new Error(`cannot load ${f.file}`));
+      img.src = `fixtures/out/${f.file}`;
+    });
+  }
+  async function ensureWorker() {
+    if (state.worker) return state.worker;
+    if (typeof Tesseract === 'undefined') throw new Error('Tesseract.js failed to load (CDN blocked or offline).');
+    progress('loading OCR engine + kor/eng data (first time only)…');
+    state.worker = await Tesseract.createWorker(['kor', 'eng'], 1, {
+      logger: (m) => { if (m.status && m.progress != null) progress(`OCR ${m.status} ${Math.round(m.progress * 100)}%`); }
+    });
+    await state.worker.setParameters({ preserve_interword_spaces: '1', tessedit_pageseg_mode: '3' });
+    return state.worker;
+  }
+  async function runOcr(f) {
+    if (state.ocr[f.id]) return state.ocr[f.id];
+    const w = await ensureWorker();
+    const img = await loadImage(f);
+    const t0 = performance.now();
+    const { data } = await w.recognize(img.capped);
+    const text = (data.text || '').replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+    state.ocr[f.id] = { text, ms: Math.round(performance.now() - t0), confidence: Math.round(data.confidence ?? 0), gate: hasQuotePanel(text) };
+    renderOcr();
+    return state.ocr[f.id];
+  }
+
+  // ---------------------------------------------------------------
+  // Model calls
+  // ---------------------------------------------------------------
+  async function promptModel({ image, text, lang, rulesVer, timeoutMs }) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(new DOMException('timeout', 'TimeoutError')), timeoutMs);
+    activeAborts.add(controller);
+    const t0 = performance.now();
+    try {
+      const session = await self.LanguageModel.create({
+        expectedInputs: image ? [{ type: 'text' }, { type: 'image' }] : [{ type: 'text' }],
+        signal: controller.signal,
+        monitor(m) { m.addEventListener('downloadprogress', (e) => progress(`model download ${Math.round((e.loaded ?? 0) * 100)}%`)); }
+      });
+      try {
+        const p = buildPrompt(lang, rulesVer, image ? null : text);
+        const raw = image
+          ? await session.prompt([{ role: 'user', content: [{ type: 'text', value: p }, { type: 'image', value: image }] }],
+                                 { responseConstraint: SCHEMA, signal: controller.signal })
+          : await session.prompt(p, { responseConstraint: SCHEMA, signal: controller.signal });
+        return { raw, ms: Math.round(performance.now() - t0) };
+      } finally { session.destroy?.(); }
+    } finally { clearTimeout(timer); activeAborts.delete(controller); }
+  }
+  async function leg(arg) {
+    try {
+      const { raw, ms } = await promptModel(arg);
+      try { return { dto: JSON.parse(raw), raw, ms, fail: null }; }
+      catch { return { dto: null, raw, ms, fail: 'parse-fail' }; }
+    } catch (e) {
+      const fail = e?.name === 'TimeoutError' ? 'timeout' : e?.name === 'AbortError' ? 'cancelled' : 'error:' + (e?.message || e);
+      return { dto: null, raw: null, ms: null, fail };
+    }
+  }
+
+  // ---------------------------------------------------------------
+  // Run loop
+  // ---------------------------------------------------------------
+  function selectedFixtures() {
+    return state.fixtures.filter(f =>
+      $(f.variant.lang === 'en' ? 'f-en' : 'f-ko').checked &&
+      $(f.variant.panel ? 'f-panel' : 'f-nopanel').checked &&
+      $(f.variant.subheading ? 'f-deck' : 'f-nodeck').checked);
+  }
+  async function runAll() {
+    if (state.running) return;
+    state.running = true; state.cancelled = false; setErr(null);
+    $('btn-run').disabled = true; $('btn-cancel').disabled = false;
+    const runs = Math.max(1, Number($('cfg-runs').value) || 3);
+    const timeoutMs = (Number($('cfg-timeout').value) || 90) * 1000;
+    const paths = ['vision', 'ocr', 'hybrid'].filter(p => $('path-' + p).checked);
+    const rulesVers = ['v1', 'v1h', 'pad', 'padh'].filter(r => $('rules-' + r).checked);
+    const fixtures = selectedFixtures();
+    const total = fixtures.length * paths.length * rulesVers.length * runs;
+    let done = 0;
+    try {
+      for (const f of fixtures) {
+        if (state.cancelled) break;
+        await loadImage(f);
+        const needOcr = paths.includes('ocr') || paths.includes('hybrid');
+        const ocr = needOcr ? await runOcr(f) : null;
+        for (const rulesVer of rulesVers) for (const path of paths) for (let i = 1; i <= runs; i++) {
+          if (state.cancelled) break;
+          progress(`${++done}/${total} · ${f.id} · ${path} · ${rulesVer} · ${i}/${runs}`);
+          const rec = { fixture: f.id, article: f.article, variant: f.variant, path, rules: rulesVer, run: i,
+                        ts: new Date().toISOString(), ocrMs: ocr?.ms ?? null, inferMs: null, status: 'ok', dto: null, raw: null };
+          // Prompt language follows the source. For vision there is no OCR
+          // text, so use the fixture's declared language (the app would know
+          // it from the OCR pass in the hybrid; here we don't double-charge).
+          const lang = ocr ? (srcIsKorean(ocr.text) ? 'ko' : 'en') : f.variant.lang;
+          rec.promptLang = lang;
+          if (path === 'vision') {
+            const L = await leg({ image: state.images[f.id].capped, lang, rulesVer, timeoutMs });
+            Object.assign(rec, { inferMs: L.ms, raw: L.raw, dto: L.dto, status: L.fail || 'ok' });
+          } else if (path === 'ocr') {
+            const L = await leg({ text: ocr.text, lang, rulesVer, timeoutMs });
+            Object.assign(rec, { inferMs: L.ms, raw: L.raw, dto: L.dto, status: L.fail || 'ok' });
+          } else {
+            const gate = ocr.gate; rec.quotePanel = gate.hit; rec.gateBy = gate.by;
+            rec.visionSkipped = $('cfg-gate').checked && !gate.hit;
+            const vArg = { image: state.images[f.id].capped, lang, rulesVer, timeoutMs };
+            const tArg = { text: ocr.text, lang, rulesVer, timeoutMs };
+            const w0 = performance.now();
+            let v, t;
+            if (rec.visionSkipped) { v = { dto: null, raw: null, ms: null, fail: null }; t = await leg(tArg); }
+            else if ($('cfg-parallel').checked) [v, t] = await Promise.all([leg(vArg), leg(tArg)]);
+            else { v = await leg(vArg); t = await leg(tArg); }
+            rec.visionMs = v.ms; rec.textMs = t.ms; rec.inferMs = Math.round(performance.now() - w0);
+            rec.raw = { vision: v.raw, text: t.raw }; rec.legFailures = [v.fail, t.fail].filter(Boolean);
+            const m = mergeHybrid(t.dto, v.dto, ocr.text);
+            rec.mergeMode = rec.visionSkipped ? 'text-only(gate)' : m.mode; rec.narrativeFrom = m.narrativeFrom;
+            rec.dto = m.dto; rec.status = m.dto ? 'ok' : (rec.legFailures[0] || 'both-failed');
+          }
+          if (rec.dto) rec.score = score(rec.dto, f.truth);
+          state.results.push(rec);
+          renderLog();
+        }
+      }
+      progress(state.cancelled ? 'cancelled' : `done (${done} runs)`);
+    } catch (e) { console.error(e); setErr(e?.message || String(e)); }
+    finally { state.running = false; $('btn-run').disabled = false; $('btn-cancel').disabled = true; window.__DONE = !state.running; }
+  }
+
+  // ---------------------------------------------------------------
+  // Rendering
+  // ---------------------------------------------------------------
+  const mk = (ok) => ok ? '<span class="yes">O</span>' : '<span class="no">X</span>';
+  function renderLog() {
+    const tb = $('log').querySelector('tbody'); tb.innerHTML = '';
+    state.results.forEach((r, i) => {
+      const s = r.score; const tr = document.createElement('tr');
+      const tag = (r.mergeMode ? ` <span class="mid">${r.mergeMode}</span>` : '') + (r.narrativeFrom === 'vision' ? ' <span class="mid">narr←vision</span>' : '');
+      tr.innerHTML = `<td class="mono">${i + 1}</td><td class="mono">${r.fixture}</td><td>${r.path}</td><td class="mono">${r.rules}</td><td class="mono">${r.run}</td>
+        <td>${esc(r.dto?.headline)}</td>
+        <td>${s ? mk(s.topicOk) : ''}</td><td>${s ? mk(s.langOk) : ''}</td><td>${s ? (s.copied ? '<span class="no">copied</span>' : '·') : ''}</td>
+        <td class="mono">${esc(r.dto?.change_percent)} ${s ? (s.distractorHit ? '<span class="no">distractor!</span>' : mk(s.changeOk)) : ''}</td>
+        <td class="mono">${esc(r.dto?.price)} ${s ? mk(s.priceOk) : ''}</td>
+        <td class="mono">${esc(r.dto?.published_at)} ${s ? (s.dateFabricated ? '<span class="no">fab</span>' : mk(s.dateOk)) : ''}</td>
+        <td class="mono">${esc(r.dto?.instrument)} ${s ? mk(s.instrumentOk) : ''}</td>
+        <td class="mono">${esc(r.dto?.sentiment)} ${s ? mk(s.sentimentOk) : ''}</td>
+        <td class="mono">${r.inferMs ?? ''}</td>
+        <td>${r.status === 'ok' ? '<span class="yes">ok</span>' : `<span class="no">${esc(r.status)}</span>`}${tag}</td>`;
+      tb.appendChild(tr);
+    });
+    renderSummary();
+  }
+  function summaryRow(label, rows) {
+    const a = aggregate(rows);
+    return `<td>${label}</td><td class="mono">${a.ok}/${a.n}</td>` +
+      METRICS.map(([k]) => `<td class="mono">${a.c[k]}/${a.ok}</td>`).join('') + `<td class="mono">${a.ms}</td>`;
+  }
+  const HEADER = `<th>group</th><th>parsed</th>` + METRICS.map(([, l]) => `<th>${l}</th>`).join('') + `<th>avg ms</th>`;
+  function renderSummary() {
+    const tb = $('summary').querySelector('tbody'); tb.innerHTML = `<tr>${HEADER}</tr>`;
+    const keys = [...new Set(state.results.map(r => `${r.path} · ${r.rules}`))];
+    for (const k of keys) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = summaryRow(`<b>${k}</b>`, state.results.filter(r => `${r.path} · ${r.rules}` === k));
+      tb.appendChild(tr);
+    }
+    if (!keys.length) tb.innerHTML = '<tr><td class="note">no results yet</td></tr>';
+    const bv = $('byvar').querySelector('tbody'); bv.innerHTML = `<tr>${HEADER}</tr>`;
+    for (const k of keys) for (const [dim, vals] of [['lang', ['en', 'ko']], ['panel', [true, false]], ['subheading', [true, false]]]) for (const v of vals) {
+      const rows = state.results.filter(r => `${r.path} · ${r.rules}` === k && r.variant[dim] === v);
+      if (!rows.length) continue;
+      const tr = document.createElement('tr'); tr.innerHTML = summaryRow(`${k} · ${dim}=${v}`, rows); bv.appendChild(tr);
+    }
+  }
+  function renderOcr() {
+    const box = $('ocr-out'); box.innerHTML = '';
+    for (const f of state.fixtures) {
+      const o = state.ocr[f.id]; if (!o) continue;
+      const d = document.createElement('div');
+      d.innerHTML = `<div class="row"><b class="mono">${f.id}</b><span class="pill">conf ${o.confidence}</span><span class="pill">${o.ms} ms</span>
+        <span class="pill">gate: ${o.gate.hit ? `<span class="yes">panel (${o.gate.by})</span>` : '<span class="mid">no panel → vision skipped</span>'}</span>
+        <span class="pill">truth panel=${f.variant.panel} ${o.gate.hit === f.variant.panel ? '<span class="yes">gate correct</span>' : '<span class="no">gate wrong</span>'}</span></div>
+        <pre class="ocr">${esc(o.text)}</pre>`;
+      box.appendChild(d);
+    }
+    if (!box.children.length) box.innerHTML = '<p class="note">none yet</p>';
+  }
+
+  // ---------------------------------------------------------------
+  // Export
+  // ---------------------------------------------------------------
+  function download(name, type, body) {
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([body], { type })); a.download = name; a.click();
+  }
+  const stamp = () => new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+  function toCsv() {
+    const cols = ['fixture', 'article', 'lang', 'panel', 'deck', 'path', 'rules', 'run', 'status', 'promptLang', 'mergeMode', 'narrativeFrom', 'visionSkipped',
+                  ...METRICS.map(([k]) => k), 'headline', 'change_percent', 'price', 'published_at', 'instrument', 'sentiment', 'ocrMs', 'inferMs', 'visionMs', 'textMs', 'ts'];
+    const q = (v) => v == null ? '' : /[",\n]/.test(String(v)) ? `"${String(v).replace(/"/g, '""')}"` : String(v);
+    const lines = [cols.join(',')];
+    for (const r of state.results) {
+      const row = { ...r, lang: r.variant.lang, panel: r.variant.panel, deck: r.variant.subheading, ...(r.score || {}),
+                    headline: r.dto?.headline, change_percent: r.dto?.change_percent, price: r.dto?.price,
+                    published_at: r.dto?.published_at, instrument: r.dto?.instrument, sentiment: r.dto?.sentiment };
+      lines.push(cols.map(c => q(row[c])).join(','));
+    }
+    return lines.join('\n');
+  }
+  window.__CSV = toCsv;
+  $('btn-json').onclick = () => download(`results_${stamp()}.json`, 'application/json',
+    JSON.stringify({ generated_at: new Date().toISOString(), ua: navigator.userAgent, ocr: state.ocr, results: state.results }, null, 2));
+  $('btn-csv').onclick = () => download(`results_${stamp()}.csv`, 'text/csv', toCsv());
+  $('btn-run').onclick = runAll;
+  $('btn-ocr').onclick = async () => { setErr(null); try { for (const f of selectedFixtures()) await runOcr(f); progress('OCR done'); } catch (e) { setErr(e.message); } };
+  $('btn-cancel').onclick = () => { state.cancelled = true; for (const c of [...activeAborts]) c.abort(); progress('cancelling…'); };
+  $('btn-clear').onclick = () => { state.results.length = 0; renderLog(); };
+
+  // ---------------------------------------------------------------
+  // Capability check
+  // ---------------------------------------------------------------
+  async function detect() {
+    const api = self.LanguageModel;
+    if (!api) { setDot('lm-dot', 'lm-text', 'bad', 'LanguageModel API not found — needs desktop Chrome 148+'); return; }
+    let t = 'unavailable', im = 'unavailable';
+    try { t = await api.availability({ expectedInputs: [{ type: 'text' }] }); } catch {}
+    try { im = await api.availability({ expectedInputs: [{ type: 'text' }, { type: 'image' }] }); } catch {}
+    const kind = (t === 'available' && im === 'available') ? 'ok' : (t === 'unavailable' && im === 'unavailable') ? 'bad' : 'warn';
+    setDot('lm-dot', 'lm-text', kind, `on-device model — text: ${t} / image: ${im}`);
+    setDot('ocr-dot', 'ocr-text', typeof Tesseract === 'undefined' ? 'bad' : 'ok', typeof Tesseract === 'undefined' ? 'Tesseract.js failed to load' : 'Tesseract.js ready (kor+eng downloads on first run)');
+  }
+  detect();
+  loadFixtures().catch(e => { setDot('fx-dot', 'fx-text', 'bad', `fixtures: ${e.message} — serve over HTTP`); });
+  renderSummary();
+})();
+</script>
+</body>
+</html>

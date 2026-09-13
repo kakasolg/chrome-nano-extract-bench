@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-12T23:49:22.728Z",
+  "generated_at": "2026-09-13T00:05:10.918Z",
   "width": 860,
   "height": 1500,
   "fixtures": [
@@ -22,7 +22,11 @@
         "change_percent": -4.6,
         "distractor_percent": 3.4,
         "sentiment": "negative",
-        "topic": "copper miner cuts shipment forecast"
+        "topic": "copper miner cuts shipment forecast",
+        "keywords": [
+          "halvorsen",
+          "copper"
+        ]
       }
     },
     {
@@ -44,7 +48,11 @@
         "change_percent": -4.6,
         "distractor_percent": 3.4,
         "sentiment": "negative",
-        "topic": "copper miner cuts shipment forecast"
+        "topic": "copper miner cuts shipment forecast",
+        "keywords": [
+          "halvorsen",
+          "copper"
+        ]
       }
     },
     {
@@ -61,12 +69,16 @@
         "headline": "Halvorsen Metals slides as copper demand outlook dims",
         "subheading": "Analysts trim targets after weak factory data",
         "published_at": "2026-03-14",
-        "instrument": "HVM",
+        "instrument": null,
         "price": null,
         "change_percent": null,
         "distractor_percent": 3.4,
         "sentiment": "negative",
-        "topic": "copper miner cuts shipment forecast"
+        "topic": "copper miner cuts shipment forecast",
+        "keywords": [
+          "halvorsen",
+          "copper"
+        ]
       }
     },
     {
@@ -83,12 +95,16 @@
         "headline": "Halvorsen Metals slides as copper demand outlook dims",
         "subheading": null,
         "published_at": "2026-03-14",
-        "instrument": "HVM",
+        "instrument": null,
         "price": null,
         "change_percent": null,
         "distractor_percent": 3.4,
         "sentiment": "negative",
-        "topic": "copper miner cuts shipment forecast"
+        "topic": "copper miner cuts shipment forecast",
+        "keywords": [
+          "halvorsen",
+          "copper"
+        ]
       }
     },
     {
@@ -110,7 +126,11 @@
         "change_percent": -4.6,
         "distractor_percent": 3.4,
         "sentiment": "negative",
-        "topic": "copper miner cuts shipment forecast"
+        "topic": "copper miner cuts shipment forecast",
+        "keywords": [
+          "할보르센",
+          "구리"
+        ]
       }
     },
     {
@@ -132,7 +152,11 @@
         "change_percent": -4.6,
         "distractor_percent": 3.4,
         "sentiment": "negative",
-        "topic": "copper miner cuts shipment forecast"
+        "topic": "copper miner cuts shipment forecast",
+        "keywords": [
+          "할보르센",
+          "구리"
+        ]
       }
     },
     {
@@ -149,12 +173,16 @@
         "headline": "할보르센 메탈스, 구리 수요 전망 악화에 하락",
         "subheading": "부진한 공장 지표에 애널리스트들 목표가 하향",
         "published_at": "2026-03-14",
-        "instrument": "HVM",
+        "instrument": null,
         "price": null,
         "change_percent": null,
         "distractor_percent": 3.4,
         "sentiment": "negative",
-        "topic": "copper miner cuts shipment forecast"
+        "topic": "copper miner cuts shipment forecast",
+        "keywords": [
+          "할보르센",
+          "구리"
+        ]
       }
     },
     {
@@ -171,12 +199,16 @@
         "headline": "할보르센 메탈스, 구리 수요 전망 악화에 하락",
         "subheading": null,
         "published_at": "2026-03-14",
-        "instrument": "HVM",
+        "instrument": null,
         "price": null,
         "change_percent": null,
         "distractor_percent": 3.4,
         "sentiment": "negative",
-        "topic": "copper miner cuts shipment forecast"
+        "topic": "copper miner cuts shipment forecast",
+        "keywords": [
+          "할보르센",
+          "구리"
+        ]
       }
     },
     {
@@ -198,7 +230,12 @@
         "change_percent": 11.8,
         "distractor_percent": 2.75,
         "sentiment": "positive",
-        "topic": "battery storage maker wins utility contract"
+        "topic": "battery storage maker wins utility contract",
+        "keywords": [
+          "larkspur",
+          "storage",
+          "battery"
+        ]
       }
     },
     {
@@ -220,7 +257,12 @@
         "change_percent": 11.8,
         "distractor_percent": 2.75,
         "sentiment": "positive",
-        "topic": "battery storage maker wins utility contract"
+        "topic": "battery storage maker wins utility contract",
+        "keywords": [
+          "larkspur",
+          "storage",
+          "battery"
+        ]
       }
     },
     {
@@ -237,12 +279,17 @@
         "headline": "Larkspur Energy jumps on grid storage contract win",
         "subheading": "Utility deal is the company's largest to date",
         "published_at": "2026-05-02",
-        "instrument": "LKSP",
+        "instrument": null,
         "price": null,
         "change_percent": null,
         "distractor_percent": 2.75,
         "sentiment": "positive",
-        "topic": "battery storage maker wins utility contract"
+        "topic": "battery storage maker wins utility contract",
+        "keywords": [
+          "larkspur",
+          "storage",
+          "battery"
+        ]
       }
     },
     {
@@ -259,12 +306,17 @@
         "headline": "Larkspur Energy jumps on grid storage contract win",
         "subheading": null,
         "published_at": "2026-05-02",
-        "instrument": "LKSP",
+        "instrument": null,
         "price": null,
         "change_percent": null,
         "distractor_percent": 2.75,
         "sentiment": "positive",
-        "topic": "battery storage maker wins utility contract"
+        "topic": "battery storage maker wins utility contract",
+        "keywords": [
+          "larkspur",
+          "storage",
+          "battery"
+        ]
       }
     },
     {
@@ -286,7 +338,12 @@
         "change_percent": 11.8,
         "distractor_percent": 2.75,
         "sentiment": "positive",
-        "topic": "battery storage maker wins utility contract"
+        "topic": "battery storage maker wins utility contract",
+        "keywords": [
+          "라크스퍼",
+          "저장장치",
+          "배터리"
+        ]
       }
     },
     {
@@ -308,7 +365,12 @@
         "change_percent": 11.8,
         "distractor_percent": 2.75,
         "sentiment": "positive",
-        "topic": "battery storage maker wins utility contract"
+        "topic": "battery storage maker wins utility contract",
+        "keywords": [
+          "라크스퍼",
+          "저장장치",
+          "배터리"
+        ]
       }
     },
     {
@@ -325,12 +387,17 @@
         "headline": "라크스퍼 에너지, 전력망 저장장치 계약 수주에 급등",
         "subheading": "유틸리티 계약은 회사 사상 최대 규모",
         "published_at": "2026-05-02",
-        "instrument": "LKSP",
+        "instrument": null,
         "price": null,
         "change_percent": null,
         "distractor_percent": 2.75,
         "sentiment": "positive",
-        "topic": "battery storage maker wins utility contract"
+        "topic": "battery storage maker wins utility contract",
+        "keywords": [
+          "라크스퍼",
+          "저장장치",
+          "배터리"
+        ]
       }
     },
     {
@@ -347,12 +414,17 @@
         "headline": "라크스퍼 에너지, 전력망 저장장치 계약 수주에 급등",
         "subheading": null,
         "published_at": "2026-05-02",
-        "instrument": "LKSP",
+        "instrument": null,
         "price": null,
         "change_percent": null,
         "distractor_percent": 2.75,
         "sentiment": "positive",
-        "topic": "battery storage maker wins utility contract"
+        "topic": "battery storage maker wins utility contract",
+        "keywords": [
+          "라크스퍼",
+          "저장장치",
+          "배터리"
+        ]
       }
     }
   ]

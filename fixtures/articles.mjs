@@ -50,6 +50,8 @@ export const ARTICLES = [
       distractor_percent: 3.4,
       sentiment: "negative",
       topic: "copper miner cuts shipment forecast",
+      // A headline is "on topic" if it names the company or the commodity.
+      keywords: { en: ["halvorsen", "copper"], ko: ["할보르센", "구리"] },
     },
   },
   {
@@ -89,6 +91,7 @@ export const ARTICLES = [
       distractor_percent: 2.75,
       sentiment: "positive",
       topic: "battery storage maker wins utility contract",
+      keywords: { en: ["larkspur", "storage", "battery"], ko: ["라크스퍼", "저장장치", "배터리"] },
     },
   },
 ];

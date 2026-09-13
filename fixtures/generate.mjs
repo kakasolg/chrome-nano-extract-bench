@@ -121,13 +121,17 @@ function main() {
               // copyable and the language metric is uncontaminated.
               subheading: subheading ? t.subheading : null,
               published_at: article.truth.published_at,
-              instrument: article.truth.instrument,
+              // The ticker only ever appears inside the quote panel; without
+              // it the page shows the company name only, so a ticker answer
+              // is invented.
+              instrument: panel ? article.truth.instrument : null,
               price: panel ? article.quote.price : null,
               change_percent: panel ? article.quote.change_percent : null,
               // Always present in the body regardless of variant.
               distractor_percent: article.truth.distractor_percent,
               sentiment: article.truth.sentiment,
               topic: article.truth.topic,
+              keywords: article.truth.keywords[lang],
             },
           });
           process.stdout.write(`${chrome ? "png " : "html"} ${id}\n`);
