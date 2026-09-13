@@ -4,7 +4,7 @@ Reproducible benchmark for structured extraction from screenshots with Chrome's
 built-in on-device model (the Prompt API / `LanguageModel`), comparing the
 vision path (image → JSON) with an OCR-first path (image → text → JSON).
 
-Status: **seven phases, 864 runs, original findings did not reproduce as claimed.** See
+Status: **eight phases, 912 runs, original findings did not reproduce as claimed.** See
 [RESULTS.md](RESULTS.md). On clean synthetic screenshots the vision path beats OCR-first,
 prompt length did not change compliance, prompt example values leak into the output
 (removing them stops the leak but does not improve accuracy), and the model will not
@@ -13,7 +13,8 @@ nullable, which also removed the distractor contamination on English fixtures. P
 rules aimed at one field keep moving other fields; telling the model a company name is
 not a ticker made it invent tickers. The nullable-schema gain replicated in an
 interleaved A/B; its apparent latency gain did not (run order). Dark-mode fixtures
-leave the vision path unchanged and make OCR-first worse on numbers and dates.
+leave the vision path unchanged and make OCR-first worse on numbers and dates;
+adaptive binarisation recovers the dates but not the numbers.
 
 ## Run it
 
@@ -38,7 +39,7 @@ Each of 2 articles is rendered in every combination of four binary variables,
 | `lang` | `en`, `ko` | same facts, different script; output-language compliance |
 | `panel` | price quote box present / absent | whether `price` / `change_percent` exist to be read at all; when absent the truth is `null` and a non-null answer is fabrication |
 | `subheading` | one-line deck under the headline present / absent | a verbatim-copyable line; when absent, headline copying is structurally impossible and the language metric is uncontaminated |
-| `theme` | `light`, `dark` | dark = light text on near-black, as phone news apps render at night; the OCR path inverts dark images before Tesseract |
+| `theme` | `light`, `dark` | dark = light text on near-black, as phone news apps render at night; the OCR path binarises (adaptive) or inverts dark images before Tesseract, selectable |
 
 Every article body also carries a **distractor percentage** (an inflation print
 or a policy rate) that is not the price change. `change_percent` must not be

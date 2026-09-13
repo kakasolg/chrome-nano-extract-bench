@@ -9,7 +9,8 @@ other response parsed.
 Raw runs: `results/phaseA_v1_all16_x3.json` (144), `results/phaseB_v1h_pad_padh_deck8_x3.json`
 (144), `results/phaseC_v1x_all16_x3.json` (96), `results/phaseD_v1n_all16_x3.json` (96),
 `results/phaseE_v1n2_all16_x3.json` (96), `results/phaseF_latency_ab_{vision,ocr}_x3.json`
-(96 + 96), `results/phaseG_dark_v1n_x3.json` (96). Re-score at any time with
+(96 + 96), `results/phaseG_dark_v1n_x3.json` (96), `results/phaseH_dark_ocr_adaptive_v1n_x3.json`
+(48). Re-score at any time with
 
 ```bash
 node scripts/summarize.mjs results/*.json --by=lang,panel,subheading --fails
@@ -359,6 +360,42 @@ screenshots hard for the vision path is not reproduced by dark colours alone —
 candidates left are phone-density type, app chrome around the article, and JPEG
 compression of real captures.
 
+## Phase H — adaptive binarisation for dark OCR, 16 dark fixtures × ocr × 3
+
+Replaces whole-image inversion with adaptive binarisation before Tesseract: each pixel
+is compared with the mean of a 31 px window (integral image), kept as foreground if it
+differs by more than 12 levels, polarity chosen from the global mean so the output is
+black-on-white either way. Only the OCR path changes; `v1n` rules and schema as before.
+Raw runs: `results/phaseH_dark_ocr_adaptive_v1n_x3.json`. `invert` rows are phase G.
+
+| ocr · dark · preprocess | topic | lang | distractor→change | change ok | price ok | date ok | date fab | instr ok |
+|---|---|---|---|---|---|---|---|---|
+| invert (phase G) | 39/48 | 41/48 | 0/48 | 23/48 | 47/48 | 14/48 | 33/48 | 10/48 |
+| adaptive | 44/48 | 46/48 | 2/48 | 23/48 | 43/48 | **28/48** | **11/48** | 4/48 |
+
+By language, adaptive: en `date ok` 21/24 (invert 6/24), ko 7/24 (8/24). Korean
+English-headline rate fell to 2/24, the lowest of any OCR condition in this series
+(light v1n about 14/24, dark-invert 7/24). OCR confidence 78–87 vs 81–91 for invert.
+The quote-panel gate was right on 15/16 (invert: 16/16).
+
+**What it fixed:** the muted grey byline survives — the OCR text now carries
+`By Ingrid Solberg - March 14, 2026 4:12 PM` where inversion had left `By Tomas Reyes a
+AM` — so the English date column recovers from 6/24 to 21/24 and fabrication drops by
+two thirds. Topic and language also improve, both plausibly from cleaner Korean text.
+
+**What it did not fix:** numbers. `change ok` is unchanged at 23/48 because the
+decimal point is still lost (`−4.6%` → `-45%`/`-46%`, `+11.8%` → `1.8`/`11.8`), and
+binarisation at this window size slightly hurts small glyphs — `price` slips 47 → 43 and
+`instrument` 10 → 4 as the ticker line degrades (`LKSP` → nothing or fragments). Korean
+dates stay bad (7/24) because the Korean date line OCRs as `2026년 38 14일 오후 412`
+under both preprocessors; the loss there is in Tesseract's `kor` model, not contrast.
+
+Net for the OCR-first design: adaptive binarisation is the right default for dark
+input, and the remaining OCR damage is concentrated in decimal points and the Korean
+date/ticker lines. That is a Tesseract problem. The vision path reads all of these
+correctly on the same images (phase G), which is the standing reason OCR-first does not
+beat vision on this benchmark.
+
 ## What to change before trusting any of this further
 
 - ~~Take the example numbers out of the rules and re-run.~~ Done (phase C): the leak
@@ -374,8 +411,10 @@ compression of real captures.
   worse on numbers and dates (inversion kills low-contrast grey text). Still untested:
   phone-density type, an app header line above the article, JPEG compression of real
   captures, and a deck line more quotable than the headline.
-- **OCR preprocessing**: replace whole-image inversion with adaptive binarisation so
-  muted grey lines survive; re-run dark OCR.
+- ~~OCR preprocessing: adaptive binarisation.~~ Done (phase H): dates recover (14 → 28),
+  fabrication drops (33 → 11), numbers do not move — Tesseract still loses decimal
+  points and the Korean date line. Next on the OCR side would be a different engine,
+  not more preprocessing.
 - **Try `most-predictable` sampling** (Chrome 148 origin-trial preset) to see whether the
   leak and the year fabrication are sampling noise.
 - Per-cell sample sizes are 12 or 24. Differences under about 3 runs are noise.
