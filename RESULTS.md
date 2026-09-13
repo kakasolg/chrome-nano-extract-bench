@@ -3,10 +3,11 @@
 Chrome 152 stable (Windows 11), built-in on-device model, image and text input both
 `available`. Tesseract.js 6 (`kor+eng`, PSM 3) on the 1024px-longest-edge copy of each
 fixture. One session per call, `responseConstraint` = the schema in `index.html`,
-default sampling. Timeout 90 s per call; no call timed out and every response parsed.
+default sampling. Timeout 90 s per call; one vision call in phase C timed out, every
+other response parsed.
 
-Raw runs: `results/phaseA_v1_all16_x3.json` (144 runs) and
-`results/phaseB_v1h_pad_padh_deck8_x3.json` (144 runs). Re-score at any time with
+Raw runs: `results/phaseA_v1_all16_x3.json` (144), `results/phaseB_v1h_pad_padh_deck8_x3.json`
+(144), `results/phaseC_v1x_all16_x3.json` (96). Re-score at any time with
 
 ```bash
 node scripts/summarize.mjs results/*.json --by=lang,panel,subheading --fails
