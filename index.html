@@ -97,6 +97,8 @@
       <span class="note">sampling:</span>
       <label class="f"><input type="checkbox" id="samp-default" checked> default</label>
       <label class="f"><input type="checkbox" id="samp-most-predictable"> most-predictable</label>
+      <span class="note">vision:</span>
+      <label class="f"><input type="checkbox" id="cfg-headercrop"> second pass on a native-resolution header crop for published_at</label>
       <span class="note">OCR preprocess:</span>
       <label class="f"><select id="cfg-ocrpre">
         <option value="invert">grayscale + invert dark images</option>
@@ -333,6 +335,11 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
     text:  { en: 'The following is the text of a news article. Extract the information according to the JSON schema below.',
              ko: '다음은 뉴스 기사 본문입니다. 아래 JSON 스키마에 맞춰 정보를 추출하세요.' }
   };
+  const HEADER_SCHEMA = { type: 'object', properties: { published_at: { type: ['string', 'null'], maxLength: 32 } }, required: ['published_at'] };
+  const HEADER_PROMPT = {
+    en: `This image is the top part of a news article screenshot. Find the article's publication date and time (usually a small line near the byline). Return it as ISO 8601 (YYYY-MM-DDThh:mm:ss; write down to seconds and do not add Z if the timezone is unknown). Copy the year, month and day exactly as printed. If no date is visible, return null.`,
+    ko: `이 이미지는 뉴스 기사 스크린샷의 상단 부분입니다. 기사의 발행 일시(보통 기자 이름 옆의 작은 줄)를 찾아 ISO 8601(YYYY-MM-DDThh:mm:ss, 시간대를 모르면 초 단위까지만 쓰고 Z를 붙이지 않음)로 돌려주세요. 연·월·일은 화면에 적힌 그대로 옮기세요. 날짜가 보이지 않으면 null을 돌려주세요.`
+  };
   const buildPrompt = (lang, rulesVer, text) => {
     const rules = RULES[lang][rulesVer];
     return text == null
@@ -410,7 +417,7 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
     if (state.images[f.id]) return Promise.resolve(state.images[f.id]);
     return new Promise((ok, no) => {
       const img = new Image();
-      img.onload = () => ok(state.images[f.id] = { capped: toCanvas(img, 1024), w: img.width, h: img.height });
+      img.onload = () => ok(state.images[f.id] = { capped: toCanvas(img, 1024), orig: toCanvas(img, null), w: img.width, h: img.height });
       img.onerror = () => no(new Error(`cannot load ${f.file}`));
       img.src = `fixtures/out/${f.file}`;
     });
@@ -477,7 +484,7 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
   // ---------------------------------------------------------------
   // Model calls
   // ---------------------------------------------------------------
-  async function promptModel({ image, text, lang, rulesVer, timeoutMs, sampling }) {
+  async function promptModel({ image, text, lang, rulesVer, timeoutMs, sampling, promptOverride, schemaOverride }) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(new DOMException('timeout', 'TimeoutError')), timeoutMs);
     activeAborts.add(controller);
@@ -490,11 +497,12 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
         monitor(m) { m.addEventListener('downloadprogress', (e) => progress(`model download ${Math.round((e.loaded ?? 0) * 100)}%`)); }
       });
       try {
-        const p = buildPrompt(lang, rulesVer, image ? null : text);
+        const p = promptOverride ?? buildPrompt(lang, rulesVer, image ? null : text);
+        const schema = schemaOverride ?? schemaFor(rulesVer);
         const raw = image
           ? await session.prompt([{ role: 'user', content: [{ type: 'text', value: p }, { type: 'image', value: image }] }],
-                                 { responseConstraint: schemaFor(rulesVer), signal: controller.signal })
-          : await session.prompt(p, { responseConstraint: schemaFor(rulesVer), signal: controller.signal });
+                                 { responseConstraint: schema, signal: controller.signal })
+          : await session.prompt(p, { responseConstraint: schema, signal: controller.signal });
         return { raw, ms: Math.round(performance.now() - t0) };
       } finally { session.destroy?.(); }
     } finally { clearTimeout(timer); activeAborts.delete(controller); }
@@ -561,6 +569,21 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
           if (path === 'vision') {
             const L = await leg({ image: state.images[f.id].capped, lang, rulesVer, timeoutMs, sampling });
             Object.assign(rec, { inferMs: L.ms, raw: L.raw, dto: L.dto, status: L.fail || 'ok' });
+            // Two-pass date: the byline/date line is the smallest text on the
+            // page and the one field the vision path lost on phone-frame
+            // fixtures. Second call sees only the top of the page at native
+            // resolution and is asked for published_at alone; its answer
+            // replaces the full-page one.
+            if ($('cfg-headercrop').checked && L.dto) {
+              rec.rules = rulesVer + '+hdr';
+              const o = state.images[f.id].orig;
+              const crop = document.createElement('canvas'); crop.width = o.width; crop.height = Math.min(o.height, Math.round(o.width * 0.7));
+              crop.getContext('2d').drawImage(o, 0, 0);
+              const H = await leg({ image: crop, lang, rulesVer, timeoutMs, sampling, promptOverride: HEADER_PROMPT[lang], schemaOverride: HEADER_SCHEMA });
+              rec.headerPass = { raw: H.raw, ms: H.ms, fail: H.fail, fullPageDate: L.dto.published_at ?? null };
+              if (H.dto && 'published_at' in H.dto) rec.dto.published_at = H.dto.published_at;
+              rec.inferMs = (L.ms || 0) + (H.ms || 0);
+            }
           } else if (path === 'ocr') {
             const L = await leg({ text: ocr.text, lang, rulesVer, timeoutMs, sampling });
             Object.assign(rec, { inferMs: L.ms, raw: L.raw, dto: L.dto, status: L.fail || 'ok' });
