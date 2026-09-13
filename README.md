@@ -4,7 +4,7 @@ Reproducible benchmark for structured extraction from screenshots with Chrome's
 built-in on-device model (the Prompt API / `LanguageModel`), comparing the
 vision path (image → JSON) with an OCR-first path (image → text → JSON).
 
-Status: **twelve phases, 1488 runs, original findings did not reproduce as claimed.** See
+Status: **thirteen phases, 1584 runs, original findings did not reproduce as claimed.** See
 [RESULTS.md](RESULTS.md). On clean synthetic screenshots the vision path beats OCR-first,
 prompt length did not change compliance, prompt example values leak into the output
 (removing them stops the leak but does not improve accuracy), and the model will not
@@ -19,7 +19,9 @@ sampling is deterministic and changes nothing: the fabrications are the argmax. 
 frame (app chrome, denser type) costs the vision path only the small date line and
 costs OCR-first every numeric field. Re-asking for the date from a native-resolution
 header crop recovers it (35 → 83 of 96) for one extra short call, and the same crop
-recovers `instrument` (41 → 85 of 95), including null where there is no quote panel.
+recovers `instrument` (41 → 85 of 95), including null where there is no quote panel,
+and asked for the panel fields it makes `change_percent` and `price` exact (96/96) with
+zero distractor contamination. See the recommended pipeline at the end of phase M.
 
 ## Run it
 

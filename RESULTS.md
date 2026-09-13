@@ -13,7 +13,8 @@ Raw runs: `results/phaseA_v1_all16_x3.json` (144), `results/phaseB_v1h_pad_padh_
 (48), `results/phaseI_sampling_ab_{vision,ocr}_x3.json` (96 + 96),
 `results/phaseJ_phone_{vision,light_ocr,dark_ocr_adaptive}_v1n_x3.json` (96 + 48 + 48),
 `results/phaseK_phone_vision_headercrop_v1n_x3.json` (96, two model calls each),
-`results/phaseL_phone_vision_crop_date_ticker_v1n_x3.json` (96, two calls each).
+`results/phaseL_phone_vision_crop_date_ticker_v1n_x3.json` (96, two calls each),
+`results/phaseM_phone_vision_crop4_v1n_x3.json` (96, two calls each).
 Re-score at any time with
 
 ```bash
@@ -581,6 +582,56 @@ schema lets it leave empty — and would need the same visual-unambiguity treatm
 crop that contains no numbers at all when there is no panel, which is what the crop
 here already is. Worth testing as a follow-up.
 
+## Phase M — the crop asked for all four panel/header fields
+
+The same 860×602 native-resolution crop, now asked in one call for `published_at`,
+`instrument`, `change_percent` and `price`, each phrased as *from the quote panel; null
+if there is no panel*. This is the test of whether the crop's "no panel is visually
+unambiguous" effect extends to `change_percent` — the field the model kept filling with
+`0` or the distractor on Korean no-panel pages in every earlier phase, schema or no
+schema. Same 32 phone fixtures, `v1n`, 3 repeats, all 96 parsed. Raw runs:
+`results/phaseM_phone_vision_crop4_v1n_x3.json`.
+
+| field, 96 paired runs | full-page | crop | crop fixed / broke | panel | no panel |
+|---|---|---|---|---|---|
+| `change_percent` | 81 | **96** | +15 / 0 | 44 → 48/48 | 37 → **48/48** |
+| `price` | 91 | **96** | +5 / 0 | 43 → 48/48 | 48 → 48/48 |
+| `instrument` | 42 | **92** | +52 / −2 | 38 → 45/48 | 4 → **47/48** |
+| `published_at` | 39 | 74 | +44 / −9 | 26 → 37/48 | 13 → 37/48 |
+
+Crop call 1.25 s with four fields (0.73 s with one); per-run total 6.3 s.
+
+**`change_percent` and `price` are perfect from the crop.** On no-panel pages the crop
+returned `null` in 48 of 48 runs — including all 24 Korean runs, where the full-page
+pass had 16/24 — and the distractor percentage appeared 0 times (full page: 4). On
+panel pages every value was exact. The full-page pass, on the same runs, produced
+`"3.4%"`, `"2.4%"`, `"4%"`, `"0"`, `" -1.00 "` on no-panel fixtures. Nothing about the
+schema or the wording changed between the two passes; what changed is that the crop of
+a no-panel page contains no number at all, so there is nothing to fill the field with.
+
+**`published_at` slipped** from 81–83 (phases K, L) to 74 with four fields in the same
+call, mostly on light fixtures. Three fields' worth of extra instructions in the same
+prompt cost the date about 8 runs. If the date matters more than a second call, ask
+for it alone.
+
+**What this closes.** Every failure this benchmark attributed to the vision path —
+small-text misreads (date, ticker), and filling fields that should be empty (change,
+instrument on no-panel pages, the Korean cases included) — is fixed by the same
+mechanism: a second call on a native-resolution crop of the region the fields live
+in, with a nullable schema. The prompt-rule variants (phases B, C, E) never moved
+these; the sampling preset (phase I) showed the errors were the argmax; the crop
+removes them because it removes the material they were built from. Recommended
+pipeline for this task, in order of evidence strength:
+
+1. Nullable schema for every field that can legitimately be absent (phases D, F).
+2. Full-page call for narrative fields (headline, summary, sentiment) and as a
+   fallback.
+3. One crop call, native resolution, for the small-text and panel fields — ask for
+   `change_percent`, `price`, `instrument` together; ask for `published_at` on its own
+   if its accuracy matters.
+4. Normalise in code (`LKSP EUR` → `LKSP`; strip `%` and currency codes).
+5. Do not put OCR in front of the model on this class of input (phases A, G, H, J).
+
 ## What to change before trusting any of this further
 
 - ~~Take the example numbers out of the rules and re-run.~~ Done (phase C): the leak
@@ -607,8 +658,9 @@ here already is. Worth testing as a follow-up.
   (phase K): 35 → 83 correct on phone fixtures, paired, +0.7 s per run. ~~Apply the same
   crop-and-re-ask to `instrument` next.~~ Done (phase L): 41 → 85, and no-panel
   instrument goes to null 44/47 with the wording that failed on the full page in
-  phase E. Next: route `change_percent` through the same crop on no-panel pages, and
-  normalise `LKSP EUR` → `LKSP` in the caller.
+  phase E. ~~Next: route `change_percent` through the same crop.~~ Done (phase M):
+  `change_percent` and `price` 96/96 from the crop, no-panel null 48/48 including
+  Korean, distractor 0. Normalise `LKSP EUR` → `LKSP` in the caller.
 - ~~Try `most-predictable` sampling.~~ Done (phase I): deterministic, accuracy unchanged,
   the fabrications are the argmax. Not a quality lever; useful only for reproducible
   regression runs.
