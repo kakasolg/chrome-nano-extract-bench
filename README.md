@@ -4,24 +4,51 @@ Reproducible benchmark for structured extraction from screenshots with Chrome's
 built-in on-device model (the Prompt API / `LanguageModel`), comparing the
 vision path (image → JSON) with an OCR-first path (image → text → JSON).
 
-Status: **thirteen phases, 1584 runs, original findings did not reproduce as claimed.** See
-[RESULTS.md](RESULTS.md). On clean synthetic screenshots the vision path beats OCR-first,
-prompt length did not change compliance, prompt example values leak into the output
-(removing them stops the leak but does not improve accuracy), and the model will not
-leave a field empty when asked in prose — but does when the schema makes the field
-nullable, which also removed the distractor contamination on English fixtures. Prose
-rules aimed at one field keep moving other fields; telling the model a company name is
-not a ticker made it invent tickers. The nullable-schema gain replicated in an
-interleaved A/B; its apparent latency gain did not (run order). Dark-mode fixtures
-leave the vision path unchanged and make OCR-first worse on numbers and dates;
-adaptive binarisation recovers the dates but not the numbers. `most-predictable`
-sampling is deterministic and changes nothing: the fabrications are the argmax. A phone
-frame (app chrome, denser type) costs the vision path only the small date line and
-costs OCR-first every numeric field. Re-asking for the date from a native-resolution
-header crop recovers it (35 → 83 of 96) for one extra short call, and the same crop
-recovers `instrument` (41 → 85 of 95), including null where there is no quote panel,
-and asked for the panel fields it makes `change_percent` and `price` exact (96/96) with
-zero distractor contamination. See the recommended pipeline at the end of phase M.
+Status: **thirteen phases, 1584 runs.** Full write-up in [RESULTS.md](RESULTS.md).
+
+## What this measures, and what it found
+
+This is a set of paired measurements on Chrome's *shipped* on-device model (Chrome 152
+stable), not a new technique. The two remedies that worked are both known in general
+form; what did not exist was numbers for them on this model, alongside the things that
+did not work.
+
+**Worked, measured here**
+
+- **Nullable schema beats prose rules for leaving a field empty.** With
+  `type: ["string", "null"]` the no-panel `change_percent` becomes `null`; with the
+  same instruction in prose it becomes `0`, the nearest number in the text, or a
+  format example from the prompt. Replicated in an interleaved A/B. The idea is standard
+  advice (Willison, *LLM schemas*; freeCodeCamp, *reliable structured data*), given
+  there without measurements.
+- **A native-resolution crop, re-asked for the small-text fields, recovers what the
+  downscaled full page loses.** Date 35 → 83 of 96, ticker 42 → 92, change 81 → 96,
+  price 91 → 96, on phone-density fixtures, for one extra ~1 s call. The Prompt API
+  resizes every image to one fixed size ([prompt-api #84](https://github.com/webmachinelearning/prompt-api/issues/84));
+  [prompt-api #133](https://github.com/webmachinelearning/prompt-api/issues/133) (open,
+  Chrome staff) proposes a resize-or-tile option for exactly this reason and carries no
+  data. Phases K–M are that data. The crop/zoom remedy itself is established VLM
+  practice — the *resolution curse* write-up, V\*, CropVLM, Dragonfly.
+
+**Did not work, measured here** (not reported elsewhere as far as I could find)
+
+- OCR-first (Tesseract → model) never beat the vision path on numbers under any
+  condition tried: light, dark, dense, framed. It loses decimal points, the Korean
+  date line, and small tickers, and noisy Korean OCR text makes the model translate.
+- Prompt-rule variants (headline rule, inert padding, removing format examples,
+  "a company name is not a ticker") moved nothing reliably, and each one that targeted
+  one field disturbed another.
+- Format examples in the rules leak verbatim into outputs (`+2.34`, seconds `:28`);
+  removing them stops the leak and does not improve accuracy.
+- `samplingMode: "most-predictable"` is deterministic and changes nothing: the wrong
+  years and filled-in zeros are the model's argmax, not sampling noise. (It also works
+  on Chrome 152 without an origin-trial token, contrary to the docs.)
+
+**Related work that is not this**
+
+- [thiagotigaz/ocr-it](https://github.com/thiagotigaz/ocr-it) benches Tesseract,
+  PaddleOCR, EasyOCR, RapidOCR, Qwen-VL and Gemini Nano on *transcription* CER over 24
+  synthetic English samples. Different task; consult it for raw OCR quality.
 
 ## Run it
 

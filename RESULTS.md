@@ -505,6 +505,14 @@ vision path happened to misread. That cannot be settled with synthetic fixtures.
 
 ## Phase K — two-pass vision: a native-resolution header crop for `published_at`
 
+> Context: the Prompt API resizes every image input to one fixed size
+> ([#84](https://github.com/webmachinelearning/prompt-api/issues/84)), and
+> [#133](https://github.com/webmachinelearning/prompt-api/issues/133) proposes letting
+> callers choose resize vs tile, without measurements. Phases K–M measure what a caller
+> can recover today by tiling on their own side. The crop-and-re-ask remedy is standard
+> in VLM work (resolution curse, V\*, CropVLM); nothing here is new except the numbers on
+> this model.
+
 Phase J's one vision-path weakness was the small date line on phone-frame fixtures.
 Fix tried: keep the full-page call as is, then make a second call with only the top of
 the page (full width × 70% of width in height, 860×602 px, **no downscale** — the
