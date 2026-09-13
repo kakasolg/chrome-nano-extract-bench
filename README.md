@@ -4,7 +4,20 @@ Reproducible benchmark for structured extraction from screenshots with Chrome's
 built-in on-device model (the Prompt API / `LanguageModel`), comparing the
 vision path (image → JSON) with an OCR-first path (image → text → JSON).
 
-Status: **fixtures only.** The benchmark page and results come next.
+Status: **first two runs done, findings did not reproduce as claimed.** See
+[RESULTS.md](RESULTS.md). On clean synthetic screenshots the vision path beats OCR-first,
+prompt length did not change compliance, and the clearest failure found is prompt example
+values leaking into the output.
+
+## Run it
+
+```bash
+python -m http.server 8765      # any static server; file:// blocks fetch of labels.json
+# open http://127.0.0.1:8765/ in desktop Chrome 148+ with the on-device model available
+```
+
+Pick paths, rule variants and fixtures, press Run, then Export JSON into `results/` and
+summarise with `node scripts/summarize.mjs results/<file>.json --by=lang,panel --fails`.
 
 ## Fixtures
 

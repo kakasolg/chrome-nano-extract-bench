@@ -297,7 +297,7 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
   function hasQuotePanel(text) {
     const t = String(text || '');
     const badge = /\b[A-Z]{2,5}\b[^\n]{0,60}[+\-−]\s?\d+(\.\d+)?\s*%/;      // "HVM OSE NOK 187.40 −4.6%" (OCR may drop the point)
-    const pct = /[+\-−]\s?\d+(\.\d+)?\s*%/;                                  // signed percent anywhere
+    const pct = /\d+(\.\d+)?\s*%/;                                           // percent anywhere (OCR drops the sign too)
     const money = /\b(USD|EUR|NOK|KRW|GBP|JPY)\s?\d[\d,]*\.\d{2}\b/;
     if (badge.test(t)) return { hit: true, by: 'badge' };
     if (money.test(t) && pct.test(t)) return { hit: true, by: 'money+pct' };
