@@ -98,7 +98,8 @@
       <label class="f"><input type="checkbox" id="samp-default" checked> default</label>
       <label class="f"><input type="checkbox" id="samp-most-predictable"> most-predictable</label>
       <span class="note">vision:</span>
-      <label class="f"><input type="checkbox" id="cfg-headercrop"> second pass on a native-resolution header crop for published_at</label>
+      <label class="f"><input type="checkbox" id="crop-published_at"> re-ask published_at from a native-resolution header crop</label>
+      <label class="f"><input type="checkbox" id="crop-instrument"> re-ask instrument from the same crop</label>
       <span class="note">OCR preprocess:</span>
       <label class="f"><select id="cfg-ocrpre">
         <option value="invert">grayscale + invert dark images</option>
@@ -335,11 +336,29 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
     text:  { en: 'The following is the text of a news article. Extract the information according to the JSON schema below.',
              ko: '다음은 뉴스 기사 본문입니다. 아래 JSON 스키마에 맞춰 정보를 추출하세요.' }
   };
-  const HEADER_SCHEMA = { type: 'object', properties: { published_at: { type: ['string', 'null'], maxLength: 32 } }, required: ['published_at'] };
-  const HEADER_PROMPT = {
-    en: `This image is the top part of a news article screenshot. Find the article's publication date and time (usually a small line near the byline). Return it as ISO 8601 (YYYY-MM-DDThh:mm:ss; write down to seconds and do not add Z if the timezone is unknown). Copy the year, month and day exactly as printed. If no date is visible, return null.`,
-    ko: `이 이미지는 뉴스 기사 스크린샷의 상단 부분입니다. 기사의 발행 일시(보통 기자 이름 옆의 작은 줄)를 찾아 ISO 8601(YYYY-MM-DDThh:mm:ss, 시간대를 모르면 초 단위까지만 쓰고 Z를 붙이지 않음)로 돌려주세요. 연·월·일은 화면에 적힌 그대로 옮기세요. 날짜가 보이지 않으면 null을 돌려주세요.`
+  // Crop pass: one short call on the un-downscaled top of the page, asking
+  // only for the small-text fields selected. Field prompts are composed so
+  // that each field can be measured against its full-page answer.
+  const CROP_FIELDS = {
+    published_at: {
+      schema: { type: ['string', 'null'], maxLength: 32 },
+      en: `published_at: the article's publication date and time (usually a small line near the byline), as ISO 8601 (YYYY-MM-DDThh:mm:ss; write down to seconds and do not add Z if the timezone is unknown). Copy the year, month and day exactly as printed. If no date is visible, null.`,
+      ko: `published_at: 기사의 발행 일시(보통 기자 이름 옆의 작은 줄)를 ISO 8601(YYYY-MM-DDThh:mm:ss, 시간대를 모르면 초 단위까지만 쓰고 Z를 붙이지 않음)로. 연·월·일은 화면에 적힌 그대로. 날짜가 보이지 않으면 null.`
+    },
+    instrument: {
+      schema: { type: ['string', 'null'], maxLength: 10 },
+      en: `instrument: if the image contains a quote panel (a short all-caps ticker code next to a price and a percentage change), the ticker code exactly as printed. If there is no quote panel, null — do not write a company name.`,
+      ko: `instrument: 이미지에 시세 패널(가격과 등락률 옆의 짧은 대문자 티커 코드)이 있으면 그 티커 코드를 적힌 그대로. 시세 패널이 없으면 null — 회사 이름을 적지 마세요.`
+    }
   };
+  const cropPlan = () => ['published_at', 'instrument'].filter(k => $('crop-' + k).checked);
+  const cropSchema = (fields) => ({ type: 'object', properties: Object.fromEntries(fields.map(k => [k, CROP_FIELDS[k].schema])), required: fields });
+  const cropPrompt = (fields, lang) => (lang === 'en'
+    ? `This image is the top part of a news article screenshot. Return only these fields:
+`
+    : `이 이미지는 뉴스 기사 스크린샷의 상단 부분입니다. 다음 필드만 돌려주세요:
+`) + fields.map(k => '- ' + CROP_FIELDS[k][lang]).join('
+');
   const buildPrompt = (lang, rulesVer, text) => {
     const rules = RULES[lang][rulesVer];
     return text == null
@@ -574,14 +593,15 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
             // fixtures. Second call sees only the top of the page at native
             // resolution and is asked for published_at alone; its answer
             // replaces the full-page one.
-            if ($('cfg-headercrop').checked && L.dto) {
-              rec.rules = rulesVer + '+hdr';
+            const fields = cropPlan();
+            if (fields.length && L.dto) {
+              rec.rules = rulesVer + '+crop:' + fields.map(k => k === 'published_at' ? 'date' : 'ticker').join('+');
               const o = state.images[f.id].orig;
               const crop = document.createElement('canvas'); crop.width = o.width; crop.height = Math.min(o.height, Math.round(o.width * 0.7));
               crop.getContext('2d').drawImage(o, 0, 0);
-              const H = await leg({ image: crop, lang, rulesVer, timeoutMs, sampling, promptOverride: HEADER_PROMPT[lang], schemaOverride: HEADER_SCHEMA });
-              rec.headerPass = { raw: H.raw, ms: H.ms, fail: H.fail, fullPageDate: L.dto.published_at ?? null };
-              if (H.dto && 'published_at' in H.dto) rec.dto.published_at = H.dto.published_at;
+              const H = await leg({ image: crop, lang, rulesVer, timeoutMs, sampling, promptOverride: cropPrompt(fields, lang), schemaOverride: cropSchema(fields) });
+              rec.headerPass = { raw: H.raw, ms: H.ms, fail: H.fail, fields, fullPage: Object.fromEntries(fields.map(k => [k, L.dto[k] ?? null])) };
+              if (H.dto) for (const k of fields) if (k in H.dto) rec.dto[k] = H.dto[k];
               rec.inferMs = (L.ms || 0) + (H.ms || 0);
             }
           } else if (path === 'ocr') {
