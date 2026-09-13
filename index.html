@@ -357,8 +357,7 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
     ? `This image is the top part of a news article screenshot. Return only these fields:
 `
     : `이 이미지는 뉴스 기사 스크린샷의 상단 부분입니다. 다음 필드만 돌려주세요:
-`) + fields.map(k => '- ' + CROP_FIELDS[k][lang]).join('
-');
+`) + fields.map(k => '- ' + CROP_FIELDS[k][lang]).join('\n');
   const buildPrompt = (lang, rulesVer, text) => {
     const rules = RULES[lang][rulesVer];
     return text == null
