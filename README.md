@@ -52,9 +52,16 @@ did not work.
 
 ## Run it
 
+Hosted: **https://kakasolg.github.io/chrome-nano-extract-bench/** — open it in desktop
+Chrome 148+ with the on-device model available (`LanguageModel.availability()` returns
+`available`); the page checks and says so at the top. Everything runs in your tab;
+nothing is sent anywhere.
+
+Locally:
+
 ```bash
 python -m http.server 8765      # any static server; file:// blocks fetch of labels.json
-# open http://127.0.0.1:8765/ in desktop Chrome 148+ with the on-device model available
+# open http://127.0.0.1:8765/
 ```
 
 Pick paths, rule variants and fixtures, press Run, then Export JSON into `results/` and
