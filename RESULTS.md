@@ -7,8 +7,8 @@ default sampling. Timeout 90 s per call; one call each in phases C and D timed o
 other response parsed.
 
 Raw runs: `results/phaseA_v1_all16_x3.json` (144), `results/phaseB_v1h_pad_padh_deck8_x3.json`
-(144), `results/phaseC_v1x_all16_x3.json` (96), `results/phaseD_v1n_all16_x3.json` (96).
-Re-score at any time with
+(144), `results/phaseC_v1x_all16_x3.json` (96), `results/phaseD_v1n_all16_x3.json` (96),
+`results/phaseE_v1n2_all16_x3.json` (96). Re-score at any time with
 
 ```bash
 node scripts/summarize.mjs results/*.json --by=lang,panel,subheading --fails
@@ -230,14 +230,54 @@ direction on both paths**, and it cost nothing in the other columns except the
 `instrument` wording problem. The prose-rules variants (v1h, pad, padh, v1x) moved
 nothing reliably.
 
+## Phase E — instrument wording (`v1n2`), 16 fixtures × vision/ocr × 3
+
+`v1n2` is `v1n` with rule 1 rewritten: *instrument is the ticker symbol shown in a quote
+panel (a short all-caps code next to a price); if there is no quote panel it MUST be
+null — a company name is NOT an instrument.* Schema unchanged from v1n. Raw runs:
+`results/phaseE_v1n2_all16_x3.json`. All 96 parsed.
+
+| path · rules | topic | lang | distractor→change | change ok | price ok | date ok | instr ok | `"null"` str | avg ms |
+|---|---|---|---|---|---|---|---|---|---|
+| vision · v1n | 40/48 | 47/48 | 1/48 | 41/48 | 47/48 | 35/48 | 19/48 | 2 | 5214 |
+| vision · v1n2 | 38/48 | 47/48 | 2/48 | 43/48 | 47/48 | 37/48 | 22/48 | 7 | 5054 |
+| ocr · v1n | 33/47 | 33/47 | 0/47 | 25/47 | 45/47 | 30/47 | 9/47 | 1 | 3789 |
+| ocr · v1n2 | 30/48 | 30/48 | 0/48 | 31/48 | 40/48 | 32/48 | 12/48 | 3 | 3955 |
+
+**The wording did not produce nulls. It produced invented tickers.** On the 48 no-panel
+runs the model wrote `null` (JSON or the word) 7 times and a ticker-shaped code it made
+up from the company name 23 times: `HAL`, `HALV`, `HAL.TO`, `LARK`, `LARKSPUR`, `SRY`.
+Under v1n the same slots held the company name in plain text, which at least was
+visibly not a ticker. Told that a company name is not an instrument, the model kept the
+field filled and changed the *format* of the fabrication to match the rule's description
+("a short all-caps code"). `instr ok` rose by 3 on each path, entirely from the 7 nulls.
+
+Side effect on the OCR path: `price ok` fell 45 → 40, all on the `battery_ko_panel`
+fixtures where price went from `42.15` to `null` in 6/6 runs. The rule's new phrase
+"next to a price" appears to have pulled the model into treating the garbled Korean OCR
+panel line as not-a-panel, and once the panel was "absent" it nulled price too.
+
+This is the second time in this series that a prose rule aimed at one field moved a
+different field (v1h hurt `change ok` on vision, phase B). The nullable schema (phase D)
+remains the only change that improved its target metric without a side effect.
+
+**Reading across D and E:** the model will leave a field empty when the schema allows
+it *and* the field has an obvious "nothing here" reading (no quote panel → no
+change_percent). It will not leave a field empty when there is anything in the input
+that could plausibly fill it (a company name → an instrument). Prose does not change
+that; it only changes what shape the filler takes. If `instrument` must be null without a
+panel, the app should null it in code when its own gate says no panel, exactly as the
+hybrid path already does for vision — not ask the model.
+
 ## What to change before trusting any of this further
 
 - ~~Take the example numbers out of the rules and re-run.~~ Done (phase C): the leak
   signatures vanish, accuracy does not improve. The open problem is the model filling
   fields that should stay empty; ~~a schema-level fix is the next thing to test~~ —
   done (phase D): nullable `change_percent` fixes the English no-panel cases outright.
-- **Fix the `instrument` wording** now that null is allowed: say "the ticker symbol
-  shown in a quote panel; null if there is no panel" so a company name is not accepted.
+- ~~Fix the `instrument` wording now that null is allowed.~~ Done (phase E): the model
+  invents ticker-shaped codes instead. Null `instrument` in code when no panel is
+  detected; stop trying to get it from the prompt.
 - **Isolate the latency drop** seen with the nullable schema (same fixtures, alternating
   v1x/v1n in one session) before reporting it.
 - **Add fixtures that look like the original failure cases**: dark mode, phone-density

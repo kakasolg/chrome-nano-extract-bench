@@ -9,7 +9,9 @@ Status: **first two runs done, findings did not reproduce as claimed.** See
 prompt length did not change compliance, prompt example values leak into the output
 (removing them stops the leak but does not improve accuracy), and the model will not
 leave a field empty when asked in prose — but does when the schema makes the field
-nullable, which also removed the distractor contamination on English fixtures.
+nullable, which also removed the distractor contamination on English fixtures. Prose
+rules aimed at one field keep moving other fields; telling the model a company name is
+not a ticker made it invent tickers.
 
 ## Run it
 
