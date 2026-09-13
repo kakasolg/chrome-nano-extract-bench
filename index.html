@@ -113,6 +113,8 @@
       <label class="f"><input type="checkbox" id="f-nodeck" checked> nodeck</label>
       <label class="f"><input type="checkbox" id="f-light" checked> light</label>
       <label class="f"><input type="checkbox" id="f-dark" checked> dark</label>
+      <label class="f"><input type="checkbox" id="f-noframe" checked> no frame</label>
+      <label class="f"><input type="checkbox" id="f-phone" checked> phone frame</label>
     </div>
     <div class="row" style="margin-top:12px">
       <button class="primary" id="btn-run">Run</button>
@@ -516,7 +518,8 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
       $(f.variant.lang === 'en' ? 'f-en' : 'f-ko').checked &&
       $(f.variant.panel ? 'f-panel' : 'f-nopanel').checked &&
       $(f.variant.subheading ? 'f-deck' : 'f-nodeck').checked &&
-      $((f.variant.theme || 'light') === 'dark' ? 'f-dark' : 'f-light').checked);
+      $((f.variant.theme || 'light') === 'dark' ? 'f-dark' : 'f-light').checked &&
+      $((f.variant.frame || 'none') === 'phone' ? 'f-phone' : 'f-noframe').checked);
   }
   async function runAll() {
     if (state.running) return;
@@ -655,12 +658,12 @@ if the source is English they MUST be English; if Korean, Korean. Never translat
   }
   const stamp = () => new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
   function toCsv() {
-    const cols = ['fixture', 'article', 'lang', 'panel', 'deck', 'theme', 'path', 'rules', 'sampling', 'run', 'status', 'promptLang', 'mergeMode', 'narrativeFrom', 'visionSkipped',
+    const cols = ['fixture', 'article', 'lang', 'panel', 'deck', 'theme', 'frame', 'path', 'rules', 'sampling', 'run', 'status', 'promptLang', 'mergeMode', 'narrativeFrom', 'visionSkipped',
                   ...METRICS.map(([k]) => k), 'headline', 'change_percent', 'price', 'published_at', 'instrument', 'sentiment', 'ocrMs', 'inferMs', 'visionMs', 'textMs', 'ts'];
     const q = (v) => v == null ? '' : /[",\n]/.test(String(v)) ? `"${String(v).replace(/"/g, '""')}"` : String(v);
     const lines = [cols.join(',')];
     for (const r of state.results) {
-      const row = { ...r, lang: r.variant.lang, panel: r.variant.panel, deck: r.variant.subheading, theme: r.variant.theme, ...(r.score || {}),
+      const row = { ...r, lang: r.variant.lang, panel: r.variant.panel, deck: r.variant.subheading, theme: r.variant.theme, frame: r.variant.frame, ...(r.score || {}),
                     headline: r.dto?.headline, change_percent: r.dto?.change_percent, price: r.dto?.price,
                     published_at: r.dto?.published_at, instrument: r.dto?.instrument, sentiment: r.dto?.sentiment };
       lines.push(cols.map(c => q(row[c])).join(','));

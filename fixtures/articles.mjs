@@ -102,4 +102,5 @@ export const VARIANTS = {
   panel: [true, false],      // price quote box above the body
   subheading: [true, false], // copyable one-line deck under the headline
   theme: ["light", "dark"],  // dark = light text on near-black, as phone news apps render at night
+  frame: ["none", "phone"],  // phone = status bar + app nav bar above the article, denser type
 };

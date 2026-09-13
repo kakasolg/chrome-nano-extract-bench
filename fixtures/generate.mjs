@@ -49,7 +49,7 @@ function fmtChange(c) {
   return `${sign}${Math.abs(c).toFixed(1)}%`;
 }
 
-function renderHtml(article, lang, panel, subheading, theme, css) {
+function renderHtml(article, lang, panel, subheading, theme, frame, css) {
   const t = article[lang];
   const q = article.quote;
   const quoteBox = panel
@@ -61,9 +61,13 @@ function renderHtml(article, lang, panel, subheading, theme, css) {
       </div>`
     : "";
   const deck = subheading ? `<p class="deck">${esc(t.subheading)}</p>` : "";
+  const chrome = frame === "phone"
+    ? `<div class="statusbar"><span>9:41</span><span>▲▲ ▮▮▮ 87%</span></div>
+  <div class="navbar"><span class="back">‹</span><span>뉴스 상세</span><span class="spacer">⋮</span></div>`
+    : "";
   return `<!doctype html>
 <html lang="${lang}" class="${theme}"><head><meta charset="utf-8"><style>${css}</style></head>
-<body class="${theme}"><div class="page">
+<body class="${theme} ${frame}">${chrome}<div class="page">
   <div class="outlet">${esc(t.outlet)}</div>
   <h1>${esc(t.headline)}</h1>
   ${deck}
@@ -100,9 +104,9 @@ function main() {
   for (const article of ARTICLES) {
     for (const lang of VARIANTS.lang) {
       for (const panel of VARIANTS.panel) {
-        for (const subheading of VARIANTS.subheading) for (const theme of VARIANTS.theme) {
-          const id = `${article.id}_${lang}_${panel ? "panel" : "nopanel"}_${subheading ? "deck" : "nodeck"}${theme === "dark" ? "_dark" : ""}`;
-          const html = renderHtml(article, lang, panel, subheading, theme, css);
+        for (const subheading of VARIANTS.subheading) for (const theme of VARIANTS.theme) for (const frame of VARIANTS.frame) {
+          const id = `${article.id}_${lang}_${panel ? "panel" : "nopanel"}_${subheading ? "deck" : "nodeck"}${theme === "dark" ? "_dark" : ""}${frame === "phone" ? "_phone" : ""}`;
+          const html = renderHtml(article, lang, panel, subheading, theme, frame, css);
           const htmlPath = join(outDir, `${id}.html`);
           writeFileSync(htmlPath, html);
           if (chrome) screenshot(chrome, htmlPath, join(outDir, `${id}.png`));
@@ -112,7 +116,7 @@ function main() {
             id,
             file: `${id}.png`,
             article: article.id,
-            variant: { lang, panel, subheading, theme },
+            variant: { lang, panel, subheading, theme, frame },
             truth: {
               language: lang,
               headline: t.headline,

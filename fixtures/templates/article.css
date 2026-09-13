@@ -39,3 +39,23 @@ body.dark .quote { background: #1c1f24; border-color: #2c3038; }
 body.dark .quote .ex { color: #8b9098; }
 body.dark .quote .chg.up { color: #4cc38a; }
 body.dark .quote .chg.down { color: #e5726e; }
+
+/* Phone frame: a status bar and an app navigation bar above the article, and
+   denser type — the shape of the real captures that motivated this benchmark.
+   The nav-bar label is always Korean regardless of article language, as in
+   those captures (app locale ≠ article language). */
+.statusbar { display: flex; justify-content: space-between; padding: 8px 22px 4px; font-size: 15px; font-weight: 600; letter-spacing: 0.02em; }
+.navbar { display: flex; align-items: center; gap: 14px; padding: 10px 18px 12px; font-size: 18px; font-weight: 700; border-bottom: 1px solid #e3e6ea; }
+.navbar .back { font-size: 26px; line-height: 1; font-weight: 400; }
+.navbar .spacer { margin-left: auto; font-size: 20px; letter-spacing: 6px; color: #6b6f76; }
+body.dark .navbar { border-color: #2c3038; }
+body.dark .navbar .spacer { color: #8b9098; }
+body.phone .page { padding: 16px 20px 32px; }
+body.phone .outlet { font-size: 13px; margin-bottom: 10px; }
+body.phone h1 { font-size: 27px; margin-bottom: 8px; }
+body.phone .deck { font-size: 17px; margin-bottom: 10px; }
+body.phone .meta { font-size: 13px; margin-bottom: 14px; }
+body.phone .quote { padding: 10px 14px; margin-bottom: 14px; }
+body.phone .quote .px { font-size: 20px; }
+body.phone .quote .chg { font-size: 15px; }
+body.phone .body p { font-size: 15.5px; line-height: 1.45; margin-bottom: 12px; }
