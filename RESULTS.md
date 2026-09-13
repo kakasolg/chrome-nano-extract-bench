@@ -10,7 +10,7 @@ Raw runs: `results/phaseA_v1_all16_x3.json` (144), `results/phaseB_v1h_pad_padh_
 (144), `results/phaseC_v1x_all16_x3.json` (96), `results/phaseD_v1n_all16_x3.json` (96),
 `results/phaseE_v1n2_all16_x3.json` (96), `results/phaseF_latency_ab_{vision,ocr}_x3.json`
 (96 + 96), `results/phaseG_dark_v1n_x3.json` (96), `results/phaseH_dark_ocr_adaptive_v1n_x3.json`
-(48). Re-score at any time with
+(48), `results/phaseI_sampling_ab_{vision,ocr}_x3.json` (96 + 96). Re-score at any time with
 
 ```bash
 node scripts/summarize.mjs results/*.json --by=lang,panel,subheading --fails
@@ -396,6 +396,46 @@ date/ticker lines. That is a Tesseract problem. The vision path reads all of the
 correctly on the same images (phase G), which is the standing reason OCR-first does not
 beat vision on this benchmark.
 
+## Phase I — `samplingMode: "most-predictable"`, default vs preset interleaved
+
+Chrome 148 added a `samplingMode` option to `LanguageModel.create()` (presets
+`most-predictable` … `most-creative`). The docs describe it as an origin trial on the
+web, but on Chrome 152 stable it took effect on this page with no trial token:
+`session.samplingMode` reflects the value and behaviour changes. Run as an interleaved
+A/B — default and `most-predictable` alternating call by call — on the light fixtures,
+`v1n`, 3 repeats, vision then OCR in halves. Raw runs:
+`results/phaseI_sampling_ab_vision_x3.json`, `results/phaseI_sampling_ab_ocr_x3.json`.
+
+| path · sampling | parsed | topic | lang | distractor→change | change ok | price ok | date ok | date fab | instr ok | avg ms |
+|---|---|---|---|---|---|---|---|---|---|---|
+| vision · default | 48/48 | 38/48 | 48/48 | 0/48 | 46/48 | 48/48 | 38/48 | 9/48 | 23/48 | 5508 |
+| vision · most-predictable | 48/48 | 39/48 | 48/48 | 0/48 | 42/48 | 48/48 | 39/48 | 9/48 | 21/48 | 5673 |
+| ocr · default | 46/48 | 38/46 | 39/46 | 0/46 | 27/46 | 42/46 | 18/46 | 19/46 | 7/46 | 6751 |
+| ocr · most-predictable | 48/48 | 39/48 | 39/48 | 0/48 | 33/48 | 48/48 | 21/48 | 18/48 | 6/48 | 7109 |
+
+**`most-predictable` is fully deterministic.** On both paths all 16 fixtures produced
+byte-identical raw output across the 3 repeats (default: 0 of 16). Repeats under this
+mode measure nothing; the effective sample per cell is 16, so every difference in the
+table above is one or two fixtures.
+
+**Accuracy does not move.** Every column is within noise of default on both paths. The
+two default-mode timeouts did not recur under the preset, and OCR `price ok` went
+42 → 48, which may be the preset avoiding an occasional long-tail generation — or two
+fixtures. Latency is 3–5% higher under the preset in this interleaved run (real, but
+small).
+
+**The fabrications are the argmax, not sampling noise.** Under `most-predictable` the
+same Korean fixtures produce the same wrong year every time — `2021-03-14`,
+`2020-03-14`, `2024-05-02`, three of three — and the Korean no-panel `change_percent`
+is `"0"` six of six where the schema allows `null`. The Korean-OCR-to-English
+translation rate is unchanged (9/24 vs 8/24). Whatever drives these is the model's
+most likely continuation, so no amount of temperature tuning or majority voting over
+repeats will remove it.
+
+Practical reading: use `most-predictable` when the harness is a regression test (one
+run per fixture is then sufficient and reproducible) and default sampling with repeats
+when the question is a failure *rate*. It is not a quality lever.
+
 ## What to change before trusting any of this further
 
 - ~~Take the example numbers out of the rules and re-run.~~ Done (phase C): the leak
@@ -415,6 +455,7 @@ beat vision on this benchmark.
   fabrication drops (33 → 11), numbers do not move — Tesseract still loses decimal
   points and the Korean date line. Next on the OCR side would be a different engine,
   not more preprocessing.
-- **Try `most-predictable` sampling** (Chrome 148 origin-trial preset) to see whether the
-  leak and the year fabrication are sampling noise.
+- ~~Try `most-predictable` sampling.~~ Done (phase I): deterministic, accuracy unchanged,
+  the fabrications are the argmax. Not a quality lever; useful only for reproducible
+  regression runs.
 - Per-cell sample sizes are 12 or 24. Differences under about 3 runs are noise.

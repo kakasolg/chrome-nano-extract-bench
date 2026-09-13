@@ -4,7 +4,7 @@ Reproducible benchmark for structured extraction from screenshots with Chrome's
 built-in on-device model (the Prompt API / `LanguageModel`), comparing the
 vision path (image → JSON) with an OCR-first path (image → text → JSON).
 
-Status: **eight phases, 912 runs, original findings did not reproduce as claimed.** See
+Status: **nine phases, 1104 runs, original findings did not reproduce as claimed.** See
 [RESULTS.md](RESULTS.md). On clean synthetic screenshots the vision path beats OCR-first,
 prompt length did not change compliance, prompt example values leak into the output
 (removing them stops the leak but does not improve accuracy), and the model will not
@@ -14,7 +14,8 @@ rules aimed at one field keep moving other fields; telling the model a company n
 not a ticker made it invent tickers. The nullable-schema gain replicated in an
 interleaved A/B; its apparent latency gain did not (run order). Dark-mode fixtures
 leave the vision path unchanged and make OCR-first worse on numbers and dates;
-adaptive binarisation recovers the dates but not the numbers.
+adaptive binarisation recovers the dates but not the numbers. `most-predictable`
+sampling is deterministic and changes nothing: the fabrications are the argmax.
 
 ## Run it
 
