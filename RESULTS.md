@@ -673,3 +673,35 @@ pipeline for this task, in order of evidence strength:
   the fabrications are the argmax. Not a quality lever; useful only for reproducible
   regression runs.
 - Per-cell sample sizes are 12 or 24. Differences under about 3 runs are noise.
+
+## Device run — the same fixtures through Kortex Android (Gemini Nano via AICore)
+
+Files: `results/device_*.json` (4 files, 320 runs). Produced by Kortex's
+`ClipBenchDeviceTest` (Pixel, ML Kit OCR + AICore Nano), which loads these 64
+fixtures, runs the app's real clip pipeline and writes rows in this repo's result
+format; `scripts/summarize.mjs` re-scores them unchanged. The `rules` column is the
+app's own prompt, not a `v1*` variant, so the columns are comparable but the
+prompts are not. `hybrid` = OCR text leg + vision leg merged (production path);
+`vision_only` = the app's OCR-failure fallback. One run per fixture, so ±1 is noise.
+
+| file | change | hybrid date | hybrid instr | vision date | vision date fab | vision instr |
+|---|---|---|---|---|---|---|
+| `device_kortex-prompt_…` | prompt without example values, `"null"` guard | 27/64 | 20/64 | 4/64 | 7/64 | 54/64 |
+| `…+ticker-date-fix_…` | first-token ticker, lenient date parser | 62/64 | 58/64 | 16/64 | 25/64 | 57/64 |
+| `…+crop_…` | header crop re-ask when the field is empty | 62/64 | 58/64 | 37/64 | 25/64 | 58/64 |
+| `…+crop-alwaysdate_…` (vision only) | vision path always re-asks the date from the crop | — | — | 62/64 | 0/64 | 58/64 |
+
+What transferred from the web runs:
+
+- Example-value leak, distractor contamination and the literal `"null"` were 0/320
+  once the example values left the schema (phase C/E remedy).
+- The first two rows are mostly the *caller's* loss, not the model's: the text leg
+  returned `HVM OSE` / `LKSP EUR` (the normalisation noted at the end of phase M) and
+  the app's `Instant.parse` dropped every zone-less or Korean date the model wrote.
+- The header crop behaves as in phases K–M. On the vision path it recovered all 22
+  Korean nulls and, once applied unconditionally, all 14 fabricated years
+  (date fab 25 → 0). On the hybrid path OCR already had the date, so the crop rarely
+  fires (+0.3 s); on the vision path it costs +2.9 s.
+- Remaining hybrid failures are invented abbreviations on panel-less fixtures
+  (`HALB`, `HAL`, `RAKS`, 6/64) and two `2024` misreads by the text leg — the same
+  argmax fabrications seen in phase I, not reachable by shape checks.

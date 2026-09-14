@@ -1,0 +1,3464 @@
+{
+ "generated_at": "2026-09-13T23:27:45.453629Z",
+ "ua": "kortex-android\/Pixel 11 Pro XL\/api37",
+ "phase": "device",
+ "ocr": "mlkit",
+ "results": [
+  {
+   "fixture": "metals_en_panel_deck",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": true,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.453909Z",
+   "ocrMs": null,
+   "inferMs": 5854,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": "HVM",
+    "published_at": "2026-03-14",
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_panel_deck_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": true,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.454072Z",
+   "ocrMs": null,
+   "inferMs": 6373,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": "HVM",
+    "published_at": "2026-03-14",
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_panel_deck_dark",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.454163Z",
+   "ocrMs": null,
+   "inferMs": 6375,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": "HVM",
+    "published_at": "2026-03-14",
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_panel_deck_dark_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.454256Z",
+   "ocrMs": null,
+   "inferMs": 5723,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": "HVM",
+    "published_at": "2026-03-14",
+    "price": "187.40",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_panel_nodeck",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": false,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.454338Z",
+   "ocrMs": null,
+   "inferMs": 6440,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": "HVM",
+    "published_at": "2026-03-14",
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_panel_nodeck_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": false,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.454425Z",
+   "ocrMs": null,
+   "inferMs": 3754,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": "HVM",
+    "published_at": "2026-03-14",
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_panel_nodeck_dark",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.454582Z",
+   "ocrMs": null,
+   "inferMs": 6236,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": "HVM",
+    "published_at": "2026-03-14",
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_panel_nodeck_dark_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.454666Z",
+   "ocrMs": null,
+   "inferMs": 6557,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": "HVM",
+    "published_at": "2026-03-14",
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_nopanel_deck",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": true,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.454755Z",
+   "ocrMs": null,
+   "inferMs": 3612,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": null,
+    "published_at": "2026-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_nopanel_deck_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": true,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.454836Z",
+   "ocrMs": null,
+   "inferMs": 3593,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": null,
+    "published_at": "2026-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_nopanel_deck_dark",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.454917Z",
+   "ocrMs": null,
+   "inferMs": 3840,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": null,
+    "published_at": "2026-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_nopanel_deck_dark_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.455005Z",
+   "ocrMs": null,
+   "inferMs": 3847,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": null,
+    "published_at": "2026-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_nopanel_nodeck",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": false,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.455085Z",
+   "ocrMs": null,
+   "inferMs": 3311,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": null,
+    "published_at": "2026-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_nopanel_nodeck_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": false,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.455171Z",
+   "ocrMs": null,
+   "inferMs": 3702,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": null,
+    "published_at": "2026-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_nopanel_nodeck_dark",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.455250Z",
+   "ocrMs": null,
+   "inferMs": 3353,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": "HALV",
+    "published_at": "2026-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_nopanel_nodeck_dark_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.455328Z",
+   "ocrMs": null,
+   "inferMs": 3421,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": null,
+    "published_at": "2026-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_panel_deck",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": true,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.455414Z",
+   "ocrMs": null,
+   "inferMs": 6815,
+   "status": "ok",
+   "dto": {
+    "headline": "부진한 공장 지표에 아애널리스트들 목표가 하향",
+    "instrument": "HVM",
+    "published_at": "2026-03-14",
+    "price": "187.40",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_panel_deck_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": true,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.455491Z",
+   "ocrMs": null,
+   "inferMs": 6859,
+   "status": "ok",
+   "dto": {
+    "headline": "할보르센 메탈스, 구리 수요 전망 악화에 하락",
+    "instrument": "HVM",
+    "published_at": "2026-03-14",
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_panel_deck_dark",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.455568Z",
+   "ocrMs": null,
+   "inferMs": 7479,
+   "status": "ok",
+   "dto": {
+    "headline": "할보르센 메탈스 주가 하락, 아시아 수요 둔화로 전망치 하향",
+    "instrument": "HVM",
+    "published_at": "2026-03-14",
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_panel_deck_dark_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.455655Z",
+   "ocrMs": null,
+   "inferMs": 5979,
+   "status": "ok",
+   "dto": {
+    "headline": "할보르센 메탈스, 구리 수요 전망 악화에 하락",
+    "instrument": "HVM",
+    "published_at": "2026-03-14",
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_panel_nodeck",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": false,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.455733Z",
+   "ocrMs": null,
+   "inferMs": 6884,
+   "status": "ok",
+   "dto": {
+    "headline": "할보르센 메탈스 주가 하락, 아시아 수요 둔화로 출하 전망치 하향",
+    "instrument": "HVM",
+    "published_at": "2026-03-14",
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_panel_nodeck_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": false,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.455808Z",
+   "ocrMs": null,
+   "inferMs": 7103,
+   "status": "ok",
+   "dto": {
+    "headline": "할보르센 메탈스, 구리 수요 전망 악화에 하락",
+    "instrument": "HVM",
+    "published_at": "2026-03-14",
+    "price": "187.40",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_panel_nodeck_dark",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.455897Z",
+   "ocrMs": null,
+   "inferMs": 6772,
+   "status": "ok",
+   "dto": {
+    "headline": "할보르센 메탈스 주가 하락, 아시아 수요 둔화로 출하 전망치 하향",
+    "instrument": "HVM",
+    "published_at": "2026-03-14",
+    "price": "187.40",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_panel_nodeck_dark_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.455974Z",
+   "ocrMs": null,
+   "inferMs": 7144,
+   "status": "ok",
+   "dto": {
+    "headline": "할보르센 메탈스, 구리 수요 전망 악화에 하락",
+    "instrument": "HVM",
+    "published_at": "2026-03-14",
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_nopanel_deck",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": true,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.456059Z",
+   "ocrMs": null,
+   "inferMs": 4180,
+   "status": "ok",
+   "dto": {
+    "headline": "할보르센 메탈스 주가 하락, 아시아 수요 둔화 영향",
+    "instrument": "HAL",
+    "published_at": "2026-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_nopanel_deck_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": true,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.456137Z",
+   "ocrMs": null,
+   "inferMs": 3816,
+   "status": "ok",
+   "dto": {
+    "headline": "할보르센 메탈스, 구리 수요 전망 악화에 하락",
+    "instrument": null,
+    "published_at": "2026-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_nopanel_deck_dark",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.456216Z",
+   "ocrMs": null,
+   "inferMs": 4250,
+   "status": "ok",
+   "dto": {
+    "headline": "할보르센 메탈스 주가 하락, 아시아 수요 둔화로 출하 전망치 하향",
+    "instrument": "HALB",
+    "published_at": "2026-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_nopanel_deck_dark_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.456304Z",
+   "ocrMs": null,
+   "inferMs": 3632,
+   "status": "ok",
+   "dto": {
+    "headline": "할보르센 메탈스, 구리 수요 전망 악화에 하락",
+    "instrument": null,
+    "published_at": "2026-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_nopanel_nodeck",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": false,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.456385Z",
+   "ocrMs": null,
+   "inferMs": 3866,
+   "status": "ok",
+   "dto": {
+    "headline": "할보르센 메탈스 주가 하락, 아시아 수요 둔화로 출하 전망치 하향",
+    "instrument": null,
+    "published_at": "2026-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_nopanel_nodeck_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": false,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.456464Z",
+   "ocrMs": null,
+   "inferMs": 3611,
+   "status": "ok",
+   "dto": {
+    "headline": "할보르센 메탈스, 구리 수요 전망 악화에 하락",
+    "instrument": null,
+    "published_at": "2026-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_nopanel_nodeck_dark",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.456551Z",
+   "ocrMs": null,
+   "inferMs": 4156,
+   "status": "ok",
+   "dto": {
+    "headline": "할보르센 메탈스 주가 하락, 아시아 수요 둔화로 출하 전망치 하향",
+    "instrument": "HALB",
+    "published_at": "2026-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_nopanel_nodeck_dark_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.456628Z",
+   "ocrMs": null,
+   "inferMs": 3844,
+   "status": "ok",
+   "dto": {
+    "headline": "할보르센 메탈스, 구리 수요 전망 악화에 하락",
+    "instrument": "BORGEN",
+    "published_at": "2026-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "battery_en_panel_deck",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": true,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.456716Z",
+   "ocrMs": null,
+   "inferMs": 6211,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy jumps on grid storage contract win",
+    "instrument": "LKSP",
+    "published_at": "2026-05-02",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_panel_deck_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": true,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.456796Z",
+   "ocrMs": null,
+   "inferMs": 6782,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy wins major European grid storage contract",
+    "instrument": "LKSP",
+    "published_at": "2026-05-02",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_panel_deck_dark",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.456883Z",
+   "ocrMs": null,
+   "inferMs": 6619,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy wins major European grid storage contract",
+    "instrument": "LKSP",
+    "published_at": "2026-05-02",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_panel_deck_dark_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.456974Z",
+   "ocrMs": null,
+   "inferMs": 6316,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy wins major grid storage contract",
+    "instrument": "LKSP",
+    "published_at": "2026-05-02",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_panel_nodeck",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": false,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.457054Z",
+   "ocrMs": null,
+   "inferMs": 6109,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy wins major grid storage contract",
+    "instrument": "LKSP",
+    "published_at": "2026-05-02",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_panel_nodeck_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": false,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.457132Z",
+   "ocrMs": null,
+   "inferMs": 6635,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy wins major European grid storage contract",
+    "instrument": "LKSP",
+    "published_at": "2026-05-02",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_panel_nodeck_dark",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.457220Z",
+   "ocrMs": null,
+   "inferMs": 6146,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy wins major grid storage contract",
+    "instrument": "LKSP",
+    "published_at": "2026-05-02",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_panel_nodeck_dark_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.457300Z",
+   "ocrMs": null,
+   "inferMs": 5947,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy wins major European grid storage contract",
+    "instrument": "LKSP",
+    "published_at": "2026-05-02",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_nopanel_deck",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": true,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.457378Z",
+   "ocrMs": null,
+   "inferMs": 3578,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy jumps on grid storage contract win",
+    "instrument": null,
+    "published_at": "2026-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_nopanel_deck_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": true,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.457466Z",
+   "ocrMs": null,
+   "inferMs": 3691,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy wins major European grid storage contract",
+    "instrument": null,
+    "published_at": "2026-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_nopanel_deck_dark",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.457545Z",
+   "ocrMs": null,
+   "inferMs": 3809,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy jumps on grid storage contract win",
+    "instrument": null,
+    "published_at": "2026-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_nopanel_deck_dark_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.457635Z",
+   "ocrMs": null,
+   "inferMs": 3890,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy jumps on grid storage contract win",
+    "instrument": null,
+    "published_at": "2026-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_nopanel_nodeck",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": false,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.457723Z",
+   "ocrMs": null,
+   "inferMs": 3769,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy wins major grid storage contract",
+    "instrument": null,
+    "published_at": "2026-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_nopanel_nodeck_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": false,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.457787Z",
+   "ocrMs": null,
+   "inferMs": 3889,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy wins major European grid storage contract",
+    "instrument": null,
+    "published_at": "2026-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_nopanel_nodeck_dark",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.457855Z",
+   "ocrMs": null,
+   "inferMs": 3525,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy jumps on grid storage contract win",
+    "instrument": null,
+    "published_at": "2026-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_nopanel_nodeck_dark_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.457915Z",
+   "ocrMs": null,
+   "inferMs": 3639,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy jumps on grid storage contract win",
+    "instrument": null,
+    "published_at": "2026-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_panel_deck",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": true,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.457974Z",
+   "ocrMs": null,
+   "inferMs": 7145,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스퍼 에너지가 대규모 배터리 저장장치 공급사 선정",
+    "instrument": "LKSP",
+    "published_at": "2026-05-02",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_panel_deck_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": true,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.458045Z",
+   "ocrMs": null,
+   "inferMs": 7902,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스퍼 에너지, 전력망 저장장치 계약 수주에 급등",
+    "instrument": "LKSP",
+    "published_at": "2026-05-02",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_panel_deck_dark",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.458108Z",
+   "ocrMs": null,
+   "inferMs": 6889,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스퍼 에너지가 대규모 배터리 저장장치 공급사 선정",
+    "instrument": "LKSP",
+    "published_at": "2026-05-02",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_panel_deck_dark_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.458176Z",
+   "ocrMs": null,
+   "inferMs": 6983,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스퍼 에너지, 전력망 저장장치 계약 수주에 급등",
+    "instrument": "LKSP",
+    "published_at": "2026-05-02",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_panel_nodeck",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": false,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.458237Z",
+   "ocrMs": null,
+   "inferMs": 8235,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스퍼 에너지가 대규모 배터리 저장장치 공급사 선정",
+    "instrument": "LKSP",
+    "published_at": "2024-05-02",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_panel_nodeck_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": false,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.458298Z",
+   "ocrMs": null,
+   "inferMs": 7484,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스퍼 에너지, 전력망 저장장치 계약 수주에 급등",
+    "instrument": "LKSP",
+    "published_at": "2026-05-02",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_panel_nodeck_dark",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.458397Z",
+   "ocrMs": null,
+   "inferMs": 7503,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스퍼 에너지가 대규모 배터리 저장장치 공급사 선정",
+    "instrument": "LKSP",
+    "published_at": "2024-05-02",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_panel_nodeck_dark_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.458459Z",
+   "ocrMs": null,
+   "inferMs": 7647,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스퍼 에너지, 전력망 저장장치 계약 수주에 급등",
+    "instrument": "LKSP",
+    "published_at": "2026-05-02",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_nopanel_deck",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": true,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.458695Z",
+   "ocrMs": null,
+   "inferMs": 4549,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스퍼 에너지가 유틸리티 배터리 계약으로 급등",
+    "instrument": null,
+    "published_at": "2026-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_nopanel_deck_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": true,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.458792Z",
+   "ocrMs": null,
+   "inferMs": 4390,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스퍼 에너지, 전력망 저장장치 계약 수주에 급등",
+    "instrument": null,
+    "published_at": "2026-05-02",
+    "price": null,
+    "change_percent": "87",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_nopanel_deck_dark",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.458859Z",
+   "ocrMs": null,
+   "inferMs": 4495,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스퍼 에너지가 대규모 배터리 계약 수주",
+    "instrument": null,
+    "published_at": "2026-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_nopanel_deck_dark_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.458925Z",
+   "ocrMs": null,
+   "inferMs": 4427,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스퍼 에너지, 전력망 저장장치 계약 수주에 급등",
+    "instrument": null,
+    "published_at": "2026-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_nopanel_nodeck",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": false,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.458982Z",
+   "ocrMs": null,
+   "inferMs": 4538,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스퍼 에너지가 유틸리티 배터리 저장장치 공급사 선정으로 급등",
+    "instrument": null,
+    "published_at": "2026-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_nopanel_nodeck_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": false,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.459038Z",
+   "ocrMs": null,
+   "inferMs": 4651,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스퍼 에너지, 전력망 저장장치 계약 수주에 급등",
+    "instrument": null,
+    "published_at": "2026-05-02",
+    "price": null,
+    "change_percent": "87%",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_nopanel_nodeck_dark",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.459101Z",
+   "ocrMs": null,
+   "inferMs": 4337,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스퍼 에너지가 대규모 배터리 계약 선정",
+    "instrument": "RAKS",
+    "published_at": "2026-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_nopanel_nodeck_dark_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "hybrid",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.459160Z",
+   "ocrMs": null,
+   "inferMs": 4580,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스퍼 에너지, 전력망 저장장치 계약 수주에 급등",
+    "instrument": null,
+    "published_at": "2026-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "metals_en_panel_deck",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": true,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.459229Z",
+   "ocrMs": null,
+   "inferMs": 2838,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": "OHM",
+    "published_at": "2026-03-14",
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_panel_deck_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": true,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.459395Z",
+   "ocrMs": null,
+   "inferMs": 2836,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": "HVM",
+    "published_at": "2022-03-14",
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_panel_deck_dark",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.459455Z",
+   "ocrMs": null,
+   "inferMs": 2708,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": "HVYM",
+    "published_at": "2026-03-14",
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_panel_deck_dark_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.459511Z",
+   "ocrMs": null,
+   "inferMs": 2803,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": "HVM",
+    "published_at": "2023-03-14",
+    "price": "187.40",
+    "change_percent": "-4.6%",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_panel_nodeck",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": false,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.459580Z",
+   "ocrMs": null,
+   "inferMs": 2854,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": "HVM",
+    "published_at": "2024-03-14",
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_panel_nodeck_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": false,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.459634Z",
+   "ocrMs": null,
+   "inferMs": 2760,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": "HSE",
+    "published_at": "2014-03-15",
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_panel_nodeck_dark",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.459692Z",
+   "ocrMs": null,
+   "inferMs": 2919,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": "HVM",
+    "published_at": "2022-03-14",
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_panel_nodeck_dark_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.459744Z",
+   "ocrMs": null,
+   "inferMs": 3226,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": "HVM",
+    "published_at": "2014-03-15",
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_nopanel_deck",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": true,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.459796Z",
+   "ocrMs": null,
+   "inferMs": 3087,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": "OSLO",
+    "published_at": "2022-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_nopanel_deck_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": true,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.459860Z",
+   "ocrMs": null,
+   "inferMs": 2903,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": null,
+    "published_at": "2022-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_nopanel_deck_dark",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.459916Z",
+   "ocrMs": null,
+   "inferMs": 2561,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": null,
+    "published_at": "2026-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_nopanel_deck_dark_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.459969Z",
+   "ocrMs": null,
+   "inferMs": 3006,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": null,
+    "published_at": "2023-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_nopanel_nodeck",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": false,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.460030Z",
+   "ocrMs": null,
+   "inferMs": 2939,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": null,
+    "published_at": "2026-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_nopanel_nodeck_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": false,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.460080Z",
+   "ocrMs": null,
+   "inferMs": 3017,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": null,
+    "published_at": "2014-03-15",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_nopanel_nodeck_dark",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.460139Z",
+   "ocrMs": null,
+   "inferMs": 2935,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": null,
+    "published_at": "2022-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_en_nopanel_nodeck_dark_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.460192Z",
+   "ocrMs": null,
+   "inferMs": 2979,
+   "status": "ok",
+   "dto": {
+    "headline": "Halvorsen Metals slides as copper demand outlook dims",
+    "instrument": "OSLO",
+    "published_at": "2014-03-14",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_panel_deck",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": true,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.460242Z",
+   "ocrMs": null,
+   "inferMs": 3613,
+   "status": "ok",
+   "dto": {
+    "headline": "Halberton Metals, Gold, and Copper Prices Decline",
+    "instrument": "NOK",
+    "published_at": "2026-03-11",
+    "price": "187.40",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_panel_deck_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": true,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.460312Z",
+   "ocrMs": null,
+   "inferMs": 3154,
+   "status": "ok",
+   "dto": {
+    "headline": "Halboren Semantics, Gold, and Yields Decline",
+    "instrument": "HVM",
+    "published_at": null,
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_panel_deck_dark",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.460362Z",
+   "ocrMs": null,
+   "inferMs": 3612,
+   "status": "ok",
+   "dto": {
+    "headline": "Halboresen Metals, Gold, and Copper Prices Decline",
+    "instrument": "HVM",
+    "published_at": "2026-03-13",
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_panel_deck_dark_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.460408Z",
+   "ocrMs": null,
+   "inferMs": 2715,
+   "status": "ok",
+   "dto": {
+    "headline": "Halboresen Melas, Guri Suho, Jinmang Hakhae to leave",
+    "instrument": "HVM",
+    "published_at": null,
+    "price": "187.4",
+    "change_percent": "4.6",
+    "sentiment": "neutral"
+   }
+  },
+  {
+   "fixture": "metals_ko_panel_nodeck",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": false,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.460460Z",
+   "ocrMs": null,
+   "inferMs": 3108,
+   "status": "ok",
+   "dto": {
+    "headline": "할로센 메탈스, 구리 수요 전망 약화에 하락",
+    "instrument": "HVM",
+    "published_at": null,
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_panel_nodeck_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": false,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.460508Z",
+   "ocrMs": null,
+   "inferMs": 3520,
+   "status": "ok",
+   "dto": {
+    "headline": "할보르센 메탈스, 구리 수요 전망 악화 하락",
+    "instrument": null,
+    "published_at": null,
+    "price": "187.40",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_panel_nodeck_dark",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.460552Z",
+   "ocrMs": null,
+   "inferMs": 2903,
+   "status": "ok",
+   "dto": {
+    "headline": "할로센 메탈스, 구리 수요 전망 악화",
+    "instrument": "HVM",
+    "published_at": null,
+    "price": "187.40",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_panel_nodeck_dark_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.460610Z",
+   "ocrMs": null,
+   "inferMs": 3726,
+   "status": "ok",
+   "dto": {
+    "headline": "할보르센 메탈스, 구리 수요 전망 악화",
+    "instrument": "HVM",
+    "published_at": "2023-03-14",
+    "price": "187.4",
+    "change_percent": "-4.6",
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_nopanel_deck",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": true,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.460655Z",
+   "ocrMs": null,
+   "inferMs": 3431,
+   "status": "ok",
+   "dto": {
+    "headline": "할보르센 메탈스, 구리 수요 전망 악화에 하락",
+    "instrument": null,
+    "published_at": "2026-03-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_nopanel_deck_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": true,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.460708Z",
+   "ocrMs": null,
+   "inferMs": 2766,
+   "status": "ok",
+   "dto": {
+    "headline": "Halboren melabs, 구리 수요 전망 악화",
+    "instrument": null,
+    "published_at": null,
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_nopanel_deck_dark",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.460755Z",
+   "ocrMs": null,
+   "inferMs": 2884,
+   "status": "ok",
+   "dto": {
+    "headline": "할로브센 메탈스, 구리 수요 전망 악화",
+    "instrument": null,
+    "published_at": null,
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_nopanel_deck_dark_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.460801Z",
+   "ocrMs": null,
+   "inferMs": 2664,
+   "status": "ok",
+   "dto": {
+    "headline": "할보르센 메탈스, 구리 수요 전망 악화",
+    "instrument": null,
+    "published_at": null,
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_nopanel_nodeck",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": false,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.460857Z",
+   "ocrMs": null,
+   "inferMs": 2627,
+   "status": "ok",
+   "dto": {
+    "headline": "할로보르센 메탈스, 구리 수요 전망 악화에 하락",
+    "instrument": null,
+    "published_at": null,
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_nopanel_nodeck_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": false,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.460949Z",
+   "ocrMs": null,
+   "inferMs": 3008,
+   "status": "ok",
+   "dto": {
+    "headline": "Halboren Semel Mails, Gold Price Drops",
+    "instrument": null,
+    "published_at": null,
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_nopanel_nodeck_dark",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.460994Z",
+   "ocrMs": null,
+   "inferMs": 3597,
+   "status": "ok",
+   "dto": {
+    "headline": "할로브센 메탈스, 구리 수요 전망 악화",
+    "instrument": null,
+    "published_at": null,
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "metals_ko_nopanel_nodeck_dark_phone",
+   "article": "metals",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.461047Z",
+   "ocrMs": null,
+   "inferMs": 3725,
+   "status": "ok",
+   "dto": {
+    "headline": "할로브레센 메탈스, 구리 수요 전망 악화",
+    "instrument": null,
+    "published_at": null,
+    "price": null,
+    "change_percent": null,
+    "sentiment": "negative"
+   }
+  },
+  {
+   "fixture": "battery_en_panel_deck",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": true,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.461091Z",
+   "ocrMs": null,
+   "inferMs": 3067,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy jumps on grid storage contract win",
+    "instrument": "LKSP",
+    "published_at": "2026-05-02",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_panel_deck_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": true,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.461149Z",
+   "ocrMs": null,
+   "inferMs": 3119,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy jumps on grid storage win",
+    "instrument": "LKSP",
+    "published_at": "2026-05-02",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_panel_deck_dark",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.461196Z",
+   "ocrMs": null,
+   "inferMs": 3069,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy jumps on grid storage contract win",
+    "instrument": "LKSP",
+    "published_at": "2026-05-02",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_panel_deck_dark_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.461242Z",
+   "ocrMs": null,
+   "inferMs": 3107,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy jumps on grid storage contract win",
+    "instrument": "LKSP",
+    "published_at": "2026-05-02",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_panel_nodeck",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": false,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.461292Z",
+   "ocrMs": null,
+   "inferMs": 3010,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy jumps on grid storage contract win",
+    "instrument": "LKSP",
+    "published_at": "2022-05-07",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_panel_nodeck_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": false,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.461338Z",
+   "ocrMs": null,
+   "inferMs": 3136,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy jumps on grid storage win",
+    "instrument": "LKSP",
+    "published_at": "2023-05-07",
+    "price": "42.15",
+    "change_percent": "+11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_panel_nodeck_dark",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.461386Z",
+   "ocrMs": null,
+   "inferMs": 2967,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy jumps on grid storage contract win",
+    "instrument": "LKSP",
+    "published_at": "2017-05-07",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_panel_nodeck_dark_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": true,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.461436Z",
+   "ocrMs": null,
+   "inferMs": 2565,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy jumps on grid storage win",
+    "instrument": "LKSP",
+    "published_at": null,
+    "price": "42.15",
+    "change_percent": "+11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_nopanel_deck",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": true,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.461480Z",
+   "ocrMs": null,
+   "inferMs": 2835,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy jumps on grid storage contract win",
+    "instrument": null,
+    "published_at": "2026-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_nopanel_deck_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": true,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.461523Z",
+   "ocrMs": null,
+   "inferMs": 2853,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy jumps on grid storage win",
+    "instrument": null,
+    "published_at": "2026-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_nopanel_deck_dark",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.461572Z",
+   "ocrMs": null,
+   "inferMs": 2680,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy jumps on grid storage win",
+    "instrument": null,
+    "published_at": "2026-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_nopanel_deck_dark_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.461623Z",
+   "ocrMs": null,
+   "inferMs": 2741,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy wins grid storage contract",
+    "instrument": null,
+    "published_at": "2022-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_nopanel_nodeck",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": false,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.461678Z",
+   "ocrMs": null,
+   "inferMs": 2653,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy jumps on grid storage contract win",
+    "instrument": null,
+    "published_at": "2016-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_nopanel_nodeck_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": false,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.461721Z",
+   "ocrMs": null,
+   "inferMs": 2921,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy jumps on grid storage contract win",
+    "instrument": null,
+    "published_at": "2016-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_nopanel_nodeck_dark",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.461768Z",
+   "ocrMs": null,
+   "inferMs": 2954,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy jumps on grid storage contract win",
+    "instrument": null,
+    "published_at": "2017-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_en_nopanel_nodeck_dark_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "en",
+    "panel": false,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.461819Z",
+   "ocrMs": null,
+   "inferMs": 2812,
+   "status": "ok",
+   "dto": {
+    "headline": "Larkspur Energy jumps on grid storage contract win",
+    "instrument": null,
+    "published_at": "2023-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_panel_deck",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": true,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.461861Z",
+   "ocrMs": null,
+   "inferMs": 3458,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스페 에너지, 전략적 저장장치 계약 수주에 금통",
+    "instrument": "LKSP",
+    "published_at": "2026-05-02",
+    "price": "42.15",
+    "change_percent": "+11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_panel_deck_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": true,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.461912Z",
+   "ocrMs": null,
+   "inferMs": 4185,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스페 에너지, 전략적 저장장치 계약 수주에 금 등급",
+    "instrument": "LKSP",
+    "published_at": null,
+    "price": "42.15",
+    "change_percent": "+11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_panel_deck_dark",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.461956Z",
+   "ocrMs": null,
+   "inferMs": 3494,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스페이 에너지, 전력장치 계약 수주에 급등",
+    "instrument": "LKSP",
+    "published_at": "2026-05-02",
+    "price": "42.15",
+    "change_percent": "+11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_panel_deck_dark_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.461998Z",
+   "ocrMs": null,
+   "inferMs": 3292,
+   "status": "ok",
+   "dto": {
+    "headline": "리크스프 에너지, 전략적 저장장치 계약 수주에 금 등",
+    "instrument": "LKSP",
+    "published_at": null,
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_panel_nodeck",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": false,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.462048Z",
+   "ocrMs": null,
+   "inferMs": 4474,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스페이 에너지, 전략적 저장장치 계약 수주 급등",
+    "instrument": "LKSP",
+    "published_at": null,
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_panel_nodeck_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": false,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.462091Z",
+   "ocrMs": null,
+   "inferMs": 4120,
+   "status": "ok",
+   "dto": {
+    "headline": "라스프에너지, 전력망 저장장치 계약 수주 규모 급등",
+    "instrument": "LKSP",
+    "published_at": "2026-05-02",
+    "price": "42.15",
+    "change_percent": "+11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_panel_nodeck_dark",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.462134Z",
+   "ocrMs": null,
+   "inferMs": 3962,
+   "status": "ok",
+   "dto": {
+    "headline": "라스크페 에너지, 전력망 저장장치 계약 수주 금통",
+    "instrument": "LKSP",
+    "published_at": "2026-05-02",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_panel_nodeck_dark_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": true,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.462184Z",
+   "ocrMs": null,
+   "inferMs": 4189,
+   "status": "ok",
+   "dto": {
+    "headline": "리크스프 에너지, 전략장치 계약 수준에 금등",
+    "instrument": "LKSP",
+    "published_at": "2023-05-28",
+    "price": "42.15",
+    "change_percent": "11.8",
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_nopanel_deck",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": true,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.462229Z",
+   "ocrMs": null,
+   "inferMs": 4683,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스페이 에너지, 전력망 저장장치 계약 수주에 금통",
+    "instrument": null,
+    "published_at": null,
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_nopanel_deck_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": true,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.462277Z",
+   "ocrMs": null,
+   "inferMs": 3953,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스페 에너지, 전략적 저장장치 계약 수주에 금등",
+    "instrument": null,
+    "published_at": null,
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_nopanel_deck_dark",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.462330Z",
+   "ocrMs": null,
+   "inferMs": 3893,
+   "status": "ok",
+   "dto": {
+    "headline": "락스프터 에너지, 전략적 저장장치 계약 수주에 금등",
+    "instrument": null,
+    "published_at": "2026-05-02",
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_nopanel_deck_dark_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": true,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.462373Z",
+   "ocrMs": null,
+   "inferMs": 4705,
+   "status": "ok",
+   "dto": {
+    "headline": "리스크프레미엄, 전략적 저장장치 계약 수주에 금 등",
+    "instrument": null,
+    "published_at": null,
+    "price": null,
+    "change_percent": null,
+    "sentiment": "neutral"
+   }
+  },
+  {
+   "fixture": "battery_ko_nopanel_nodeck",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": false,
+    "theme": "light",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.462423Z",
+   "ocrMs": null,
+   "inferMs": 4470,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스페 에너지, 전력망 저장장치 계약 수주 급등",
+    "instrument": null,
+    "published_at": null,
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_nopanel_nodeck_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": false,
+    "theme": "light",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.462468Z",
+   "ocrMs": null,
+   "inferMs": 3003,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스페 에너지, 전략적 저장장치 계약 수주에 금 등",
+    "instrument": null,
+    "published_at": null,
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_nopanel_nodeck_dark",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "none"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.462558Z",
+   "ocrMs": null,
+   "inferMs": 3728,
+   "status": "ok",
+   "dto": {
+    "headline": "라크스퍼 에너지, 전력망 저장장치 계약 수주 급등",
+    "instrument": null,
+    "published_at": null,
+    "price": null,
+    "change_percent": null,
+    "sentiment": "positive"
+   }
+  },
+  {
+   "fixture": "battery_ko_nopanel_nodeck_dark_phone",
+   "article": "battery",
+   "variant": {
+    "lang": "ko",
+    "panel": false,
+    "subheading": false,
+    "theme": "dark",
+    "frame": "phone"
+   },
+   "path": "vision_only",
+   "rules": "kortex-prompt",
+   "sampling": "default",
+   "run": 1,
+   "ts": "2026-09-13T23:27:45.462609Z",
+   "ocrMs": null,
+   "inferMs": 3752,
+   "status": "ok",
+   "dto": {
+    "headline": "리스크헤지, 전략망 저장장치 계약 수주에 금 등",
+    "instrument": null,
+    "published_at": null,
+    "price": null,
+    "change_percent": null,
+    "sentiment": "neutral"
+   }
+  }
+ ]
+}
