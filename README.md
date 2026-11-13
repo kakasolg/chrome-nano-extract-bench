@@ -6,6 +6,9 @@ vision path (image → JSON) with an OCR-first path (image → text → JSON).
 
 Status: **thirteen phases, 1584 runs.** Full write-up in [RESULTS.md](RESULTS.md).
 
+Earlier companion: [ondevice-summarizer-bench](https://github.com/kakasolg/ondevice-summarizer-bench) — the live demo
+and the first reliability run that found the vision path and non-English screenshots as the weak spots measured here.
+
 ## What this measures, and what it found
 
 This is a set of paired measurements on Chrome's *shipped* on-device model (Chrome 152
