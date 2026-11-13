@@ -1,6 +1,6 @@
 {
  "generated_at": "2026-09-13T22:46:29.683088Z",
- "ua": "kortex-android\/Pixel 11 Pro XL\/api37",
+ "ua": "android-app\/Pixel 11 Pro XL\/api37",
  "phase": "device",
  "ocr": "mlkit",
  "results": [
@@ -15,7 +15,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.683724Z",
@@ -42,7 +42,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.683984Z",
@@ -69,7 +69,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.684063Z",
@@ -96,7 +96,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.684156Z",
@@ -123,7 +123,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.684203Z",
@@ -150,7 +150,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.684261Z",
@@ -177,7 +177,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.684306Z",
@@ -204,7 +204,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.684350Z",
@@ -231,7 +231,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.684400Z",
@@ -258,7 +258,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.684480Z",
@@ -285,7 +285,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.684525Z",
@@ -312,7 +312,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.684583Z",
@@ -339,7 +339,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.684626Z",
@@ -366,7 +366,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.684677Z",
@@ -393,7 +393,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.684721Z",
@@ -420,7 +420,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.684763Z",
@@ -447,7 +447,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.684814Z",
@@ -474,7 +474,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.684858Z",
@@ -501,7 +501,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.684902Z",
@@ -528,7 +528,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.684953Z",
@@ -555,7 +555,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.685006Z",
@@ -582,7 +582,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.685074Z",
@@ -609,7 +609,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.685137Z",
@@ -636,7 +636,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.685192Z",
@@ -663,7 +663,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.685244Z",
@@ -690,7 +690,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.685312Z",
@@ -717,7 +717,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.685355Z",
@@ -744,7 +744,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.685407Z",
@@ -771,7 +771,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.685449Z",
@@ -798,7 +798,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.685490Z",
@@ -825,7 +825,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.685543Z",
@@ -852,7 +852,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.685584Z",
@@ -879,7 +879,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.685632Z",
@@ -906,7 +906,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.685675Z",
@@ -933,7 +933,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.685718Z",
@@ -960,7 +960,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.685784Z",
@@ -987,7 +987,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.685827Z",
@@ -1014,7 +1014,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.685867Z",
@@ -1041,7 +1041,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.685917Z",
@@ -1068,7 +1068,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.685959Z",
@@ -1095,7 +1095,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.686001Z",
@@ -1122,7 +1122,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.686049Z",
@@ -1149,7 +1149,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.686092Z",
@@ -1176,7 +1176,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.686142Z",
@@ -1203,7 +1203,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.686184Z",
@@ -1230,7 +1230,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.686225Z",
@@ -1257,7 +1257,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.686273Z",
@@ -1284,7 +1284,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.686317Z",
@@ -1311,7 +1311,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.686358Z",
@@ -1338,7 +1338,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.686407Z",
@@ -1365,7 +1365,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.686451Z",
@@ -1392,7 +1392,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.686578Z",
@@ -1419,7 +1419,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.686624Z",
@@ -1446,7 +1446,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.686669Z",
@@ -1473,7 +1473,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.686721Z",
@@ -1500,7 +1500,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.686765Z",
@@ -1527,7 +1527,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.686809Z",
@@ -1554,7 +1554,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.686858Z",
@@ -1581,7 +1581,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.686900Z",
@@ -1608,7 +1608,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.686950Z",
@@ -1635,7 +1635,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.686996Z",
@@ -1662,7 +1662,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.687038Z",
@@ -1689,7 +1689,7 @@
     "frame": "none"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.687087Z",
@@ -1716,7 +1716,7 @@
     "frame": "phone"
    },
    "path": "hybrid",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.687128Z",
@@ -1743,7 +1743,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.687170Z",
@@ -1770,7 +1770,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.687221Z",
@@ -1797,7 +1797,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.687262Z",
@@ -1824,7 +1824,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.687303Z",
@@ -1851,7 +1851,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.687352Z",
@@ -1878,7 +1878,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.687393Z",
@@ -1905,7 +1905,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.687440Z",
@@ -1932,7 +1932,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.687483Z",
@@ -1959,7 +1959,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.687526Z",
@@ -1986,7 +1986,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.687576Z",
@@ -2013,7 +2013,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.687622Z",
@@ -2040,7 +2040,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.687666Z",
@@ -2067,7 +2067,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.687718Z",
@@ -2094,7 +2094,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.687760Z",
@@ -2121,7 +2121,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.687834Z",
@@ -2148,7 +2148,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.687876Z",
@@ -2175,7 +2175,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.687919Z",
@@ -2202,7 +2202,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.687976Z",
@@ -2229,7 +2229,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688018Z",
@@ -2256,7 +2256,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688061Z",
@@ -2283,7 +2283,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688111Z",
@@ -2310,7 +2310,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688152Z",
@@ -2337,7 +2337,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688192Z",
@@ -2364,7 +2364,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688244Z",
@@ -2391,7 +2391,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688286Z",
@@ -2418,7 +2418,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688337Z",
@@ -2445,7 +2445,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688379Z",
@@ -2472,7 +2472,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688421Z",
@@ -2499,7 +2499,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688470Z",
@@ -2526,7 +2526,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688511Z",
@@ -2553,7 +2553,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688554Z",
@@ -2580,7 +2580,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688602Z",
@@ -2607,7 +2607,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688643Z",
@@ -2634,7 +2634,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688690Z",
@@ -2661,7 +2661,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688735Z",
@@ -2688,7 +2688,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688777Z",
@@ -2715,7 +2715,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688826Z",
@@ -2742,7 +2742,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688867Z",
@@ -2769,7 +2769,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688909Z",
@@ -2796,7 +2796,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688957Z",
@@ -2823,7 +2823,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.688998Z",
@@ -2850,7 +2850,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.689039Z",
@@ -2877,7 +2877,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.689088Z",
@@ -2904,7 +2904,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.689130Z",
@@ -2931,7 +2931,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.689179Z",
@@ -2958,7 +2958,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.689221Z",
@@ -2985,7 +2985,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.689266Z",
@@ -3012,7 +3012,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.689316Z",
@@ -3039,7 +3039,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.689358Z",
@@ -3066,7 +3066,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.689406Z",
@@ -3093,7 +3093,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.689775Z",
@@ -3120,7 +3120,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.689849Z",
@@ -3147,7 +3147,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.689908Z",
@@ -3174,7 +3174,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.690028Z",
@@ -3201,7 +3201,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.690072Z",
@@ -3228,7 +3228,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.690144Z",
@@ -3255,7 +3255,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.690191Z",
@@ -3282,7 +3282,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.690233Z",
@@ -3309,7 +3309,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.690285Z",
@@ -3336,7 +3336,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.690329Z",
@@ -3363,7 +3363,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.690380Z",
@@ -3390,7 +3390,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.690424Z",
@@ -3417,7 +3417,7 @@
     "frame": "none"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.690468Z",
@@ -3444,7 +3444,7 @@
     "frame": "phone"
    },
    "path": "vision_only",
-   "rules": "kortex-prompt",
+   "rules": "app-prompt",
    "sampling": "default",
    "run": 1,
    "ts": "2026-09-13T22:46:29.690677Z",

@@ -674,9 +674,9 @@ pipeline for this task, in order of evidence strength:
   regression runs.
 - Per-cell sample sizes are 12 or 24. Differences under about 3 runs are noise.
 
-## Device run — the same fixtures through Kortex Android (Gemini Nano via AICore)
+## Device run — the same fixtures through an Android app (Gemini Nano via AICore)
 
-Files: `results/device_*.json` (4 files, 320 runs). Produced by Kortex's
+Files: `results/device_*.json` (4 files, 320 runs). Produced by the app's
 `ClipBenchDeviceTest` (Pixel, ML Kit OCR + AICore Nano), which loads these 64
 fixtures, runs the app's real clip pipeline and writes rows in this repo's result
 format; `scripts/summarize.mjs` re-scores them unchanged. The `rules` column is the
@@ -686,7 +686,7 @@ prompts are not. `hybrid` = OCR text leg + vision leg merged (production path);
 
 | file | change | hybrid date | hybrid instr | vision date | vision date fab | vision instr |
 |---|---|---|---|---|---|---|
-| `device_kortex-prompt_…` | prompt without example values, `"null"` guard | 27/64 | 20/64 | 4/64 | 7/64 | 54/64 |
+| `device_app-prompt_…` | prompt without example values, `"null"` guard | 27/64 | 20/64 | 4/64 | 7/64 | 54/64 |
 | `…+ticker-date-fix_…` | first-token ticker, lenient date parser | 62/64 | 58/64 | 16/64 | 25/64 | 57/64 |
 | `…+crop_…` | header crop re-ask when the field is empty | 62/64 | 58/64 | 37/64 | 25/64 | 58/64 |
 | `…+crop-alwaysdate_…` (vision only) | vision path always re-asks the date from the crop | — | — | 62/64 | 0/64 | 58/64 |
